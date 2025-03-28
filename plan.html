@@ -1,251 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plan de Clases - Historia de la Música Paraguaya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #5e3a1e;
-            --secondary-color: #8d6e63;
-            --accent-color: #d7ccc8;
-            --text-color: #3e2723;
-            --light-color: #efebe9;
-            --font-main: 'Cormorant Garamond', serif;
-            --font-headings: 'Playfair Display', serif;
-        }
-        
-        body {
-            font-family: var(--font-main);
-            color: var(--text-color);
-            line-height: 1.8;
-            background-color: var(--light-color);
-            margin: 0;
-            padding: 0;
-            background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
-            background-color: rgba(239, 235, 233, 0.9);
-        }
-        
-        /* Barra de navegación */
-        .navbar {
-            background-color: rgba(94, 58, 30, 0.9);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .nav-logo {
-            height: 60px;
-            transition: transform 0.3s ease;
-        }
-        
-        .nav-logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .nav-item {
-            margin-left: 2rem;
-        }
-        
-        .nav-link {
-            color: var(--light-color);
-            text-decoration: none;
-            font-family: var(--font-headings);
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        
-        .nav-link:hover {
-            color: var(--accent-color);
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--accent-color);
-            padding-bottom: 1rem;
-        }
-        
-        h1 {
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        h2 {
-            font-family: var(--font-headings);
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-top: 2.5rem;
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 1rem;
-        }
-        
-        h3 {
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-size: 1.4rem;
-            margin-top: 2rem;
-        }
-        
-        p {
-            margin-bottom: 1.5rem;
-            text-align: justify;
-            font-size: 1.1rem;
-        }
-        
-        .intro {
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--primary-color);
-            padding: 1rem;
-            background-color: var(--accent-color);
-            border-radius: 4px;
-        }
-        
-        .chapter-number {
-            display: block;
-            font-size: 1rem;
-            letter-spacing: 3px;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-        
-        .section-divider {
-            border: none;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--secondary-color), transparent);
-            margin: 3rem 0;
-        }
-        
-        .quote {
-            font-style: italic;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            background-color: rgba(141, 110, 99, 0.1);
-            border-left: 3px solid var(--secondary-color);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            font-size: 1rem;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--accent-color);
-        }
-        
-        th {
-            background-color: rgba(94, 58, 30, 0.1);
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        tr:hover {
-            background-color: rgba(215, 204, 200, 0.3);
-        }
-        
-        .month-section {
-            margin-bottom: 3rem;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 1.5rem;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .month-title {
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent-color);
-        }
-        
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            .nav-menu {
-                margin-top: 1rem;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-item {
-                margin: 0.5rem 0;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.5rem;
-            }
-            
-            th, td {
-                padding: 8px 10px;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Barra de navegación -->
     <nav class="navbar">
@@ -255,7 +20,7 @@
         <ul class="nav-menu">
             <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
             <li class="nav-item"><a href="plan.html" class="nav-link">Plan</a></li>
-            <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
         </ul>
     </nav>
 
@@ -548,11 +313,14 @@
         <div class="section-divider"></div>
 
         <h2>Evaluación Final</h2>
-        <p>La evaluación final se realizará en noviembre según el calendario académico del CONAMU, cubriendo todos los contenidos desarrollados durante el año.</p>
-        
+        <p>La evaluación final se realizará en noviembre según el calendario académico del CONAMU, cubriendo todos los
+            contenidos desarrollados durante el año.</p>
+
         <div class="quote">
-            <p>"La música paraguaya es el alma sonora de un pueblo que ha sabido conservar su identidad a través de los siglos, mezclando tradiciones indígenas con influencias europeas para crear algo único y auténtico."</p>
+            <p>"La música paraguaya es el alma sonora de un pueblo que ha sabido conservar su identidad a través de los
+                siglos, mezclando tradiciones indígenas con influencias europeas para crear algo único y auténtico."</p>
         </div>
     </div>
 </body>
+
 </html>

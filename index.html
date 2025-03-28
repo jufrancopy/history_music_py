@@ -1,252 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etnomúsica - Capítulo 1</title>
-    <style>
-        :root {
-            --primary-color: #5e3a1e;
-            --secondary-color: #8d6e63;
-            --accent-color: #d7ccc8;
-            --text-color: #3e2723;
-            --light-color: #efebe9;
-            --font-main: 'Cormorant Garamond', serif;
-            --font-headings: 'Playfair Display', serif;
-        }
-        
-        body {
-            font-family: var(--font-main);
-            color: var(--text-color);
-            line-height: 1.8;
-            background-color: var(--light-color);
-            margin: 0;
-            padding: 0;
-            background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
-            background-color: rgba(239, 235, 233, 0.9);
-        }
-        
-        /* Barra de navegación */
-        .navbar {
-            background-color: rgba(94, 58, 30, 0.9);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .nav-logo {
-            height: 60px;
-            transition: transform 0.3s ease;
-        }
-        
-        .nav-logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .nav-item {
-            margin-left: 2rem;
-        }
-        
-        .nav-link {
-            color: var(--light-color);
-            text-decoration: none;
-            font-family: var(--font-headings);
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        
-        .nav-link:hover {
-            color: var(--accent-color);
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--accent-color);
-            padding-bottom: 1rem;
-        }
-        
-        h1 {
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        h2 {
-            font-family: var(--font-headings);
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            margin-top: 2.5rem;
-            border-left: 4px solid var(--secondary-color);
-            padding-left: 1rem;
-        }
-        
-        h3 {
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-size: 1.4rem;
-            margin-top: 2rem;
-        }
-        
-        p {
-            margin-bottom: 1.5rem;
-            text-align: justify;
-            font-size: 1.1rem;
-        }
-        
-        .intro {
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--primary-color);
-            padding: 1rem;
-            background-color: var(--accent-color);
-            border-radius: 4px;
-        }
-        
-        .chapter-number {
-            display: block;
-            font-size: 1rem;
-            letter-spacing: 3px;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-        
-        .section-divider {
-            border: none;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--secondary-color), transparent);
-            margin: 3rem 0;
-        }
-        
-        .quote {
-            font-style: italic;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            background-color: rgba(141, 110, 99, 0.1);
-            border-left: 3px solid var(--secondary-color);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            font-size: 1rem;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--accent-color);
-        }
-        
-        th {
-            background-color: rgba(94, 58, 30, 0.1);
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        tr:hover {
-            background-color: rgba(215, 204, 200, 0.3);
-        }
-        
-        .month-section {
-            margin-bottom: 3rem;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 1.5rem;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .month-title {
-            font-family: var(--font-headings);
-            color: var(--primary-color);
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent-color);
-        }
-        
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 1rem;
-            }
-            
-            .nav-menu {
-                margin-top: 1rem;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-item {
-                margin: 0.5rem 0;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.5rem;
-            }
-            
-            th, td {
-                padding: 8px 10px;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <title>Plan de Clases - Historia de la Música Paraguaya</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+    <!-- Barra de navegación -->
     <nav class="navbar">
         <a href="index.html">
             <img src="historia.png" alt="Logo Historia de la Música Paraguaya" class="nav-logo">
@@ -254,133 +20,246 @@
         <ul class="nav-menu">
             <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
             <li class="nav-item"><a href="plan.html" class="nav-link">Plan</a></li>
-            <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+            <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
         </ul>
     </nav>
+
+    <!-- Portada -->
+    <section class="cover">
+        <img src="historia.png" alt="Logo Historia de la Música Paraguaya" class="cover-logo">
+        <h1 class="cover-title">Historia de la Música Paraguaya</h1>
+        <p class="cover-subtitle">Explorando las raíces culturales y la evolución del arte sonoro paraguayo a través de
+            los siglos</p>
+    </section>
+
     <div class="container">
-        <header>
-            <span class="chapter-number">CAPÍTULO 1</span>
-            <h1>QUÉ ES LA ETNOMÚSICA</h1>
-        </header>
-        
-        <p class="intro">Una de las ramas de expresión que se manifiestan espontáneamente como creación musical es la "etnomúsica", que por su rudeza ornamental sin interés teórico o especulativo no resiste una profunda indagación.</p>
-        
-        <p>En tanto que la música como ciencia de elaboración artística puede ser analizada con amplias posibilidades de experimentación. La música como función expresiva oral ingenua carece de aquellas condiciones.</p>
-        
-        <p>La expresión musical puede ser sometida a dos campos diferentes de teorización, de acuerdo a su definición. En el primero, la música como arte o como ciencia se desenvuelve en el fenómeno sonoro escrito, y en esta expresión gráfica nos da la posibilidad de análisis, la teorización, la identificación y desarrollo de las formas, la difusión en el tiempo y el espacio; y al mismo tiempo la posibilidad de experimentación técnica ordenada y científica de todos los recursos sonoros. Estas músicas, que se transmiten a través del tiempo de generación a generación, ayudan a los que empíricamente abrazan la especialidad y logran captar intuitivamente para la práctica oral e instrumental, ayudándoles a combinar la afinación de los instrumentos, recursos expresivos diversos en la voz, el acompañamiento de temas fundamentalmente sin desarrollo (temas tradicionales de motivos populares folklóricos), el "purahéi asy", el "valseado", el "rasguido doble" y las "polcas" de tiempo lento como "Marâpa reikuaase", "Ndarekói la culpa", "Mama cumandá" y otros. De este juicio surge que la etnomúsica abarca todo el campo de la música de transmisión oral, ya sea indígena y autóctona, o civilizada y de influencia cultural, debiéndose investigar y lograr ideas sobre la música más primitiva y simple, como la más compleja, adecuándola dentro de la transmisión oral. O sea, los aspectos que estén separados en los tres conocidos campos de: música indígena, música folklórica y música popular.</p>
-        
-        <hr class="section-divider">
-        
-        <h2>LOS DIFERENTES CAMPOS</h2>
-        
-        <p>En nuestro caso particular, no existen vivencias culturales entre la música indígena y la aculturada música criolla, mayormente generada en las corrientes de influencia europea. Para los conquistadores, y especialmente para los jesuitas, fueron llevados por la tendencia civilizadora de su misión y para ello trataron de destruir todas las manifestaciones musicales de los nativos, ya que más bien simples ruidos salvajes) no lograron comprender los ritmos nativos y para ellos las expresiones autóctonas (que lejos de comprenderlas les parecían que, haciendo un paralelismo con el ritmo africano de inmensa riqueza, creían que para civilizar había que eliminar esas expresiones musicales, razón por la cual esas fueron desapareciendo, quedando dispersas en varios espacios de dominios guaraníticos, leves indicios manejados a nivel de ensayos por muchos historiadores, donde las opiniones fueron vertidas en cadena, generalmente por actuales muy alejadas de la realidad circundante. Así, por ejemplo, nos extranjeros con visiones no confiables, ya que opinaban con mentalidades transmite un tal Ulrico Schmid, soldado alemán llegado a esta zona en 1536, y el Padre Pedro del Oñate, de la música y la danza indígena, en 1615.</p>
-        <div class="quote">
-            El Padre Guevara, en 1720, habla de sus bailes haciendo rueda y círculos entonando canciones bárbaras y sin arte, al son de roncas calabazas y sonajas de porongos con pedrezuelas dentro, que tocan los demás, repitiendo el son y letrillas que empezó el director del coro.
+        <!-- Sección de perfil -->
+        <div class="profile-section">
+            <img src="prof.jpeg" alt="Foto de perfil" class="profile-pic">
+            <div class="profile-content">
+                <h2>Sobre el Profe</h2>
+                <p>
+                    Soy el Profesor Julio Franco, licenciado en Filosofía con postgreado en Didáctica Universitaria.
+                    Profesor Elemental de Música con énfasis
+                    en Violoncello. Estoy comprometido con la formación integral a través del
+                    arte y el pensamiento crítico. Actualmente, desempeño funciones
+                    docentes en el Instituto Superior Nacional de Música, donde imparto la
+                    Cátedra de Historia del Música paraguaya, Introducción a la Filosofía
+                    y el curso de Violoncello Introductorio.
+                </p>
+                <p>
+                    Como multinstrumentista y fundador de la
+                    <a href="https://ipuparaguay.org">Orquesta Filarmónica Ipu Paraguay</a>, he cultivado una amplia
+                    trayectoria en el ámbito musical, actuando
+                    también como arreglador, orquestador y compositor. Entre mis
+                    experiencias destacadas se encuentra la dirección de la orquesta en
+                    obras emblemáticas, como la zarzuela paraguaya <em>María Pacuri</em>,
+                    y la coordinación de proyectos musicales en el Teatro Municipal
+                    Ignacio A. Pane. Tuve el honor de trabajar en los arreglos orquestales del <a
+                        href="https://youtube.com/playlist?list=PLwyUtCKRMxQGeKzDvpB1dGNUgneqX6p_B&si=FX2ZYxR9HoIYb4zJ">Proyecto
+                        Beatles Sinfónico en el año 2024, con 13 transcripciones de algunas icónicas piezas de la Banda
+                        de Liverpool.</a>
+                </p>
+                <p>
+                    Además de mi pasión por la música, soy apacionado de la investigación
+                    en tecnología, desarrollando competencias en lenguajes de programación
+                    como PHP, Python, C, C#, Java y trabajando en el desarrollo de software para distintas empresas.
+                    Esta
+                    combinación de habilidades artísticas y tecnológicas me permite
+                    abordar los desafíos desde una perspectiva multidisciplinaria,
+                    promoviendo siempre la innovación y la excelencia en la formación de mis estudiantes.
+                </p>
+                <p>El camino de la música es una travesía extraordinaria que nos invita a desafiar
+                    nuestros límites y descubrir el potencial artístico que habita en cada uno de nosotros. En el
+                    Instituto Superior Nacional de Música, no solo estamos aprendiendo técnicas o interpretando notas,
+                    estamos construyendo un lenguaje universal que conecta emociones, historias y sueños. Cada clase,
+                    cada exposición, cada tarea, cada desafío que enfrentemos juntos, será un escalón más hacia nuestra
+                    transformación
+                    como músicos y como seres humanos. Les invito a sumergirse con pasión en este viaje, a atreverse a
+                    explorar sus potencialidades, a equivocarse con valentía y a reinventarse constantemente. Nuestra
+                    meta no es solo dominar un instrumento, sino ser creadores de experiencias que trascienden lo
+                    musical y nos conecten profundamente con el mundo que nos rodea.</p>
+            </div>
         </div>
-        <p>En el segundo campo se encuentran viviendo en comunión diferentes vivencias culturales, en unión de los grupos de clase media y proletaria; los primeros con exigencia de música más calificada en cuanto a su contenido técnico, y los segundos con canciones que resaltan las tendencias más populares de exaltación de la naturaleza, los romances y la cotidianeidad más ingenua de este pueblo.</p>
-        
-        <p>Estas y muchas otras versiones nos demuestran que los nativos, igual que los Aztecas, Mayas, Quichés, Incas y otras civilizaciones primitivas, tuvieron riquísimas formas de expresión musical y notamos que en varios países latinoamericanos hasta hoy se presentan núcleos de poblaciones autóctonas que ocupan un ámbito geográfico determinado, que poseen una lengua y una religión especial, así como costumbres características como sobrevivencia histórica de nuestro continente. Estas músicas, que se transmiten a través del tiempo de generación a generación, ayudan a los que empíricamente abrazan la especialidad y logran captar intuitivamente para la práctica oral e instrumental, ayudándoles a combinar la afinación de los instrumentos, recursos expresivos diversos en la voz, el acompañamiento de temas fundamentalmente sin desarrollo (temas tradicionales de motivos populares folklóricos), el "purahéi asy", el "valseado", el "rasguido doble" y las "polcas" de tiempo lento como "Marâpa reikuaase", "Ndarekói la culpa", "Mama cumandá" y otros. De este juicio surge que la etnomúsica abarca todo el campo de la música de transmisión oral, ya sea indígena y autóctona, o civilizada y de influencia cultural, debiéndose investigar y lograr ideas sobre la música más primitiva y simple, como la más compleja, adecuándola dentro de la transmisión oral. O sea, los aspectos que estén separados en los tres conocidos campos de: música indígena, música folklórica y música popular. </p>
-        
-        <hr class="section-divider">
-        
-        <h2>UTILIDAD PRÁCTICA</h2>
-        
-        <p>La música cumple dos funciones, una espiritual y otra mágica. En lo espiritual, fascina en lo religioso y en lo pagano. En el aspecto religioso, en casi todos los pueblos y aldeas de Latinoamérica, como en los nuestros, se practica el canto colectivamente en los momentos religiosos: misas, procesiones, rogativas de los estacioneros, y las danzas rituales de profundas invocaciones raciales de los indígenas de las distintas parcialidades.</p>
-        <p>En lo mágico, el hombre se sirve de la música para impetrar diferentes tipos de ayuda. En la tradicional "serenata" para rendirse ante la amada; para llamar a la guerra; para que llueva; para que deje de llover; para la fiesta de la cosecha; como terapia; para adquirir las cualidades del animal totem, y hasta para acompañar al difunto, el "jejuy" y el "jejuvukue jera", el purahei asy o "carretaguy", y los cantos en los compromisos matrimoniales costumbristas.</p>
-        <h2>UTILIDAD PRÁCTICA EN LO ESPIRITUAL</h2>
-        
-        <p>La música cumple dos funciones, una espiritual y otra mágica. En lo espiritual, fascina en lo religioso y en lo pagano. En el aspecto religioso, en casi todos los pueblos y aldeas de Latinoamérica, como en los nuestros, se practica el canto colectivamente en los momentos religiosos: misas, procesiones, rogativas de los estacioneros, y las danzas rituales de profundas invocaciones raciales de los indígenas de las distintas parcialidades.</p>
-        <p>En lo mágico, el hombre se sirve de la música para impetrar diferentes tipos de ayuda. En la tradicional "serenata" para rendirse ante la amada; para llamar a la guerra; para que llueva; para que deje de llover; para la fiesta de la cosecha; como terapia; para adquirir las cualidades del animal totem, y hasta para acompañar al difunto, el "jejuy" y el "jejuvukue jera", el purahei asy o "carretaguy", y los cantos en los compromisos matrimoniales costumbristas.</p>
-        
-        <h2>QUÉ ES LA MÚSICA POPULAR</h2>
-        
-        <p>Si se enfoca de una forma amplia el concepto de música popular, puede abarcar el campo de lo folklórico, aunque por ahora sólo voy a exponer mi concepto exclusivamente con relación a la música popular, ya que la misma ocupa, en gran parte, un ámbito muy especializado en lo profesional debido a la moderna técnica de escritura, ya computarizada en algunos casos, junto a la mejor capacidad creadora de los músicos actuales (mayor posibilidades de acción, trabajo, difusión, etc., y la constante renovación existente, en este campo profesional. En él se enmarcan las actividades que se generan en el teatro, la radio, la televisión y otros medios de comunicación, como los "jingles", los "playback", etc. Presentándose en la vida de convivencia dos tipos de música popular: aquella que se enmarca en el pasado, o sea aquellas músicas de carácter popular con raíz tradicional, y la que se nutre casi exclusivamente de su proyección, tanto en el presente como en el futuro, o sea, la música popular moderna.</p>
-        <p>No podemos dejar de observar un aspecto nuevo que se ha manifestado ampliamente en el ámbito de la música popular. Desde hace algunos años, desde la aparición de los instrumentos electrónicos como la guitarra eléctrica, el órgano de uso tecladístico múltiple, el bajo eléctrico y los accesorios de percusion, más un nuevo estilo en el canto y el baile, inicialmente con la balada, el rock and rol y demás ritmos, han venido a establecer un nuevo esquema de sonoridad moderna que, pese a lo que se creyó en el primer momento, lejos de esfumarse o extinguirse, se ha afincado definitivamente para dar cabida a una efectiva renovación de la música popular. A veces gran parte de ellas es improvisada y aprendida también oralmente, y es presentada en partituras escritas como tradicionalmente se viene haciendo. Pero en todo caso lo que quiero señalar es el hecho de que, ante la aparición y permanencia de una nueva música popular como éstas, aquélla, la que fue moderna hace 40 ó 50 años, el Samba, la Rumba, el Bolero, el Tango, el Foxtrot, etc., no han perdido vigencia y se las sigue interpretando, y están pasando ya a la categoría de lo tradicional, o sea, empiezan a adquirir la condición de folklore. Es éste un caso normal de aclimatación social, que al hacerse costumbre pasa inadvertido para la gran mayoría de los habitantes, corolario que debemos reconocer como expresión real del periodo de transición que vamos viviendo.</p>
 
-        <h2>PROCESOS FUNCIONALES DE LA MÚSICA</h2>
-        
-        <p>De acuerdo a los datos provenientes de los antiguos elementos que nos acercan a los orígenes de este fenómeno de la naturaleza, es un hecho vital; algo no muy diferente de las nubes y las flores, de la luz y las sombras - compañero inseparable- a quien jamás se nos ocurre preguntar por su origen.</p>
-        
-        <div class="quote">
-            ¿Quién, en efecto, al instante de escuchar una melodía o un ritmo cualquiera piensa que detrás de esa cascada de notas late un ser humano, con sus penas, fatigas y alegrías?
+        <!-- Tabla de Materias -->
+        <h2>Mis Materias</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Materia</th>
+                    <th>Horario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Violoncello Introductorio</td>
+                    <td>15:20 a 16:00 hs</td>
+                    <td><button class="btn" onclick="openModal('modalCello')">Ver Alumnos</button></td>
+                </tr>
+                <tr>
+                    <td>Introducción a la Filosofía</td>
+                    <td>16:00 a 17:00 hs</td>
+                    <td><button class="btn" onclick="openModal('modalFilosofia')">Ver Alumnos</button></td>
+                </tr>
+                <tr>
+                    <td>Historia de la Música Paraguaya</td>
+                    <td>17:00 a 18:00 hs</td>
+                    <td><button class="btn" onclick="openModal('modalHistoria')">Ver Alumnos</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Modales para listas de alumnos -->
+        <div id="modalCello" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modalCello')">&times;</span>
+                <h3>Alumnos de Violoncello Introductorio</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PARK</td>
+                            <td>ADAM JOSHUA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <p>Contar la historia de la música es, por lo tanto, contar la historia de las venturas espirituales que los hombres han vivido desde siempre; es descender hasta el secreto de los tiempos; es volver a encontrar cada vez a la humana criatura con su felicidad y su dolor, con sus ambiciones y esperanzas. Capítulos maravillosos en los cuales el sonido se revela como una íntima confesión del individuo en unos casos, y en otros, como el clamor majestuoso y dramático de todo un pueblo o de una colectividad racial.</p>
-
-        <p>El factor condicionante de siempre fue la melodía, que, como es sabido, se basa en la altura e intervalos, a partir de los de mínima distancia como los cuartos de tono. Observamos que con la aparición de los aparatos electrónicos sonoros quedaron aniquiladas las barreras de antaño, comprendidas entre sonido y ruido, llevando al concepto de lo musical un mayor campo de acción. Gracias a esta invención se ha establecido que ciertos ruidos de alturas diferentes pueden adquirir categoría musical no sólo por su calidad de altura, sino por la de su comparación con otras calidades como la del timbre (parámetro), o bien por su específica condición rítmica.</p>
-        
-        
-        
-        <hr class="section-divider">
-        
-        <h2>CANTURREOS Y EXCLAMACIONES</h2>
-        
-        <p>Las expresiones no cantadas, como el canturreo que se emite en forma desprevenida, a veces sin sentido rítmico, difieren de las exclamaciones sobre ciertos cantos y bailes que, en forma de estímulo, son preferidos por los bailarines o por los bueyes que necesitan ser guiados rítmicamente. En estos casos, el carácter musical del grito o de las exclamaciones depende de su unión rítmica cercana al canto, pues simples gritos, chasquidos y otros ruidos funcionales de trabajo pueden no tener relación con la música.</p>
-        
-        <h2>EL RECITADO</h2>
-        
-        <p>Es muy común también en nuestro país observar la inclinación hacia este hecho de expresión imprecisa en su altura. Basta una reunión con participación de amigos para que se apronten y, acompañados por interpretaciones de guitarras y algunos instrumentos, rivalizan poemas de distintos autores. El recitado se ejercita con expresiones vocales individuales, como en determinados cantos colectivos indígenas de los Maka, Mby'a guaraní, Tavyterã, etc., en sus rituales, como igualmente en los cantos folklóricos de función recreativa. El recitado es diferente del simple grito o de la exclamación, en que se utilizan frases rítmico-textuales de corta o larga extensión, y a veces hasta periodos rítmicos recitados.</p>
-        
-        <h2>VOCES ATONALES</h2>
-        
-        <p>Un fenómeno cotidiano es la actitud de emitir la voz sobre canciones y melodías determinadas llevando el ritmo y el verso fuera de la tonalidad que se escucha y le contagia. Esta característica se denomina con el vocablo "cantilación", aceptado por numerosos historiadores de la música y musicólogos, que expresa una manera particular de cantar con alturas imprecisas.</p>
-        
-        <div class="quote">
-            La cantilación tiene características muy especiales, porque no pertenece a un solo tipo de ambiente ni a una sola función.
+        <div id="modalFilosofia" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modalFilosofia')">&times;</span>
+                <h3>Alumnos de Introducción a la Filosofía</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>COLMAN MARTINEZ</td>
+                            <td>CARMINA ARACELO</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
-        <p>La falta de precisión en el canto dentro de esta manera expresiva no significa incapacidad musical individual o colectiva para cantar afinadamente, ya que si se tiene capacidad de adecuarse al ritmo exigido en cada caso, demuestra que se trata de un fenómeno cultural bien determinado.</p>
-        <p>Cuando el compositor necesita expresar su creación con la cantilación mencionada, debe utilizar signos especiales que indican cuando un sonido es ligeramente más alto o más bajo que lo escrito. Algunos autores utilizan para el sonido más alto o más bajo signos especialmente concebidos, haciendo en cada caso llamadas explicativas con indicadores (asterisco).</p>
-        <p>La explicación correcta para el recitado y la cantilación consiste en que la cantilación es música de entonación imprecisa, mientras que el recitado está más cerca del lenguaje amelódico y del simple grito.</p>
 
-        <hr class="section-divider">
-        
-        <h2>LA MELODÍA</h2>
-        
-        <p>Si la melodía es la sucesión de sonidos ordenada de manera que presente un sentido musical que satisfaga al oído y a la inteligencia y produzca deleite dentro de la perspectiva de la etnomúsica, ofrece características diferentes de las melodías utilizadas por los músicos de técnica académica y, por tanto, el cantar o ejecutar étnico es enriquecido con los "glisando", "falsetes", "impresión de alturas", "fraseos arrítmicos", "armónicos audibles", etc., características que la hacen llamativamente original, a veces muy difícil de traducir en impresión gráfica. Antiguamente, cuando la comunicación musical del exterior era nulo a nuestros oídos determinando un ambiente donde la gente nace, vive y muere sin algún contacto exterior, donde los músicos y los oyentes se adaptan a tales maneras particulares, transmitiendo esa constante a las nuevas generaciones; hecho natural que se relaciona con un hábitat definido, en el que conjugan, como ocurre en el ámbito latinoamericano, aspectos con sentidos autóctonos, foráneos o mezclados. Al recibir audiovisualmente posibilidades de contactos, aunque el hábitat permanezca igual o casi inalterado en lo material, esa cultura sufre trascendentales cambios.</p>
-        <p>Como trataremos los fenómenos sonoros con un criterio cultural, abarcando algunos grupos sociales americanos, consideraremos aquellos aspectos más simples y perceptibles, para pasar posteriormente a los más complejos.</p>
-        
-        <h2>PARTICULARIDADES DE ALTURAS</h2>
-        
-        <p>Una experiencia notablemente novedosa es la que pude extraer de los cantos rituales de la parcialidad indígena "Mby'a guaraní", en cuyos cantos corales, al unísono, alternan con una fracción cantada en dúo de quinta justa, con una precisión extraordinaria. También podemos hacer notar el canto "Purahei asy" llamado también "jahe'o" (llanto) de los intérpretes de los conjuntos campesinos que, hasta nuestros días, producen sonidos que no llegan a la altura o las pasan a propósito, para finalizar con un portamento descendente muy característico. Existen también los grupos corales, de los llamados "estacioneros", que cantan en los calvarios y en las Iglesias durante La Semana Santa, arrastrando hacia el descanso (movimiento de suspensión sobre la mediante), del motivo o la frase, donde con unción sostiene el sonido hasta deformarlo por la descolocación de la altura.</p>
-
-        <hr class="section-divider">
-        
-        <h2>EL RITMO NORMAL</h2>
-        
-        <p>El ritmo, en el campo de la música, es una proporción simétrica de tiempos y débiles, o simplemente, "una manera de acentuación". Según Curt Sachs, existen más de 50 definiciones del ritmo, desde aquellas que la definen de una manera poética, hasta las que pretenden hacerla sobre criterios estrictamente científicos. Es mejor definirlo al ritmo como una "manera de acentuación", ya que evidentemente es el acento el que determina el ritmo, el que lo organiza ordenadamente. En una agrupación de notas concernientes a los valores del compás : si se cambia de sitio el acento , el ritmo cambia . Por ejemplo : en un compás de tres por cuatro , se acentúa la primera y la cuarta corchea : el ritmo se convierte en dos tiempos compuestos sobre un ritmo acompañante de tres , característica de muchas músicas de los más diversos países latinoamericanos , y por otra parte , dicho sea de paso , muchos autores populares de nuestro país lo utilizan para escribir erróneamente nuestra música nativa.</p>
-        <p>El " pie rítmico " : Es la separación de una unidad de tiempo en dos o tres partes iguales como ser : Dos corcheas ( binario ) , tres corcheas ( ternario ).</p>
-        <p>El ritmo proveniente de las acentuaciones logra su característica al ajustarse al compás , y puede ser : uniforme , sincopado , alterno , a contratiempo , contrapuesto ( birritmia ) , múltiple ( polirritmia ) y libre.</p>
-        
-        <h2>UNIFORME</h2>
-        
-        <p>Es el que se ejecuta dentro de un mismo pie rítmico sin cambiar su acento, aunque haya variante por aumento o disminución de figuras.</p>
-        
-        <h2>SÍNCOPA Y CONTRATIEMPO</h2>
-        
-        <p>La " síncopa " , como elemento de una melodía , se basa en un contraste de acentos , como ser : la que corresponde al acento leve desplazado al tiempo fuerte del compás , o la parte fuerte de un tiempo y la que reposa en la nota anterior al tiempo y se desplaza menguada al tiempo fuerte del siguiente compás . Esta es la característica genérica de la guarania y de la polca , que sin esta peculiaridad en la escritura e interpretación , deforma el sentido de la expresión autóctona.</p>
-        
-        <div class="quote">
-            La melodía de la música paraguaya es arrítmica por naturaleza, y requiere una articulación a destiempo para lograr una perfecta identificación genérica.
+        <div id="modalHistoria" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('modalHistoria')">&times;</span>
+                <h3>Alumnos de Historia de la Música Paraguaya</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Apellidos</th>
+                            <th>Nombres</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CABALLERO MARTÍNEZ</td>
+                            <td>LEONARDO FABIO</td>
+                        </tr>
+                        <tr>
+                            <td>CRUZ VALDEZ</td>
+                            <td>SANTIAGO JOSUE</td>
+                        </tr>
+                        <tr>
+                            <td>MOLEDA BENÍTEZ</td>
+                            <td>AGUSTÍN</td>
+                        </tr>
+                        <tr>
+                            <td>PERALTA TROCHE</td>
+                            <td>GILBERTO ZACHARIEL</td>
+                        </tr>
+                        <tr>
+                            <td>MENDOZA CANTERO</td>
+                            <td>SEBASTIAN</td>
+                        </tr>
+                        <tr>
+                            <td>MARTÍNEZ NUÑEZ</td>
+                            <td>KARINA ELIZABET</td>
+                        </tr>
+                        <tr>
+                            <td>DOMANICZKY BALLASCH</td>
+                            <td>IVÁN LORENZO</td>
+                        </tr>
+                        <tr>
+                            <td>IBAÑEZ ESCURRA</td>
+                            <td>JAQUELINE</td>
+                        </tr>
+                        <tr>
+                            <td>RODRIGUEZ GALEANO</td>
+                            <td>ANGEL GABRIEL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <p>Este contraste en los acentos hace que el contratiempo también sea una acentuación desplazada, que se manifiesta por el contraste con los acentos de los tiempos fuertes o de las unidades de tiempo dentro de cada compás. Sobre esta singularidad fisica nos extenderemos más adelante.</p>
-        
-        <h2>RITMO ALTERNO O SESQUIÁLTERO</h2>
-        
-        <p>Ritmo alterno o sesquiáltero: Es la combinación de dos pies rítmicos diferentes, como el binario y el ternario. En el área sudamericana la sucesión más común es la de pie ternario. En algunos casos, en obstinatos continuos, y en otros casos con variantes en equivalencia de valores.</p>
-        <p>Esta característica difiere de la música paraguaya que, aparte de la síncopa menguada de su giro melódico, en el ritmo del kyre'ỹ es común la mezcla del pie binario y ternario, sucesión llamada como ritmo sesquiáltero. Este estilo se destaca en las obras orquestales de los autores más modernos como las de José Asunción Flores, Emilio Biggi, Florentín Giménez, Francisco Alvarenga y otros. Quizás la explicación más simple y correcta sea la prosecución del "cuatrillo" con el "tresillo" por cada compás en forma alternada; variante rítmica que aflora de las diversas posibilidades vernáculas paraguayas.</p>
-        
-        <h2>RITMO A CONTRATIEMPO</h2>
-        
-        <p>La música paraguaya, dentro de su aire melódico con acento arrítmico, ofrece combinaciones particulares que, graciosamente en su agreste columpiar motívico, se solaza libremente sobre el ritmo característico que lo acompaña con sus variedades de adecuación estructural. El denominador común en todos estos casos es la fluctuación constante entre el ritmo y la melodía contrastante.</p>
-        
-        <h2>RITMO CONTRAPUESTO (BIRRIMIA)</h2>
-        
-        <p>De la misma manera que el término diafonía, que se utiliza para denominar a dos voces, y polifonía, para más de dos, la birritmia en contraposición de la polirritmia se justifica mejor para el caso de nuestro ritmo acompañante, que en forma sincrónica se produce sucesivamente. Esta combinación del bajo y otros elementos debe considerarse como un todo característico, sin fragmentación alguna. La estructura birrítmica es utilizada desde tiempo remoto en la música académica; y en la nuestra configura una muestra de estilo que verticalmente le sujeta a medida , cuando al menos , se efectúan constantes cambios de compás.</p>
-        
+
+        <!-- Clases Programadas -->
+        <h2>Clases Programadas</h2>
+
+        <div class="schedule-card">
+            <h3 class="schedule-date">Jueves 27 de Marzo de 2025</h3>
+            <p>Contenido: Introducción a la música indígena paraguaya. Instrumentos tradicionales.</p>
+            <a href="25_03_25.html" class="schedule-link">Ver detalles de la clase →</a>
+        </div>
+
+        <div class="schedule-card">
+            <h3 class="schedule-date">Jueves 3 de Abril de 2025</h3>
+            <p>Contenido: La música durante el periodo colonial. Transición cultural.</p>
+            <a href="25_04_03.html" class="schedule-link">Ver detalles de la clase →</a>
+        </div>
+
+        <div class="schedule-card">
+            <h3 class="schedule-date">Jueves 10 de Abril de 2025</h3>
+            <p>Contenido: Las misiones jesuíticas y su aporte musical.</p>
+            <a href="25_04_10.html" class="schedule-link">Ver detalles de la clase →</a>
+        </div>
+
+        <!-- Plan de Clases (contenido anterior) -->
+        <div class="section-divider"></div>
+
+        <h2>Plan Anual de Clases</h2>
+        <p class="intro">Distribución mensual de contenidos para el curso de Historia de la Música Paraguaya</p>
+
+        <!-- Aquí iría el resto del plan de clases que ya tenías -->
+        <!-- ... -->
+
         <div class="quote">
-            La estructura birrítmica es utilizada desde tiempo remoto en la música académica; y en la nuestra configura una muestra de estilo que verticalmente le sujeta a medida, cuando al menos, se efectúan constantes cambios de compás.
+            <p>"La música paraguaya es el alma sonora de un pueblo que ha sabido conservar su identidad a través de los
+                siglos, mezclando tradiciones indígenas con influencias europeas para crear algo único y auténtico."</p>
         </div>
     </div>
+
+    <script>
+        // Funciones para manejar los modales
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Cerrar modal al hacer click fuera del contenido
+        window.onclick = function (event) {
+            if (event.target.className === "modal") {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
 </body>
+
 </html>
