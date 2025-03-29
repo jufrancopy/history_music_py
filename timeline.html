@@ -8,255 +8,303 @@
     <style>
         :root {
             --primary: #D52B1E;
-            /* Rojo Paraguay */
             --secondary: #005F87;
-            /* Azul histórico */
             --light: #F5F0E6;
-            /* Beige claro */
-            --dark: #333333;
+            --dark: #333;
+            --transition-speed: 0.4s;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
+            font-family: 'Arial', sans-serif;
+            background: var(--light);
             margin: 0;
-            padding: 0;
+            padding: 10px;
             overflow-x: hidden;
+            font-size: 14px;
         }
 
         .timeline-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
-
-        .timeline-header {
-            text-align: center;
-            margin-bottom: 40px;
-            width: 100%;
-        }
-
-        .timeline-header h1 {
-            color: var(--primary);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .timeline-header p {
-            color: var(--secondary);
-            font-size: 1.2rem;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-        }
-
-        .timeline {
             position: relative;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
+            padding: 20px 0;
         }
 
-        .timeline::after {
-            content: '';
+        .timeline-line {
             position: absolute;
-            width: 6px;
-            background-color: var(--primary);
+            left: 50%;
+            width: 3px;
+            background: var(--primary);
             top: 0;
             bottom: 0;
-            left: 50%;
-            margin-left: -3px;
-            border-radius: 3px;
+            transform: translateX(-50%);
+            z-index: 1;
         }
 
+        /* Nodo de año (principal) - Más pequeño */
+        .year-node {
+            position: absolute;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--secondary);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            z-index: 15;
+            font-size: 1em;
+        }
+
+        .year-node:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Nodo de mes (secundario) - Más pequeño */
+        .month-node {
+            position: absolute;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border: 2px solid var(--secondary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+            z-index: 12;
+            font-size: 0.8em;
+        }
+
+        .month-node:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Nodo de día (terciario) - Más pequeño */
+        .day-node {
+            position: absolute;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            background: var(--light);
+            border: 1.5px solid var(--dark);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            z-index: 11;
+            font-size: 0.7em;
+        }
+
+        .day-node:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: var(--dark);
+            color: white;
+        }
+
+        /* Tarjetas más compactas */
         .timeline-card {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-            margin-bottom: 30px;
+            width: 42%;
+            background: white;
+            border-radius: 12px;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            position: absolute;
+            margin: 0;
+            z-index: 10;
+            overflow: hidden;
         }
 
         .timeline-card.visible {
             opacity: 1;
-            transform: translateY(0);
         }
 
-        .timeline-card:nth-child(odd) {
-            left: 0;
+        .timeline-card.left {
+            right: 52%;
         }
 
-        .timeline-card:nth-child(even) {
-            left: 50%;
+        .timeline-card.right {
+            left: 52%;
         }
 
-        .timeline-card::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background-color: white;
-            border: 4px solid var(--primary);
+        .timeline-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Encabezado de tarjeta más compacto */
+        .card-header {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Imagen más pequeña */
+        .author-image {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            top: 15px;
-            z-index: 1;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
 
-        .timeline-card:nth-child(odd)::after {
-            right: -17px;
-        }
-
-        .timeline-card:nth-child(even)::after {
-            left: -17px;
+        /* Texto más compacto */
+        .author-name {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.1em;
+            line-height: 1.2;
+            font-weight: 600;
+            max-width: calc(100% - 65px);
         }
 
         .card-content {
-            padding: 20px 30px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            position: relative;
-            border-left: 5px solid var(--secondary);
+            max-height: 0;
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
+            padding: 0 15px;
+            font-size: 0.9em;
         }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .card-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            margin-right: 20px;
-        }
-
-        .card-title h2 {
-            color: var(--primary);
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .card-title p {
-            color: var(--secondary);
-            margin: 5px 0 0;
-            font-style: italic;
-        }
-
-        .card-body {
-            margin-bottom: 15px;
-        }
-
-        .card-dates {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .card-bio {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .card-history {
-            background-color: rgba(0, 95, 135, 0.1);
+        .card-content.expanded {
             padding: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        /* Listas más compactas */
+        .obras-list {
+            background: rgba(0, 95, 135, 0.05);
+            padding: 10px;
             border-radius: 8px;
-            margin-top: 15px;
-        }
-
-        .card-history h3 {
-            color: var(--secondary);
-            margin-top: 0;
-            border-bottom: 1px dashed var(--secondary);
-            padding-bottom: 5px;
-        }
-
-        .card-history ul {
-            padding-left: 20px;
-        }
-
-        .card-history li {
-            margin-bottom: 8px;
-        }
-
-        .card-footer {
-            font-size: 0.9rem;
-            color: #666;
-            text-align: right;
             margin-top: 10px;
+            border-left: 2px solid var(--secondary);
         }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-            gap: 20px;
+        .obras-list h3 {
+            color: var(--secondary);
+            margin: 0 0 8px 0;
+            font-size: 1em;
         }
 
-        .nav-button {
-            padding: 10px 25px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        .obras-list ul {
+            padding-left: 18px;
+            margin: 0;
         }
 
-        .nav-button:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
+        .obras-list li {
+            margin-bottom: 6px;
+            line-height: 1.3;
         }
 
-        .nav-button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            transform: none;
+        .historical-context {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(213, 43, 30, 0.3);
         }
 
-        @media screen and (max-width: 768px) {
-            .timeline::after {
-                left: 31px;
+        .historical-context h4 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 0.95em;
+        }
+
+        .expand-indicator {
+            display: block;
+            text-align: center;
+            padding: 6px;
+            font-size: 11px;
+            color: var(--secondary);
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Grupo de año */
+        .year-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        /* Versión escritorio */
+        @media (min-width: 992px) {
+            .timeline-card {
+                width: 38%;
+            }
+
+            .timeline-card.left {
+                right: 54%;
+            }
+
+            .timeline-card.right {
+                left: 54%;
+            }
+        }
+
+        /* Versión móvil */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .timeline-line {
+                left: 25px;
+                width: 2px;
             }
 
             .timeline-card {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
+                width: calc(100% - 60px);
+                left: 50px !important;
+                right: auto !important;
             }
 
-            .timeline-card:nth-child(even) {
-                left: 0;
+            .year-node,
+            .month-node,
+            .day-node {
+                left: 25px;
             }
 
-            .timeline-card::after {
-                left: 18px;
+            .year-node {
+                width: 45px;
+                height: 45px;
+                font-size: 0.9em;
             }
 
-            .timeline-card:nth-child(odd)::after,
-            .timeline-card:nth-child(even)::after {
-                left: 18px;
+            .month-node {
+                width: 35px;
+                height: 35px;
+                font-size: 0.75em;
             }
 
-            .card-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .card-image {
-                margin-bottom: 15px;
+            .day-node {
+                width: 28px;
+                height: 28px;
+                font-size: 0.65em;
             }
         }
     </style>
@@ -264,247 +312,396 @@
 
 <body>
     <div class="timeline-container">
-        <div class="timeline-header">
-            <h1>Historia de la Música Paraguaya</h1>
-            <p>Un recorrido por los compositores que definieron nuestra identidad musical</p>
-        </div>
-
-        <div class="timeline">
-            <!-- José Asunción Flores -->
-            <div class="timeline-card">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Jos%C3%A9_Asunci%C3%B3n_Flores.jpg"
-                            alt="José Asunción Flores" class="card-image">
-                        <div class="card-title">
-                            <h2>José Asunción Flores</h2>
-                            <p>Creador de la Guarania</p>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="card-dates">
-                            <span>Nacimiento: 27/08/1904</span>
-                            <span>Fallecimiento: 16/05/1972</span>
-                        </div>
-
-                        <div class="card-bio">
-                            <p>Revolucionó la música paraguaya con la creación de la Guarania en 1925. De origen
-                                humilde, sus obras como "India" y "Ñande Aramboha" se convirtieron en símbolos
-                                nacionales. Exiliado durante la dictadura de Stroessner por sus ideas políticas.</p>
-                        </div>
-
-                        <div class="card-history">
-                            <h3>Contexto Histórico</h3>
-                            <ul>
-                                <li>1929: Gran Depresión económica</li>
-                                <li>1932-1935: Guerra del Chaco</li>
-                                <li>1954-1989: Dictadura de Stroessner</li>
-                                <li>1960: Movimientos de liberación nacional</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <p>Publicado por: Julio Franco | Revisión: 15/03/2023</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Agustín Barrios Mangoré -->
-            <div class="timeline-card">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Agustin_Barrios.jpg/220px-Agustin_Barrios.jpg"
-                            alt="Agustín Barrios" class="card-image">
-                        <div class="card-title">
-                            <h2>Agustín Barrios Mangoré</h2>
-                            <p>El Paganini de la guitarra</p>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="card-dates">
-                            <span>Nacimiento: 05/05/1885</span>
-                            <span>Fallecimiento: 07/08/1944</span>
-                        </div>
-
-                        <div class="card-bio">
-                            <p>Considerado uno de los más grandes guitarristas clásicos del siglo XX. Compuso más de 300
-                                obras, incluyendo "La Catedral". Adoptó el nombre artístico "Nitsuga Mangoré" (Nitsuga =
-                                Agustín al revés). Realizó giras por América y Europa.</p>
-                        </div>
-
-                        <div class="card-history">
-                            <h3>Contexto Histórico</h3>
-                            <ul>
-                                <li>1914-1918: Primera Guerra Mundial</li>
-                                <li>1929: Crack de Wall Street</li>
-                                <li>1932-1935: Guerra del Chaco</li>
-                                <li>1939-1945: Segunda Guerra Mundial</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <p>Publicado por: Julio Franco | Revisión: 22/03/2023</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Herminio Giménez -->
-            <div class="timeline-card">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Herminio_gimenez.jpg/220px-Herminio_gimenez.jpg"
-                            alt="Herminio Giménez" class="card-image">
-                        <div class="card-title">
-                            <h2>Herminio Giménez</h2>
-                            <p>Maestro de la música popular</p>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="card-dates">
-                            <span>Nacimiento: 19/01/1905</span>
-                            <span>Fallecimiento: 04/01/1991</span>
-                        </div>
-
-                        <div class="card-bio">
-                            <p>Director de orquesta y compositor de más de 1,000 obras. Popularizó la música paraguaya
-                                en el exterior con su orquesta. Entre sus obras destacan "Che vallemi Paraguay", "Mi
-                                dicha lejana" y "Mis noches sin ti".</p>
-                        </div>
-
-                        <div class="card-history">
-                            <h3>Contexto Histórico</h3>
-                            <ul>
-                                <li>1930: Revolución en Paraguay</li>
-                                <li>1947: Guerra Civil Paraguaya</li>
-                                <li>1954: Golpe de Estado de Stroessner</li>
-                                <li>1989: Caída de Stroessner</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <p>Publicado por: Julio Franco | Revisión: 10/04/2023</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Luis Alberto del Paraná -->
-            <div class="timeline-card">
-                <div class="card-content">
-                    <div class="card-header">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Luisalbertodelparana.jpg/220px-Luisalbertodelparana.jpg"
-                            alt="Luis Alberto del Paraná" class="card-image">
-                        <div class="card-title">
-                            <h2>Luis Alberto del Paraná</h2>
-                            <p>El embajador de la música paraguaya</p>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="card-dates">
-                            <span>Nacimiento: 21/06/1926</span>
-                            <span>Fallecimiento: 15/09/1974</span>
-                        </div>
-
-                        <div class="card-bio">
-                            <p>Uno de los artistas paraguayos más internacionales. Vendió más de 30 millones de discos.
-                                Formó el trío "Los Paraguayos" que llevó la música paraguaya a más de 60 países. Grabó
-                                más de 1,200 canciones en 12 idiomas.</p>
-                        </div>
-
-                        <div class="card-history">
-                            <h3>Contexto Histórico</h3>
-                            <ul>
-                                <li>1945: Fin de la Segunda Guerra</li>
-                                <li>1950s: Boom económico mundial</li>
-                                <li>1960s: Movimientos juveniles</li>
-                                <li>1973: Crisis del petróleo</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="card-footer">
-                        <p>Publicado por: Julio Franco | Revisión: 05/05/2023</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="nav-buttons">
-            <button id="prevBtn" class="nav-button" disabled>Anterior</button>
-            <button id="nextBtn" class="nav-button">Siguiente</button>
-        </div>
+        <div class="timeline-line"></div>
+        <div id="timeline-content"></div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const cards = document.querySelectorAll('.timeline-card');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
+        // Datos de autores
+        const autores = [
+            {
+                nombre: "Agustín Barrios Mangoré",
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Agustin_Barrios.jpg",
+                nacimiento: "1885-05-05",
+                fallecimiento: "1944-08-07",
+                obras: ["La Catedral (1921)", "Un Sueño en la Floresta (1918)", "Vals Op. 8 No. 4 (1910)", "Mazurka Apasionata (1930)"],
+                contexto: ["1885: Nace en San Juan Bautista, Misiones", "1910: Primeras giras internacionales", "1932: Regresa a Paraguay durante la Guerra del Chaco"]
+            },
+            {
+                nombre: "José Asunción Flores",
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/5/5a/Jos%C3%A9_Asunci%C3%B3n_Flores.jpg",
+                nacimiento: "1904-08-27",
+                fallecimiento: "1972-05-16",
+                obras: ["India (1944)", "Ñande Aramboha (1925)", "Kerasy (1950)", "Panambi Vera (1946)"],
+                contexto: ["1904: Nace en el barrio La Chacarita, Asunción", "1925: Crea el género Guarania", "1944: Compone su obra maestra 'India'", "1954: Exilio político durante la dictadura"]
+            },
+            {
+                nombre: "Emiliano R. Fernández",
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Emilianorfernandez.jpg/220px-Emilianorfernandez.jpg",
+                nacimiento: "1885-01-10",
+                fallecimiento: "1949-09-12",
+                obras: ["13 de Tuyutí (1924)", "Che Lucero Aguai (1920)", "Rojas Silva Poriajhu (1928)"],
+                contexto: ["1885: Nace en Guarambaré", "1924: Sus poemas se hacen populares durante la guerra", "1936: Guerra Civil Paraguaya"]
+            },
+            {
+                nombre: "Herminio Giménez",
+                imagen: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Herminio_Gimenez.jpg/220px-Herminio_Gimenez.jpg",
+                nacimiento: "1904-08-15",
+                fallecimiento: "1991-12-10",
+                obras: ["Nde Rendape Ayu (1950)", "Musiqueada Che Barrio (1940)", "Recuerdos de Ypacaraí (1960)"],
+                contexto: ["1904: Nace en Eusebio Ayala", "1928: Funda su primera orquesta", "1932: Compone marchas para la Guerra del Chaco"]
+            }
+        ];
+
+        // Variables de control
+        let autoScrollInterval;
+        let isUserInteracting = false;
+        let cardHeights = new Map();
+        const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+        // Función para medir la altura del contenido
+        function medirAlturaContenido(contentElement) {
+            const clone = contentElement.cloneNode(true);
+            clone.style.position = 'absolute';
+            clone.style.visibility = 'hidden';
+            clone.style.maxHeight = 'none';
+            clone.style.height = 'auto';
+            clone.style.display = 'block';
+            clone.style.padding = '15px';
+            clone.classList.add('expanded');
+
+            document.body.appendChild(clone);
+            const height = clone.offsetHeight;
+            document.body.removeChild(clone);
+
+            return height;
+        }
+
+        // Función para posicionar tarjetas y nodos
+        function posicionarElementos() {
+            const container = document.getElementById('timeline-content');
+            const yearGroups = {};
+            let currentPosition = 80;
+
+            // Agrupar autores por año, mes y día
+            autores.forEach(autor => {
+                const year = autor.nacimiento.substring(0, 4);
+                const month = parseInt(autor.nacimiento.substring(5, 7)) - 1;
+                const day = parseInt(autor.nacimiento.substring(8, 10));
+
+                if (!yearGroups[year]) {
+                    yearGroups[year] = {};
+                }
+
+                if (!yearGroups[year][month]) {
+                    yearGroups[year][month] = {};
+                }
+
+                if (!yearGroups[year][month][day]) {
+                    yearGroups[year][month][day] = [];
+                }
+
+                yearGroups[year][month][day].push(autor);
+            });
+
+            // Crear estructura HTML
+            container.innerHTML = '';
+
+            // Posicionar años, meses y días
+            Object.keys(yearGroups).sort().forEach(year => {
+                // Crear grupo de año
+                const yearGroup = document.createElement('div');
+                yearGroup.className = 'year-group';
+                yearGroup.dataset.year = year;
+                container.appendChild(yearGroup);
+
+                // Nodo de año
+                const yearNode = document.createElement('div');
+                yearNode.className = 'year-node';
+                yearNode.textContent = year;
+                yearNode.dataset.year = year;
+                yearGroup.appendChild(yearNode);
+
+                // Posicionar meses dentro del año
+                Object.keys(yearGroups[year]).sort((a, b) => a - b).forEach(month => {
+                    const monthInt = parseInt(month);
+                    const monthDays = yearGroups[year][month];
+
+                    // Nodo de mes
+                    const monthNode = document.createElement('div');
+                    monthNode.className = 'month-node';
+                    monthNode.textContent = monthNames[monthInt].substring(0, 3);
+                    monthNode.title = monthNames[monthInt];
+                    monthNode.dataset.year = year;
+                    monthNode.dataset.month = monthInt + 1;
+                    yearGroup.appendChild(monthNode);
+
+                    // Posicionar días dentro del mes
+                    Object.keys(monthDays).sort((a, b) => a - b).forEach(day => {
+                        const dayInt = parseInt(day);
+                        const dayAuthors = monthDays[day];
+
+                        // Nodo de día
+                        const dayNode = document.createElement('div');
+                        dayNode.className = 'day-node';
+                        dayNode.textContent = dayInt;
+                        dayNode.dataset.year = year;
+                        dayNode.dataset.month = monthInt + 1;
+                        dayNode.dataset.day = dayInt;
+                        yearGroup.appendChild(dayNode);
+
+                        // Posicionar autores de este día
+                        dayAuthors.forEach((autor, authorIndex) => {
+                            const card = document.createElement('div');
+                            card.className = 'timeline-card';
+                            card.dataset.year = year;
+                            card.dataset.month = monthInt + 1;
+                            card.dataset.day = dayInt;
+                            card.dataset.nombre = autor.nombre.replace(/\s+/g, '-').toLowerCase();
+
+                            card.innerHTML = `
+                                <div class="card-header">
+                                    <img src="${autor.imagen}" alt="${autor.nombre}" class="author-image">
+                                    <h2 class="author-name">${autor.nombre}</h2>
+                                </div>
+                                <div class="card-content">
+                                    <p><strong>Nacimiento:</strong> ${formatDate(autor.nacimiento)}</p>
+                                    <p><strong>Fallecimiento:</strong> ${formatDate(autor.fallecimiento)}</p>
+                                    <div class="obras-list">
+                                        <h3>Obras Destacadas</h3>
+                                        <ul>
+                                            ${autor.obras.map(obra => `<li>${obra}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    <div class="historical-context">
+                                        <h4>Contexto Histórico</h4>
+                                        <ul>
+                                            ${autor.contexto.map(evento => `<li>${evento}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <span class="expand-indicator">Haz clic para expandir</span>
+                            `;
+
+                            // Evento clic para la tarjeta (MODIFICADO para no cerrar otras tarjetas)
+                            card.addEventListener('click', function (e) {
+                                if (e.target.tagName === 'A') return;
+                                isUserInteracting = true;
+                                clearInterval(autoScrollInterval);
+                                toggleCard(this);
+                                setTimeout(() => { isUserInteracting = false; iniciarAutoScroll(); }, 30000);
+                            });
+
+                            yearGroup.appendChild(card);
+                        });
+                    });
+                });
+            });
+
+            // Calcular alturas y posiciones
+            calcularPosiciones();
+        }
+
+        // Función para calcular posiciones exactas
+        function calcularPosiciones() {
+            const yearGroups = document.querySelectorAll('.year-group');
+            let currentPosition = 80;
+            let globalIndex = 0;
+
+            yearGroups.forEach(yearGroup => {
+                const yearNode = yearGroup.querySelector('.year-node');
+                const monthNodes = yearGroup.querySelectorAll('.month-node');
+                const cards = yearGroup.querySelectorAll('.timeline-card');
+
+                yearNode.style.top = `${currentPosition}px`;
+                currentPosition += 80;
+
+                monthNodes.forEach(monthNode => {
+                    const month = monthNode.dataset.month;
+                    const dayNodes = yearGroup.querySelectorAll(`.day-node[data-month="${month}"]`);
+
+                    monthNode.style.top = `${currentPosition}px`;
+                    currentPosition += 70;
+
+                    dayNodes.forEach(dayNode => {
+                        const day = dayNode.dataset.day;
+                        const dayCards = Array.from(cards).filter(card =>
+                            card.dataset.month === month && card.dataset.day === day);
+
+                        dayNode.style.top = `${currentPosition}px`;
+                        currentPosition += 60;
+
+                        dayCards.forEach((card, index) => {
+                            const content = card.querySelector('.card-content');
+                            const cardId = card.dataset.nombre;
+
+                            if (!cardHeights.has(cardId)) {
+                                const headerHeight = card.querySelector('.card-header').offsetHeight;
+                                const expandedHeight = headerHeight + medirAlturaContenido(content);
+                                cardHeights.set(cardId, { collapsed: headerHeight, expanded: expandedHeight });
+                            }
+
+                            const side = globalIndex % 2 === 0 ? 'left' : 'right';
+                            card.dataset.originalSide = side;
+                            card.dataset.globalIndex = globalIndex;
+                            globalIndex++;
+
+                            card.style.top = `${currentPosition}px`;
+                            card.className = `timeline-card ${side} visible`;
+
+                            currentPosition += cardHeights.get(cardId).collapsed + 60;
+                        });
+                    });
+                });
+
+                currentPosition += 80;
+            });
+
+            document.querySelector('.timeline-container').style.height = `${currentPosition + 150}px`;
+            document.querySelector('.timeline-line').style.height = `${currentPosition + 150}px`;
+        }
+
+        // Función para reposicionar al expandir/contraer
+        function reposicionarElementos() {
+            const yearGroups = document.querySelectorAll('.year-group');
+            let currentPosition = 80;
+            const allCards = Array.from(document.querySelectorAll('.timeline-card'));
+
+            allCards.sort((a, b) => parseInt(a.dataset.globalIndex) - parseInt(b.dataset.globalIndex));
+
+            yearGroups.forEach(yearGroup => {
+                const yearNode = yearGroup.querySelector('.year-node');
+                const monthNodes = yearGroup.querySelectorAll('.month-node');
+
+                yearNode.style.top = `${currentPosition}px`;
+                currentPosition += 80;
+
+                monthNodes.forEach(monthNode => {
+                    const month = monthNode.dataset.month;
+                    const dayNodes = yearGroup.querySelectorAll(`.day-node[data-month="${month}"]`);
+
+                    monthNode.style.top = `${currentPosition}px`;
+                    currentPosition += 70;
+
+                    dayNodes.forEach(dayNode => {
+                        const day = dayNode.dataset.day;
+                        const dayCards = allCards.filter(card =>
+                            card.dataset.month === month && card.dataset.day === day && yearGroup.contains(card));
+
+                        dayNode.style.top = `${currentPosition}px`;
+                        currentPosition += 60;
+
+                        dayCards.forEach(card => {
+                            const content = card.querySelector('.card-content');
+                            const isExpanded = content.classList.contains('expanded');
+                            const cardId = card.dataset.nombre;
+                            const heights = cardHeights.get(cardId);
+
+                            const side = card.dataset.originalSide;
+
+                            card.style.top = `${currentPosition}px`;
+                            card.className = `timeline-card ${side} visible`;
+
+                            currentPosition += (isExpanded ? heights.expanded : heights.collapsed) + (isExpanded ? 90 : 60);
+                        });
+                    });
+                });
+
+                currentPosition += 80;
+            });
+
+            document.querySelector('.timeline-container').style.height = `${currentPosition + 150}px`;
+            document.querySelector('.timeline-line').style.height = `${currentPosition + 150}px`;
+        }
+
+        // Función para alternar tarjeta (MODIFICADA para no cerrar otras tarjetas)
+        function toggleCard(card) {
+            const content = card.querySelector('.card-content');
+            const wasExpanded = content.classList.contains('expanded');
+
+            // Eliminamos la parte que cerraba otras tarjetas
+            content.classList.toggle('expanded');
+            card.querySelector('.expand-indicator').textContent = wasExpanded ? 'Haz clic para expandir' : 'Haz clic para cerrar';
+
+            setTimeout(() => {
+                requestAnimationFrame(() => {
+                    const cardRect = card.getBoundingClientRect();
+                    const scrollPos = window.scrollY + cardRect.top - 80;
+                    window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+                    reposicionarElementos();
+                });
+            }, 50);
+        }
+
+        // Auto-scroll
+        function iniciarAutoScroll() {
+            if (isUserInteracting) return;
+            clearInterval(autoScrollInterval);
+
+            const cards = document.querySelectorAll('.timeline-card:not(.expanded)');
+            if (cards.length === 0) return;
+
             let currentIndex = 0;
 
-            // Mostrar primera tarjeta
-            showCard(currentIndex);
+            autoScrollInterval = setInterval(() => {
+                if (isUserInteracting || document.querySelector('.card-content.expanded')) return;
 
-            // Observador para animación al hacer scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+                const card = cards[currentIndex];
+                if (card) {
+                    window.scrollTo({
+                        top: card.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    card.style.transition = 'box-shadow 0.5s, transform 0.5s';
+                    card.style.boxShadow = '0 0 0 2px rgba(213, 43, 30, 0.5), 0 5px 20px rgba(0,0,0,0.15)';
+                    card.style.transform = 'scale(1.02)';
+
+                    setTimeout(() => {
+                        card.style.boxShadow = '';
+                        card.style.transform = '';
+                    }, 1500);
+                }
+
+                currentIndex = (currentIndex + 1) % cards.length;
+            }, 6000);
+        }
+
+        // Formatear fecha
+        function formatDate(dateStr) {
+            try {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateStr).toLocaleDateString('es-ES', options);
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            posicionarElementos();
+
+            setTimeout(() => {
+                document.querySelectorAll('.timeline-card').forEach(card => {
+                    card.classList.add('visible');
                 });
-            }, { threshold: 0.1 });
+            }, 100);
 
-            cards.forEach(card => {
-                observer.observe(card);
+            window.addEventListener('resize', () => {
+                cardHeights.clear();
+                posicionarElementos();
             });
 
-            // Navegación
-            nextBtn.addEventListener('click', () => {
-                if (currentIndex < cards.length - 1) {
-                    currentIndex++;
-                    scrollToCard(currentIndex);
-                    updateButtons();
-                }
+            window.addEventListener('scroll', () => {
+                isUserInteracting = true;
+                clearTimeout(window.scrollEndTimer);
+                window.scrollEndTimer = setTimeout(() => {
+                    isUserInteracting = false;
+                }, 2000);
             });
 
-            prevBtn.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    scrollToCard(currentIndex);
-                    updateButtons();
-                }
-            });
-
-            function scrollToCard(index) {
-                cards[index].scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
-
-            function showCard(index) {
-                cards[index].classList.add('visible');
-            }
-
-            function updateButtons() {
-                prevBtn.disabled = currentIndex === 0;
-                nextBtn.disabled = currentIndex === cards.length - 1;
-            }
-
-            // Teclado
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' && !nextBtn.disabled) {
-                    nextBtn.click();
-                } else if (e.key === 'ArrowLeft' && !prevBtn.disabled) {
-                    prevBtn.click();
-                }
-            });
+            iniciarAutoScroll();
         });
     </script>
 </body>
