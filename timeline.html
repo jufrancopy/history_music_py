@@ -4,30 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timeline Música Paraguaya</title>
+    <title>Línea de Tiempo - Música Paraguaya</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #D52B1E;
             --secondary: #005F87;
             --light: #F5F0E6;
             --dark: #333;
-            --transition-speed: 0.4s;
+            --transition-speed: 0.3s;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: var(--light);
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light);
             margin: 0;
-            padding: 10px;
+            padding: 0;
             overflow-x: hidden;
             font-size: 14px;
+            position: relative;
+        }
+
+        /* Mapa de Paraguay como fondo */
+        .paraguay-map {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Cabecera con título */
+        .timeline-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+            position: relative;
+            z-index: 5;
+            background: linear-gradient(to bottom, rgba(245, 240, 230, 1) 60%, rgba(245, 240, 230, 0.8));
+        }
+
+        .timeline-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+        }
+
+        .timeline-subtitle {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 10px;
+            font-style: italic;
         }
 
         .timeline-container {
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
-            padding: 20px 0;
+            padding: 20px 0 100px;
+            z-index: 2;
         }
 
         .timeline-line {
@@ -41,7 +85,7 @@
             z-index: 1;
         }
 
-        /* Nodo de año (principal) - Más pequeño */
+        /* Nodo de año (principal) */
         .year-node {
             position: absolute;
             left: 50%;
@@ -68,7 +112,7 @@
             box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Nodo de mes (secundario) - Más pequeño */
+        /* Nodo de mes (secundario) */
         .month-node {
             position: absolute;
             left: 50%;
@@ -96,7 +140,7 @@
             color: white;
         }
 
-        /* Nodo de día (terciario) - Más pequeño */
+        /* Nodo de día (terciario) */
         .day-node {
             position: absolute;
             left: 50%;
@@ -124,7 +168,7 @@
             color: white;
         }
 
-        /* Tarjetas más compactas */
+        /* Tarjetas */
         .timeline-card {
             width: 42%;
             background: white;
@@ -137,6 +181,7 @@
             margin: 0;
             z-index: 10;
             overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.93);
         }
 
         .timeline-card.visible {
@@ -155,7 +200,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Encabezado de tarjeta más compacto */
+        /* Encabezado de tarjeta */
         .card-header {
             padding: 12px 15px;
             display: flex;
@@ -164,7 +209,7 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        /* Imagen más pequeña */
+        /* Imagen */
         .author-image {
             width: 50px;
             height: 50px;
@@ -174,7 +219,7 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
 
-        /* Texto más compacto */
+        /* Texto */
         .author-name {
             color: var(--primary);
             margin: 0;
@@ -192,13 +237,21 @@
             font-size: 0.9em;
         }
 
+        /* Efecto hover */
+        .timeline-card:hover .card-content,
         .card-content.expanded {
-            padding: 15px;
             max-height: 500px;
+            padding: 15px;
             overflow-y: auto;
         }
 
-        /* Listas más compactas */
+        /* Mantener expandido cuando se hace clic */
+        .card-content.expanded {
+            max-height: 500px !important;
+            padding: 15px !important;
+        }
+
+        /* Listas */
         .obras-list {
             background: rgba(0, 95, 135, 0.05);
             padding: 10px;
@@ -272,6 +325,23 @@
                 padding: 5px;
             }
 
+            .paraguay-map {
+                width: 120%;
+                opacity: 0.05;
+            }
+
+            .timeline-header {
+                padding: 20px 10px 15px;
+            }
+
+            .timeline-title {
+                font-size: 1.8rem;
+            }
+
+            .timeline-subtitle {
+                font-size: 1rem;
+            }
+
             .timeline-line {
                 left: 25px;
                 width: 2px;
@@ -281,6 +351,12 @@
                 width: calc(100% - 60px);
                 left: 50px !important;
                 right: auto !important;
+            }
+
+            /* Desactivar hover en móvil */
+            .timeline-card:hover .card-content:not(.expanded) {
+                max-height: 0;
+                padding: 0 15px;
             }
 
             .year-node,
@@ -311,6 +387,29 @@
 </head>
 
 <body>
+    <!-- Mapa de Paraguay como fondo -->
+    <svg class="paraguay-map" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M256 512c-68.38 0-132.667-26.629-181.02-74.98C26.629 388.667 0 324.38 0 256S26.629 123.333 74.98 74.98C123.333 26.629 187.62 0 256 0s132.667 26.629 181.02 74.98C485.371 123.333 512 187.62 512 256s-26.629 132.667-74.98 181.02C388.667 485.371 324.38 512 256 512zm0-472c-119.103 0-216 96.897-216 216s96.897 216 216 216 216-96.897 216-216-96.897-216-216-216z"
+            fill="#D52B1E" />
+        <path d="M256 472c-119.103 0-216-96.897-216-216S136.897 40 256 40s216 96.897 216 216-96.897 216-216 216z"
+            fill="#005F87" />
+        <path
+            d="M256 416c-88.366 0-160-71.634-160-160S167.634 96 256 96s160 71.634 160 160-71.634 160-160 160zm0-280c-66.168 0-120 53.832-120 120s53.832 120 120 120 120-53.832 120-120-53.832-120-120-120z"
+            fill="#D52B1E" />
+        <path d="M256 376c-66.168 0-120-53.832-120-120s53.832-120 120-120 120 53.832 120 120-53.832 120-120 120z"
+            fill="#005F87" />
+        <circle cx="256" cy="256" r="60" fill="#F5F0E6" />
+        <path d="M256 316c-33.137 0-60-26.863-60-60s26.863-60 60-60 60 26.863 60 60-26.863 60-60 60z" fill="#D52B1E" />
+    </svg>
+
+    <!-- Cabecera con título -->
+    <div class="timeline-header">
+        <h1 class="timeline-title">Línea de Tiempo de la Historia de la Música en Paraguay</h1>
+        <p class="timeline-subtitle">Un recorrido por los grandes compositores y sus obras inmortales</p>
+    </div>
+
+    <!-- Línea de tiempo -->
     <div class="timeline-container">
         <div class="timeline-line"></div>
         <div id="timeline-content"></div>
@@ -481,14 +580,15 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <span class="expand-indicator">Haz clic para expandir</span>
+                                <span class="expand-indicator">Toca para expandir permanentemente</span>
                             `;
 
-                            // Evento clic para la tarjeta (MODIFICADO para no cerrar otras tarjetas)
+                            // Evento clic para la tarjeta
                             card.addEventListener('click', function (e) {
                                 if (e.target.tagName === 'A') return;
                                 isUserInteracting = true;
                                 clearInterval(autoScrollInterval);
+                                this.classList.toggle('clicked');
                                 toggleCard(this);
                                 setTimeout(() => { isUserInteracting = false; iniciarAutoScroll(); }, 30000);
                             });
@@ -615,23 +715,15 @@
             document.querySelector('.timeline-line').style.height = `${currentPosition + 150}px`;
         }
 
-        // Función para alternar tarjeta (MODIFICADA para no cerrar otras tarjetas)
+        // Función para alternar tarjeta
         function toggleCard(card) {
             const content = card.querySelector('.card-content');
             const wasExpanded = content.classList.contains('expanded');
 
-            // Eliminamos la parte que cerraba otras tarjetas
             content.classList.toggle('expanded');
-            card.querySelector('.expand-indicator').textContent = wasExpanded ? 'Haz clic para expandir' : 'Haz clic para cerrar';
-
-            setTimeout(() => {
-                requestAnimationFrame(() => {
-                    const cardRect = card.getBoundingClientRect();
-                    const scrollPos = window.scrollY + cardRect.top - 80;
-                    window.scrollTo({ top: scrollPos, behavior: 'smooth' });
-                    reposicionarElementos();
-                });
-            }, 50);
+            card.querySelector('.expand-indicator').textContent = wasExpanded
+                ? 'Toca para expandir permanentemente'
+                : 'Contenido fijado (toca para cerrar)';
         }
 
         // Auto-scroll
@@ -639,13 +731,13 @@
             if (isUserInteracting) return;
             clearInterval(autoScrollInterval);
 
-            const cards = document.querySelectorAll('.timeline-card:not(.expanded)');
+            const cards = document.querySelectorAll('.timeline-card:not(.clicked)');
             if (cards.length === 0) return;
 
             let currentIndex = 0;
 
             autoScrollInterval = setInterval(() => {
-                if (isUserInteracting || document.querySelector('.card-content.expanded')) return;
+                if (isUserInteracting) return;
 
                 const card = cards[currentIndex];
                 if (card) {
