@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paraguay Precolonial - Línea del Tiempo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f1e9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #5a7302;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/api/placeholder/800/300');
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .intro {
+            background-color: #fff;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #8b5d33;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            padding: 1rem 2rem;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: #ff9800;
+            border: 4px solid #8b5d33;
+            top: 20px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid #fff;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid #fff;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #fff transparent transparent;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .content {
+            padding: 1.5rem;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #5a7302;
+            margin-bottom: 0.5rem;
+        }
+
+        .content .date {
+            font-weight: bold;
+            color: #8b5d33;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .tribe-section {
+            margin: 3rem 0;
+        }
+
+        .tribe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tribe-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tribe-card h3 {
+            color: #5a7302;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #f0e6d2;
+            padding-bottom: 0.5rem;
+        }
+
+        .tribe-card img {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            width: 100%;
+            height: auto;
+        }
+
+        .culture-section {
+            margin: 3rem 0;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .culture-section h2 {
+            color: #5a7302;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .culture-item {
+            padding: 1.5rem;
+            background-color: #f9f5eb;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .culture-item i {
+            font-size: 2.5rem;
+            color: #8b5d33;
+            margin-bottom: 1rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #5a7302;
+            color: white;
+            margin-top: 3rem;
+        }
+
+        .toggle-btn {
+            display: none;
+            background-color: #5a7302;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            margin: 1rem auto;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::before {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::before {
+                left: 60px;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent #fff transparent transparent;
+            }
+
+            .left::after,
+            .right::after {
+                left: 19px;
+            }
+
+            .right {
+                left: 0%;
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+
+            .tribe-grid,
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Paraguay Precolonial</h1>
+        <p>Una mirada a las culturas originarias y su desarrollo antes de la llegada europea</p>
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <h2>Introducción</h2>
+            <p>Antes de la llegada de los conquistadores españoles en el siglo XVI, el territorio que hoy conocemos como
+                Paraguay estaba habitado por diversos grupos indígenas con sus propias culturas, tradiciones y formas de
+                vida. Esta cronología explora los principales acontecimientos, culturas y desarrollos en el periodo
+                precolonial paraguayo.</p>
+        </section>
+
+        <section class="timeline">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Línea del Tiempo</h2>
+
+            <div class="timeline-item left">
+                <div class="content">
+                    <span class="date">10000 - 8000 a.C.</span>
+                    <h2>Primeros Pobladores</h2>
+                    <p>Evidencias arqueológicas sugieren la presencia de grupos nómadas de cazadores-recolectores en el
+                        territorio paraguayo. Hallazgos en la región del Chaco y el este paraguayo indican actividades
+                        de caza y recolección.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="content">
+                    <span class="date">5000 - 3000 a.C.</span>
+                    <h2>Desarrollo de Agricultura Temprana</h2>
+                    <p>Algunos grupos comienzan a establecerse más permanentemente y desarrollan prácticas agrícolas
+                        rudimentarias, cultivando principalmente mandioca, maíz y calabazas.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="content">
+                    <span class="date">2000 - 1000 a.C.</span>
+                    <h2>Formación de Aldeas</h2>
+                    <p>Se forman las primeras aldeas permanentes en las zonas ribereñas. Desarrollo de la cerámica entre
+                        algunos grupos, especialmente en la cultura preguaraní.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="content">
+                    <span class="date">1000 a.C. - 500 d.C.</span>
+                    <h2>Expansión Guaraní</h2>
+                    <p>Migración de los grupos proto-guaraníes desde la Amazonía hacia el sur, estableciéndose en lo que
+                        hoy es Paraguay oriental. Desarrollo de una sociedad basada en la agricultura de roza y quema
+                        (slash-and-burn).</p>
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="content">
+                    <span class="date">500 - 1000 d.C.</span>
+                    <h2>Consolidación Cultural</h2>
+                    <p>Diferenciación cultural entre los grupos guaraníes y otros grupos étnicos. Desarrollo de técnicas
+                        avanzadas de alfarería y cestería. Consolidación de sistemas de creencias y mitología.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="content">
+                    <span class="date">1000 - 1400 d.C.</span>
+                    <h2>Sistemas Políticos y Tekoha</h2>
+                    <p>Formación de los tekoha (territorios comunitarios) guaraníes y desarrollo de sistemas políticos
+                        basados en el liderazgo de los caciques. Fortalecimiento de redes comerciales entre los
+                        diferentes grupos indígenas.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="content">
+                    <span class="date">1400 - 1500 d.C.</span>
+                    <h2>Periodo Pre-Contacto</h2>
+                    <p>Aumento de las interacciones entre los diferentes grupos étnicos. El imperio Inca comienza a
+                        expandirse hacia el sur, aunque nunca llega a dominar el territorio paraguayo. Desarrollo de
+                        redes comerciales más extensas.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="content">
+                    <span class="date">1516 - 1537</span>
+                    <h2>Primeros Contactos y Conquista</h2>
+                    <p>Juan Díaz de Solís explora el Río de la Plata en 1516. Alejo García, náufrago de la expedición de
+                        Solís, es el primer europeo en atravesar territorio paraguayo. En 1537, Juan de Salazar funda el
+                        fuerte de Nuestra Señora de la Asunción, marcando el inicio de la colonización española.</p>
+                </div>
+            </div>
+        </section>
+
+        <button class="toggle-btn" id="timelineToggle">Mostrar/Ocultar Detalles</button>
+
+        <section class="tribe-section">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Principales Grupos Indígenas</h2>
+
+            <div class="tribe-grid">
+                <div class="tribe-card">
+                    <h3>Guaraníes</h3>
+                    <img src="/api/placeholder/400/200" alt="Representación de cultura guaraní">
+                    <p><strong>Ubicación:</strong> Paraguay Oriental</p>
+                    <p><strong>Organización:</strong> Comunidades agrícolas (tekoha) lideradas por caciques (mburuvichá)
+                    </p>
+                    <p><strong>Economía:</strong> Agricultura de roza y quema, caza, pesca y recolección</p>
+                    <p><strong>Cultura:</strong> Rico sistema de creencias centrado en figuras como Tupã (dios del
+                        trueno), desarrollo del arte de la palabra (ñe'ẽ porã) y tradición oral</p>
+                </div>
+
+                <div class="tribe-card">
+                    <h3>Payaguá</h3>
+                    <img src="/api/placeholder/400/200" alt="Representación de cultura payaguá">
+                    <p><strong>Ubicación:</strong> Río Paraguay</p>
+                    <p><strong>Organización:</strong> Grupos nómadas fluviales</p>
+                    <p><strong>Economía:</strong> Pesca, caza y recolección, expertos navegantes</p>
+                    <p><strong>Cultura:</strong> Adaptados a la vida en las zonas pantanosas y ribereñas, desarrollaron
+                        avanzadas técnicas de navegación y guerreras</p>
+                </div>
+
+                <div class="tribe-card">
+                    <h3>Guaycurúes</h3>
+                    <img src="/api/placeholder/400/200" alt="Representación de cultura guaycurú">
+                    <p><strong>Ubicación:</strong> Chaco Paraguayo</p>
+                    <p><strong>Organización:</strong> Grupos nómadas con estructura jerárquica</p>
+                    <p><strong>Economía:</strong> Caza, recolección, y más tarde adoptaron la cría de caballos</p>
+                    <p><strong>Cultura:</strong> Conocidos por sus habilidades guerreras y resistencia a la colonización
+                    </p>
+                </div>
+
+                <div class="tribe-card">
+                    <h3>Aché (Guayakí)</h3>
+                    <img src="/api/placeholder/400/200" alt="Representación de cultura aché">
+                    <p><strong>Ubicación:</strong> Bosques orientales</p>
+                    <p><strong>Organización:</strong> Bandas nómadas de cazadores-recolectores</p>
+                    <p><strong>Economía:</strong> Especialistas en caza y recolección forestal</p>
+                    <p><strong>Cultura:</strong> Profundo conocimiento de la selva, desarrollo de técnicas de caza con
+                        arco y flecha</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="culture-section">
+            <h2>Aspectos Culturales y Sociales</h2>
+
+            <div class="culture-grid">
+                <div class="culture-item">
+                    <h3>Religión</h3>
+                    <p>Creencias animistas y chamanismo. Los guaraníes desarrollaron una compleja cosmología con
+                        deidades como Tupã y la búsqueda de la "Tierra sin Mal" (Yvy maraẽy).</p>
+                </div>
+
+                <div class="culture-item">
+                    <h3>Lengua</h3>
+                    <p>El guaraní se consolidó como lengua dominante en gran parte del territorio. Rica tradición oral
+                        con mitos, leyendas e historias transmitidas de generación en generación.</p>
+                </div>
+
+                <div class="culture-item">
+                    <h3>Arte</h3>
+                    <p>Desarrollo de cerámica policromada, cestería, tallas en madera y adornos corporales. Arte
+                        plumario especialmente entre los guaraníes.</p>
+                </div>
+
+                <div class="culture-item">
+                    <h3>Organización Social</h3>
+                    <p>Sociedades mayormente igualitarias con división del trabajo por género. Importancia de los
+                        vínculos familiares extensos (teyy) entre los guaraníes.</p>
+                </div>
+
+                <div class="culture-item">
+                    <h3>Economía</h3>
+                    <p>Combinación de agricultura (principalmente mandioca, maíz, batata), caza, pesca y recolección.
+                        Desarrollo de técnicas de conservación de alimentos.</p>
+                </div>
+
+                <div class="culture-item">
+                    <h3>Tecnología</h3>
+                    <p>Herramientas líticas, arcos y flechas, cerbatanas, canoas monóxilas, y desarrollo de técnicas
+                        agrícolas adaptadas al entorno subtropical.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="culture-section">
+            <h2>Legado Precolonial</h2>
+            <p>El legado de las culturas precoloniales sigue presente en la sociedad paraguaya contemporánea:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li>La persistencia del guaraní como lengua oficial junto al español, siendo uno de los pocos países
+                    latinoamericanos con una lengua indígena de uso generalizado.</li>
+                <li>Prácticas agrícolas tradicionales que persisten, especialmente en zonas rurales.</li>
+                <li>Conocimientos medicinales basados en plantas nativas.</li>
+                <li>Gastronomía con fuerte influencia indígena (mandioca, chipá, sopa paraguaya).</li>
+                <li>Artesanías como el ñandutí y la cerámica que mantienen técnicas ancestrales.</li>
+                <li>Cosmovisión y espiritualidad sincretizada con el catolicismo pero manteniendo elementos originarios.
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>Paraguay Precolonial: Una exploración de las culturas originarias</p>
+        <p>© 2025 - Línea del Tiempo Interactiva</p>
+    </footer>
+
+    <script>
+        // Script para hacer la línea de tiempo interactiva
+        document.getElementById('timelineToggle').addEventListener('click', function () {
+            const items = document.querySelectorAll('.timeline-item .content p');
+            items.forEach(item => {
+                if (item.style.display === 'none') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Agregar animación al scroll
+        document.addEventListener('DOMContentLoaded', function () {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const tribeCards = document.querySelectorAll('.tribe-card');
+            const cultureItems = document.querySelectorAll('.culture-item');
+
+            // Función simple para añadir efectos al hacer scroll
+            function checkPosition() {
+                const elements = [...timelineItems, ...tribeCards, ...cultureItems];
+                elements.forEach(element => {
+                    const position = element.getBoundingClientRect();
+
+                    // Si el elemento está en la ventana visible
+                    if (position.top < window.innerHeight && position.bottom >= 0) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+
+            // Inicializar estilos
+            timelineItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+
+            tribeCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+
+            cultureItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+
+            // Verificar posiciones al cargar y al hacer scroll
+            window.addEventListener('scroll', checkPosition);
+            window.addEventListener('resize', checkPosition);
+
+            // Verificar posiciones iniciales
+            checkPosition();
+        });
+    </script>
+</body>
+
+</html>
