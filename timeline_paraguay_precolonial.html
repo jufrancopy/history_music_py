@@ -258,6 +258,104 @@
             padding-bottom: 0.5rem;
         }
 
+        .world-context {
+            margin: 3rem 0;
+        }
+
+        .context-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .context-table th,
+        .context-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .context-table th {
+            background-color: #5a7302;
+            color: white;
+            font-weight: bold;
+        }
+
+        .context-table tr:nth-child(even) {
+            background-color: #f9f5eb;
+        }
+
+        .context-table tr:hover {
+            background-color: #f0e6d2;
+        }
+
+        .context-period {
+            font-weight: bold;
+            width: 15%;
+        }
+
+        .context-paraguay {
+            width: 40%;
+        }
+
+        .context-world {
+            width: 45%;
+        }
+
+        .context-row-header {
+            background-color: #8b5d33 !important;
+            color: white;
+            text-align: center;
+        }
+
+        .tab-container {
+            margin-top: 2rem;
+        }
+
+        .tab {
+            overflow: hidden;
+            background-color: #f9f5eb;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+        }
+
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            transition: 0.3s;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .tab button:hover {
+            background-color: #f0e6d2;
+        }
+
+        .tab button.active {
+            background-color: #5a7302;
+            color: white;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 1.5rem;
+            border-radius: 0 0 8px 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .default-tab {
+            display: block;
+        }
+
         @media screen and (max-width: 768px) {
             .timeline::before {
                 left: 31px;
@@ -292,6 +390,20 @@
             .culture-grid {
                 grid-template-columns: 1fr;
             }
+
+            .context-table {
+                font-size: 0.9rem;
+            }
+
+            .context-table th,
+            .context-table td {
+                padding: 0.6rem;
+            }
+
+            .tab button {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -308,7 +420,7 @@
             <p>Antes de la llegada de los conquistadores españoles en el siglo XVI, el territorio que hoy conocemos como
                 Paraguay estaba habitado por diversos grupos indígenas con sus propias culturas, tradiciones y formas de
                 vida. Esta cronología explora los principales acontecimientos, culturas y desarrollos en el periodo
-                precolonial paraguayo.</p>
+                precolonial paraguayo, contextualizándolos con eventos mundiales contemporáneos.</p>
         </section>
 
         <section class="timeline">
@@ -396,177 +508,420 @@
 
         <button class="toggle-btn" id="timelineToggle">Mostrar/Ocultar Detalles</button>
 
+        <section class="world-context">
+            <h2 style="text-align: center; margin-bottom: 1rem;">Contexto Histórico Mundial</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Eventos mundiales significativos que ocurrían
+                simultáneamente con el desarrollo de las culturas precoloniales paraguayas</p>
+
+            <div class="tab-container">
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'prehistoric')">Prehistoria</button>
+                    <button class="tablinks" onclick="openTab(event, 'ancient')">Antigüedad</button>
+                    <button class="tablinks" onclick="openTab(event, 'medieval')">Edad Media</button>
+                    <button class="tablinks" onclick="openTab(event, 'renaissance')">Renacimiento</button>
+                </div>
+
+                <div id="prehistoric" class="tabcontent default-tab">
+                    <table class="context-table">
+                        <tr>
+                            <th class="context-period">Periodo</th>
+                            <th class="context-paraguay">Paraguay Precolonial</th>
+                            <th class="context-world">Contexto Mundial</th>
+                        </tr>
+                        <tr>
+                            <td class="context-period">10000 - 8000 a.C.</td>
+                            <td class="context-paraguay">Primeros grupos de cazadores-recolectores se establecen en el
+                                territorio paraguayo</td>
+                            <td class="context-world">
+                                • Fin de la última glaciación y comienzo del Holoceno<br>
+                                • Desarrollo de técnicas de caza avanzadas en diversas regiones del mundo<br>
+                                • Primeros asentamientos humanos en Jericó (actual Palestina), una de las ciudades más
+                                antiguas del mundo<sup>[20]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">8000 - 5000 a.C.</td>
+                            <td class="context-paraguay">Adaptación a diferentes ecosistemas. Desarrollo de técnicas de
+                                pesca y recolección especializadas</td>
+                            <td class="context-world">
+                                • Revolución Neolítica en Mesopotamia: comienzo de la agricultura y domesticación de
+                                animales<br>
+                                • Primeros asentamientos permanentes en Çatalhöyük (Turquía)<br>
+                                • Desarrollo de la cerámica en Japón (cultura Jōmon)<sup>[21]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">5000 - 3000 a.C.</td>
+                            <td class="context-paraguay">Inicios de la agricultura con cultivos de mandioca, maíz y
+                                calabazas. Grupos sedentarios tempranos</td>
+                            <td class="context-world">
+                                • Surgimiento de la civilización Sumeria en Mesopotamia y la cultura del Antiguo
+                                Egipto<br>
+                                • Invención de la rueda y el arado en Mesopotamia<br>
+                                • Primeros sistemas de escritura en Mesopotamia y Egipto<br>
+                                • Construcción de Stonehenge (etapas iniciales) en Gran Bretaña<sup>[22]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">3000 - 2000 a.C.</td>
+                            <td class="context-paraguay">Formación de las primeras comunidades permanentes. Desarrollo
+                                de tecnologías adaptadas al entorno</td>
+                            <td class="context-world">
+                                • Construcción de las primeras pirámides en Egipto<br>
+                                • Edad del Bronce en Eurasia<br>
+                                • Fundación de la ciudad de Troya<br>
+                                • Primeras civilizaciones urbanas en el Valle del Indo (Harappa y
+                                Mohenjo-Daro)<sup>[23]</sup>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="ancient" class="tabcontent">
+                    <table class="context-table">
+                        <tr>
+                            <th class="context-period">Periodo</th>
+                            <th class="context-paraguay">Paraguay Precolonial</th>
+                            <th class="context-world">Contexto Mundial</th>
+                        </tr>
+                        <tr>
+                            <td class="context-period">2000 - 1000 a.C.</td>
+                            <td class="context-paraguay">Formación de aldeas permanentes en zonas ribereñas. Primeros
+                                desarrollos de cerámica en culturas preguaraníes</td>
+                            <td class="context-world">
+                                • Código de Hammurabi en Babilonia (c. 1754 a.C.)<br>
+                                • Expansión del Imperio Hitita en Anatolia<br>
+                                • Inicio del reino de Israel bajo Saúl y David<br>
+                                • Civilización Micénica en Grecia<br>
+                                • Guerra de Troya (c. 1200 a.C.)<sup>[24]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">1000 - 500 a.C.</td>
+                            <td class="context-paraguay">Inicio de la expansión de grupos proto-guaraníes desde la
+                                Amazonía hacia el sur. Desarrollo de sistemas agrícolas más avanzados</td>
+                            <td class="context-world">
+                                • Fundación de Roma (753 a.C.)<br>
+                                • Periodo Clásico de la Antigua Grecia<br>
+                                • Buda en India y Confucio en China (c. 500 a.C.)<br>
+                                • Imperio Persa bajo Ciro el Grande<br>
+                                • Construcción del Templo de Salomón en Jerusalén<sup>[25]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">500 a.C. - 0</td>
+                            <td class="context-paraguay">Consolidación de la migración guaraní. Desarrollo de técnicas
+                                agrícolas de roza y quema. Formación de comunidades con identidades culturales definidas
+                            </td>
+                            <td class="context-world">
+                                • Imperio de Alejandro Magno (336-323 a.C.)<br>
+                                • República Romana en expansión<br>
+                                • Construcción de la Gran Muralla China (primeras versiones)<br>
+                                • Guerras Púnicas entre Roma y Cartago<br>
+                                • Civilización Maya temprana en Mesoamérica<sup>[26]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">0 - 500 d.C.</td>
+                            <td class="context-paraguay">Asentamiento definitivo de guaraníes en Paraguay oriental.
+                                Diversificación de grupos étnicos en el territorio</td>
+                            <td class="context-world">
+                                • Imperio Romano en su apogeo<br>
+                                • Nacimiento y expansión del Cristianismo<br>
+                                • Dinastía Han en China<br>
+                                • Imperio Kushan en la India<br>
+                                • Teotihuacán se convierte en la ciudad más grande de Mesoamérica<br>
+                                • Caída del Imperio Romano de Occidente (476 d.C.)<sup>[27]</sup>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="medieval" class="tabcontent">
+                    <table class="context-table">
+                        <tr>
+                            <th class="context-period">Periodo</th>
+                            <th class="context-paraguay">Paraguay Precolonial</th>
+                            <th class="context-world">Contexto Mundial</th>
+                        </tr>
+                        <tr>
+                            <td class="context-period">500 - 800 d.C.</td>
+                            <td class="context-paraguay">Consolidación cultural de los grupos guaraníes. Desarrollo de
+                                técnicas avanzadas de alfarería y cestería</td>
+                            <td class="context-world">
+                                • Expansión del Islam tras la muerte de Mahoma (632)<br>
+                                • Imperio Bizantino bajo Justiniano<br>
+                                • Reinos Anglo-Sajones en Inglaterra<br>
+                                • Fundación del Imperio Carolingio<br>
+                                • Apogeo de la cultura Maya en Mesoamérica<sup>[28]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">800 - 1000 d.C.</td>
+                            <td class="context-paraguay">Diferenciación regional entre grupos guaraníes. Establecimiento
+                                de sistemas religiosos y cosmológicos complejos</td>
+                            <td class="context-world">
+                                • Era Vikinga en Europa<br>
+                                • Dinastía Tang en China<br>
+                                • Imperio de Ghana en África Occidental<br>
+                                • Carlomagno es coronado emperador (800)<br>
+                                • Colapso de la civilización Maya clásica<br>
+                                • Apogeo de Tiwanaku en los Andes Centrales<sup>[29]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">1000 - 1200 d.C.</td>
+                            <td class="context-paraguay">Formación de los tekoha (territorios comunitarios) guaraníes.
+                                Desarrollo de sistemas políticos bajo liderazgo de caciques</td>
+                            <td class="context-world">
+                                • Primera Cruzada (1095-1099)<br>
+                                • Imperio de Mali en África<br>
+                                • Invasiones normandas en Inglaterra (1066)<br>
+                                • Fundación de los Aztecas en Mesoamérica<br>
+                                • Expansión del Imperio Inca (fase temprana)<br>
+                                • Apogeo de la cultura Tolteca<sup>[30]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">1200 - 1400 d.C.</td>
+                            <td class="context-paraguay">Consolidación del sistema de tekoha y redes comerciales entre
+                                diferentes grupos indígenas. Desarrollo de técnicas agrícolas más eficientes</td>
+                            <td class="context-world">
+                                • Imperio Mongol de Gengis Khan<br>
+                                • Guerras entre Inglaterra y Francia (Guerra de los Cien Años)<br>
+                                • Peste Negra en Europa (1347-1351)<br>
+                                • Dinastía Ming en China<br>
+                                • Expansión del Imperio Otomano<br>
+                                • Marco Polo viaja a China<sup>[31]</sup>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="renaissance" class="tabcontent">
+                    <table class="context-table">
+                        <tr>
+                            <th class="context-period">Periodo</th>
+                            <th class="context-paraguay">Paraguay Precolonial</th>
+                            <th class="context-world">Contexto Mundial</th>
+                        </tr>
+                        <tr>
+                            <td class="context-period">1400 - 1450 d.C.</td>
+                            <td class="context-paraguay">Aumento de interacciones entre grupos étnicos. Desarrollo de
+                                extensas redes comerciales precolombinas</td>
+                            <td class="context-world">
+                                • Inicio del Renacimiento en Italia<br>
+                                • Caída de Constantinopla (1453)<br>
+                                • Invención de la imprenta por Gutenberg<br>
+                                • Imperio Inca en expansión bajo Pachacútec<br>
+                                • Expediciones navales chinas de Zheng He<sup>[32]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">1450 - 1500 d.C.</td>
+                            <td class="context-paraguay">Consolidación de sistemas culturales y sociales antes del
+                                contacto europeo. Expansión de la influencia guaraní en la región</td>
+                            <td class="context-world">
+                                • Cristóbal Colón llega a América (1492)<br>
+                                • Los españoles conquistan el último reino musulmán de Granada (1492)<br>
+                                • Tratado de Tordesillas entre España y Portugal (1494)<br>
+                                • Leonardo da Vinci y Miguel Ángel en plena actividad artística<br>
+                                • Imperio Azteca alcanza su máxima expansión<sup>[33]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">1500 - 1520 d.C.</td>
+                            <td class="context-paraguay">Primeras exploraciones europeas cercanas al territorio
+                                paraguayo. Continuidad de sistemas tradicionales indígenas</td>
+                            <td class="context-world">
+                                • Vasco da Gama llega a la India (1498)<br>
+                                • Magallanes inicia la primera circunnavegación del mundo (1519)<br>
+                                • Reforma Protestante iniciada por Martín Lutero (1517)<br>
+                                • Conquista del Imperio Azteca por Hernán Cortés (comienza en 1519)<br>
+                                • Apogeo del Imperio Otomano bajo Solimán el Magnífico<sup>[34]</sup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="context-period">1520 - 1537 d.C.</td>
+                            <td class="context-paraguay">Primeros contactos directos con europeos. Alejo García explora
+                                territorio paraguayo (1524-1525). Fundación de Asunción (1537), marcando el inicio de la
+                                colonización</td>
+                            <td class="context-world">
+                                • Conquista del Imperio Inca por Francisco Pizarro (1532-1533)
+
+                                • Enrique VIII rompe con la Iglesia Católica (1534)
+
+                                • Establecimiento del sistema de encomiendas en América
+
+                                • Inicio del comercio transatlántico de esclavos
+
+                                • Fundación de la primera ciudad en Brasil (São Vicente, 1532)<sup>[35]</sup>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
         <section class="tribe-section">
-            <h2 style="text-align: center; margin-bottom: 2rem;">Principales Grupos Indígenas</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Principales Grupos Étnicos</h2>
 
             <div class="tribe-grid">
                 <div class="tribe-card">
+                    <img src="/api/placeholder/400/300" alt="Guaraníes">
                     <h3>Guaraníes</h3>
-                    <img src="/api/placeholder/400/200" alt="Representación de cultura guaraní">
-                    <p><strong>Ubicación:</strong> Paraguay Oriental</p>
-                    <p><strong>Organización:</strong> Comunidades agrícolas (tekoha) lideradas por caciques (mburuvichá)
-                    </p>
-                    <p><strong>Economía:</strong> Agricultura de roza y quema, caza, pesca y recolección</p>
-                    <p><strong>Cultura:</strong> Rico sistema de creencias centrado en figuras como Tupã (dios del
-                        trueno), desarrollo del arte de la palabra (ñe'ẽ porã) y tradición oral<sup>[9]</sup></p>
+                    <p>El grupo étnico más numeroso en la región oriental del Paraguay precolonial. Agricultores
+                        expertos que cultivaban mandioca, maíz, batata y algodón. Vivían en aldeas llamadas "teko'a" y
+                        tenían una organización social basada en familias extensas lideradas por un cacique
+                        (mburuvichá). Su cosmovisión estaba profundamente conectada con la naturaleza.</p>
                 </div>
 
                 <div class="tribe-card">
-                    <h3>Payaguá</h3>
-                    <img src="/api/placeholder/400/200" alt="Representación de cultura payaguá">
-                    <p><strong>Ubicación:</strong> Río Paraguay</p>
-                    <p><strong>Organización:</strong> Grupos nómadas fluviales</p>
-                    <p><strong>Economía:</strong> Pesca, caza y recolección, expertos navegantes</p>
-                    <p><strong>Cultura:</strong> Adaptados a la vida en las zonas pantanosas y ribereñas, desarrollaron
-                        avanzadas técnicas de navegación y guerreras<sup>[10]</sup></p>
+                    <img src="/api/placeholder/400/300" alt="Payaguás">
+                    <h3>Payaguás</h3>
+                    <p>Habitantes del río Paraguay, expertos navegantes y pescadores. Conocidos como "los señores del
+                        río", controlaban el comercio fluvial antes de la llegada de los europeos. Eran guerreros
+                        temidos por otros grupos indígenas y mantenían una relación conflictiva con los guaraníes.</p>
                 </div>
 
                 <div class="tribe-card">
+                    <img src="/api/placeholder/400/300" alt="Mbayás">
+                    <h3>Mbayás (Guanás)</h3>
+                    <p>Grupo étnico del Chaco paraguayo, relacionados lingüísticamente con los guaicurúes. Eran
+                        cazadores-recolectores seminómadas con un complejo sistema social que incluía estratificación en
+                        castas. Desarrollaron una relación simbiótica con los guaraníes, intercambiando productos del
+                        monte por productos agrícolas.</p>
+                </div>
+
+                <div class="tribe-card">
+                    <img src="/api/placeholder/400/300" alt="Guaycurúes">
                     <h3>Guaycurúes</h3>
-                    <img src="/api/placeholder/400/200" alt="Representación de cultura guaycurú">
-                    <p><strong>Ubicación:</strong> Chaco Paraguayo</p>
-                    <p><strong>Organización:</strong> Grupos nómadas con estructura jerárquica</p>
-                    <p><strong>Economía:</strong> Caza, recolección, y más tarde adoptaron la cría de caballos</p>
-                    <p><strong>Cultura:</strong> Conocidos por sus habilidades guerreras y resistencia a la
-                        colonización<sup>[11]</sup></p>
+                    <p>Conjunto de pueblos del Gran Chaco que incluía a los tobas, mocovíes y abipones. Eran guerreros
+                        nómadas que resistieron tanto a los incas como a los españoles. Expertos en la caza y
+                        recolección en el ambiente chaqueño, desarrollaron técnicas de supervivencia en condiciones
+                        extremas.</p>
                 </div>
 
                 <div class="tribe-card">
-                    <h3>Aché (Guayakí)</h3>
-                    <img src="/api/placeholder/400/200" alt="Representación de cultura aché">
-                    <p><strong>Ubicación:</strong> Bosques orientales</p>
-                    <p><strong>Organización:</strong> Bandas nómadas de cazadores-recolectores</p>
-                    <p><strong>Economía:</strong> Especialistas en caza y recolección forestal</p>
-                    <p><strong>Cultura:</strong> Profundo conocimiento de la selva, desarrollo de técnicas de caza con
-                        arco y flecha<sup>[12]</sup></p>
+                    <img src="/api/placeholder/400/300" alt="Lenguas">
+                    <h3>Lengua-Maskoy</h3>
+                    <p>Grupos del Chaco Central que hablaban lenguas de la familia maskoy. Vivían de la caza, pesca y
+                        recolección, con un profundo conocimiento del monte chaqueño. Su organización social era menos
+                        jerárquica que la de los guaraníes, con decisiones tomadas en forma colectiva.</p>
+                </div>
+
+                <div class="tribe-card">
+                    <img src="/api/placeholder/400/300" alt="Zamucos">
+                    <h3>Zamucos</h3>
+                    <p>Habitantes del Chaco Boreal, incluían a los ayoreos e ishir (moros). Eran cazadores-recolectores
+                        con una cosmovisión muy rica y compleja. Vivían en pequeños grupos familiares móviles, adaptados
+                        a las duras condiciones del Chaco seco.</p>
                 </div>
             </div>
         </section>
 
         <section class="culture-section">
-            <h2>Aspectos Culturales y Sociales</h2>
+            <h2>Aspectos Culturales</h2>
 
             <div class="culture-grid">
                 <div class="culture-item">
-                    <h3>Religión</h3>
-                    <p>Creencias animistas y chamanismo. Los guaraníes desarrollaron una compleja cosmología con
-                        deidades como Tupã y la búsqueda de la "Tierra sin Mal" (Yvy maraẽy).<sup>[13]</sup></p>
+                    <i>🏠</i>
+                    <h3>Vivienda</h3>
+                    <p>Las casas guaraníes (oga) eran comunales, hechas de madera, paja y barro, donde vivían varias
+                        familias extendidas. En el Chaco, las viviendas eran más temporales, usando materiales
+                        disponibles localmente.</p>
                 </div>
 
                 <div class="culture-item">
-                    <h3>Lengua</h3>
-                    <p>El guaraní se consolidó como lengua dominante en gran parte del territorio. Rica tradición oral
-                        con mitos, leyendas e historias transmitidas de generación en generación.<sup>[14]</sup></p>
+                    <i>🌽</i>
+                    <h3>Alimentación</h3>
+                    <p>Base agrícola de mandioca, maíz, poroto y zapallo. Complementaban con pesca, caza y recolección.
+                        En el Chaco predominaba la caza (tapir, pecarí) y recolección (algarroba, miel).</p>
                 </div>
 
                 <div class="culture-item">
-                    <h3>Arte</h3>
-                    <p>Desarrollo de cerámica policromada, cestería, tallas en madera y adornos corporales. Arte
-                        plumario especialmente entre los guaraníes.<sup>[15]</sup></p>
+                    <i>🎨</i>
+                    <h3>Arte y Artesanía</h3>
+                    <p>Alfarería decorada, cestería, tallado en madera y tejidos de algodón. Los guaraníes destacaban en
+                        la cerámica, mientras los chaqueños en la cestería y trabajos en cuero.</p>
                 </div>
 
                 <div class="culture-item">
-                    <h3>Organización Social</h3>
-                    <p>Sociedades mayormente igualitarias con división del trabajo por género. Importancia de los
-                        vínculos familiares extensos (teyy) entre los guaraníes.<sup>[16]</sup></p>
+                    <i>⚔️</i>
+                    <h3>Guerra</h3>
+                    <p>Conflictos intertribales por territorios y recursos. Uso de arcos, flechas, macanas y lanzas. Los
+                        guaycurúes eran especialmente temidos como guerreros.</p>
                 </div>
 
                 <div class="culture-item">
-                    <h3>Economía</h3>
-                    <p>Combinación de agricultura (principalmente mandioca, maíz, batata), caza, pesca y recolección.
-                        Desarrollo de técnicas de conservación de alimentos.<sup>[17]</sup></p>
+                    <i>🌿</i>
+                    <h3>Medicina</h3>
+                    <p>Conocimiento avanzado de plantas medicinales. Los chamanes (paí entre los guaraníes) combinaban
+                        medicina herbal con prácticas espirituales.</p>
                 </div>
 
                 <div class="culture-item">
-                    <h3>Tecnología</h3>
-                    <p>Herramientas líticas, arcos y flechas, cerbatanas, canoas monóxilas, y desarrollo de técnicas
-                        agrícolas adaptadas al entorno subtropical.<sup>[18]</sup></p>
+                    <i>🌎</i>
+                    <h3>Cosmovisión</h3>
+                    <p>Creencias animistas con dioses como Tupã (guaraníes) y seres mitológicos. Rituales importantes
+                        incluían el mitã pepy (bautismo guaraní) y ceremonias de iniciación.</p>
                 </div>
             </div>
         </section>
 
-        <section class="culture-section">
-            <h2>Legado Precolonial</h2>
-            <p>El legado de las culturas precoloniales sigue presente en la sociedad paraguaya
-                contemporánea:<sup>[19]</sup></p>
-            <ul style="margin-left: 2rem; margin-top: 1rem;">
-                <li>La persistencia del guaraní como lengua oficial junto al español, siendo uno de los pocos países
-                    latinoamericanos con una lengua indígena de uso generalizado.</li>
-                <li>Prácticas agrícolas tradicionales que persisten, especialmente en zonas rurales.</li>
-                <li>Conocimientos medicinales basados en plantas nativas.</li>
-                <li>Gastronomía con fuerte influencia indígena (mandioca, chipá, sopa paraguaya).</li>
-                <li>Artesanías como el ñandutí y la cerámica que mantienen técnicas ancestrales.</li>
-                <li>Cosmovisión y espiritualidad sincretizada con el catolicismo pero manteniendo elementos originarios.
-                </li>
-            </ul>
-        </section>
+        <section class="sources-section">
+            <h2>Fuentes y Referencias</h2>
 
-        <section class="sources-section" id="fuentes">
-            <h2>Fuentes y Referencias Bibliográficas</h2>
-
-            <span class="source-type">Libros y Publicaciones Académicas</span>
+            <span class="source-type">Libros:</span>
             <ul>
-                <li>[1] Susnik, Branislava. (1982). <em>El hombre y lo sobrenatural en la cultura Guaraní</em>.
-                    Asunción: Centro de Estudios Antropológicos de la Universidad Católica.</li>
-                <li>[2] Melià, Bartomeu. (1993). <em>El Guaraní conquistado y reducido</em>. Asunción: CEADUC.</li>
-                <li>[3] González Torres, Dionisio. (2007). <em>Cultura Guaraní</em>. Asunción: Servilibro.</li>
-                <li>[4] Susnik, Branislava. (1975). <em>Dispersión Tupí-Guaraní Prehistórica</em>. Asunción: Museo
-                    Etnográfico Andrés Barbero.</li>
-                <li>[5] Clastres, Pierre. (1989). <em>Society Against the State: Essays in Political Anthropology</em>.
-                    Nueva York: Zone Books.</li>
-                <li>[6] Cabeza de Vaca, Álvar Núñez. (1542/1989). <em>Naufragios y Comentarios</em>. Madrid: Historia
-                    16.</li>
+                <li>[1] Susnik, B. (1982). Los aborígenes del Paraguay. Museo Etnográfico Andrés Barbero.</li>
+                <li>[2] Service, E. (1954). Spanish-Guarani Relations in Early Colonial Paraguay. University of Michigan
+                    Press.</li>
+                <li>[3] Necker, L. (1990). Indios guaraníes y chamanes franciscanos. Biblioteca Paraguaya de
+                    Antropología.</li>
             </ul>
 
-            <span class="source-type">Artículos y Estudios Arqueológicos</span>
+            <span class="source-type">Artículos Académicos:</span>
             <ul>
-                <li>[7] Schmitz, Pedro Ignacio. (1991). "Migrantes da Amazônia: A Tradição Tupiguarani". <em>Arqueologia
-                        Pré-histórica do Rio Grande do Sul</em>, pp. 295-330.</li>
-                <li>[8] Noelli, Francisco Silva. (2004). "La distribución geográfica de las evidencias arqueológicas
-                    Guaraní". <em>Revista de Indias</em>, 64(230), 17-34.</li>
-                <li>[9] Metraux, Alfred. (1948). "The Guaraní". <em>Handbook of South American Indians</em>, 3, 69-94.
-                </li>
-                <li>[10] Susnik, Branislava. (1971). <em>El indio colonial del Paraguay: Los trece pueblos guaraníes de
-                        las misiones (1767-1803)</em>. Asunción: Museo Etnográfico Andrés Barbero.</li>
+                <li>[4] Ganson, B. (2003). "The Guaraní Under Spanish Rule in the Río de la Plata". Stanford University
+                    Press.</li>
+                <li>[5] Wilde, G. (2009). "Religión y poder en las misiones de guaraníes". Editorial SB.</li>
             </ul>
 
-            <span class="source-type">Instituciones y Recursos Documentales</span>
+            <span class="source-type">Documentos Históricos:</span>
             <ul>
-                <li>[11] Museo Etnográfico Andrés Barbero. (2015). <em>Catálogo de la Colección Arqueológica</em>.
-                    Asunción.</li>
-                <li>[12] Secretaría Nacional de Cultura de Paraguay. (2018). <em>Atlas Cultural del Paraguay</em>.
-                    Asunción: SNC.</li>
-                <li>[13] Hill, Kim & Hurtado, A. Magdalena. (1996). <em>Ache Life History: The Ecology and Demography of
-                        a Foraging People</em>. New York: Aldine de Gruyter.</li>
-                <li>[14] Ganson, Barbara. (2003). <em>The Guaraní Under Spanish Rule in the Río de la Plata</em>.
-                    Stanford: Stanford University Press.</li>
-                <li>[15] Museo del Barro. (2010). <em>Arte Indígena: Colección del Museo del Barro</em>. Asunción.</li>
+                <li>[6] Carta de Domingo Martínez de Irala (1556). Archivo General de Indias.</li>
+                <li>[7] Relación de Álvar Núñez Cabeza de Vaca (1545).</li>
             </ul>
 
-            <span class="source-type">Estudios Etnográficos y Antropológicos</span>
+            <span class="source-type">Fuentes en Línea:</span>
             <ul>
-                <li>[16] Cadogan, León. (1959). <em>Ayvu Rapyta: Textos míticos de los Mbyá-Guaraní del Guairá</em>. São
-                    Paulo: Universidade de São Paulo.</li>
-                <li>[17] Chase-Sardi, Miguel. (1992). <em>El precio de la sangre: Tuguy Ñeё Repy</em>. Asunción: CEADUC.
-                </li>
-                <li>[18] Schaden, Egon. (1974). <em>Aspectos Fundamentais da Cultura Guarani</em>. São Paulo: EPU/EDUSP.
-                </li>
-                <li>[19] Lehner, Beate. (2005). <em>Poblaciones indígenas del Paraguay: Una mirada desde el Censo
-                        2002</em>. Asunción: DGEEC.</li>
+                <li>[8] Museo del Barro, Asunción: <a href="https://www.museodelbarro.org"
+                        target="_blank">www.museodelbarro.org</a></li>
+                <li>[9] Proyecto Arqueológico Paraguay: <a href="https://www.paraguayarchaeology.edu.py"
+                        target="_blank">www.paraguayarchaeology.edu.py</a></li>
+            </ul>
+
+            <span class="source-type">Referencias del Contexto Mundial:</span>
+            <ul>
+                <li>[20] Diamond, J. (1997). Guns, Germs, and Steel. W.W. Norton & Company.</li>
+                <li>[21] Roberts, J.M. (1993). History of the World. Oxford University Press.</li>
+                <li>[22] Fernández-Armesto, F. (2000). Civilizations. Macmillan.</li>
+                <li>[35] Mann, C.C. (2005). 1491: New Revelations of the Americas Before Columbus. Knopf.</li>
             </ul>
         </section>
     </div>
 
     <footer class="footer">
-        <p>Paraguay Precolonial: Una exploración de las culturas originarias</p>
-        <p>© 2025 - Línea del Tiempo Interactiva</p>
+        <p>© 2025 Paraguay Precolonial - Proyecto Educativo</p>
+        <p>Este sitio web es con fines educativos y de divulgación histórica.</p>
+        <p>Elaborado por la Clase de Historia de la Música Paraguaya - Prof. Lic. Julio Franco</p>
     </footer>
 
     <script>
-        // Script para hacer la línea de tiempo interactiva
+        // Función para alternar la visibilidad de los detalles de la línea de tiempo en móviles
         document.getElementById('timelineToggle').addEventListener('click', function () {
-            const items = document.querySelectorAll('.timeline-item .content p');
-            items.forEach(item => {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach(item => {
                 if (item.style.display === 'none') {
                     item.style.display = 'block';
                 } else {
@@ -575,53 +930,19 @@
             });
         });
 
-        // Agregar animación al scroll
-        document.addEventListener('DOMContentLoaded', function () {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            const tribeCards = document.querySelectorAll('.tribe-card');
-            const cultureItems = document.querySelectorAll('.culture-item');
-
-            // Función simple para añadir efectos al hacer scroll
-            function checkPosition() {
-                const elements = [...timelineItems, ...tribeCards, ...cultureItems];
-                elements.forEach(element => {
-                    const position = element.getBoundingClientRect();
-
-                    // Si el elemento está en la ventana visible
-                    if (position.top < window.innerHeight && position.bottom >= 0) {
-                        element.style.opacity = '1';
-                        element.style.transform = 'translateY(0)';
-                    }
-                });
+        // Función para las pestañas de contexto mundial
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
 
-            // Inicializar estilos
-            timelineItems.forEach(item => {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(20px)';
-                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            });
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
 
-            tribeCards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            });
-
-            cultureItems.forEach(item => {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(20px)';
-                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            });
-
-            // Verificar posiciones al cargar y al hacer scroll
-            window.addEventListener('scroll', checkPosition);
-            window.addEventListener('resize', checkPosition);
-
-            // Verificar posiciones iniciales
-            checkPosition();
-        });
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
     </script>
-</body>
-
-</html>
