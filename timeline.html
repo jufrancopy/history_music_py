@@ -481,7 +481,6 @@
         function posicionarElementos() {
             const container = document.getElementById('timeline-content');
             const yearGroups = {};
-            let currentPosition = 80;
 
             // Agrupar autores por año, mes y día
             autores.forEach(autor => {
@@ -558,30 +557,31 @@
                             card.dataset.month = monthInt + 1;
                             card.dataset.day = dayInt;
                             card.dataset.nombre = autor.nombre.replace(/\s+/g, '-').toLowerCase();
+                            card.dataset.expanded = 'false'; // Tracking expansion state
 
                             card.innerHTML = `
-                                <div class="card-header">
-                                    <img src="${autor.imagen}" alt="${autor.nombre}" class="author-image">
-                                    <h2 class="author-name">${autor.nombre}</h2>
-                                </div>
-                                <div class="card-content">
-                                    <p><strong>Nacimiento:</strong> ${formatDate(autor.nacimiento)}</p>
-                                    <p><strong>Fallecimiento:</strong> ${formatDate(autor.fallecimiento)}</p>
-                                    <div class="obras-list">
-                                        <h3>Obras Destacadas</h3>
-                                        <ul>
-                                            ${autor.obras.map(obra => `<li>${obra}</li>`).join('')}
-                                        </ul>
-                                    </div>
-                                    <div class="historical-context">
-                                        <h4>Contexto Histórico</h4>
-                                        <ul>
-                                            ${autor.contexto.map(evento => `<li>${evento}</li>`).join('')}
-                                        </ul>
-                                    </div>
-                                </div>
-                                <span class="expand-indicator">Toca para expandir permanentemente</span>
-                            `;
+                        <div class="card-header">
+                            <img src="${autor.imagen}" alt="${autor.nombre}" class="author-image">
+                            <h2 class="author-name">${autor.nombre}</h2>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Nacimiento:</strong> ${formatDate(autor.nacimiento)}</p>
+                            <p><strong>Fallecimiento:</strong> ${formatDate(autor.fallecimiento)}</p>
+                            <div class="obras-list">
+                                <h3>Obras Destacadas</h3>
+                                <ul>
+                                    ${autor.obras.map(obra => `<li>${obra}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="historical-context">
+                                <h4>Contexto Histórico</h4>
+                                <ul>
+                                    ${autor.contexto.map(evento => `<li>${evento}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                        <span class="expand-indicator">Toca para expandir permanentemente</span>
+                    `;
 
                             // Evento clic para la tarjeta
                             card.addEventListener('click', function (e) {
@@ -589,8 +589,17 @@
                                 isUserInteracting = true;
                                 clearInterval(autoScrollInterval);
                                 this.classList.toggle('clicked');
+
+                                // Toggle expansion state
+                                const wasExpanded = this.dataset.expanded === 'true';
+                                this.dataset.expanded = wasExpanded ? 'false' : 'true';
+
                                 toggleCard(this);
-                                setTimeout(() => { isUserInteracting = false; iniciarAutoScroll(); }, 30000);
+                                setTimeout(() => {
+                                    reposicionarElementos(); // Reposicionar después de expandir/contraer
+                                    isUserInteracting = false;
+                                    iniciarAutoScroll();
+                                }, 500);
                             });
 
                             yearGroup.appendChild(card);
@@ -600,14 +609,24 @@
             });
 
             // Calcular alturas y posiciones
-            calcularPosiciones();
+            setTimeout(() => {
+                calcularPosiciones();
+                // Hacer visibles las tarjetas con un pequeño retraso
+                setTimeout(() => {
+                    document.querySelectorAll('.timeline-card').forEach(card => {
+                        card.classList.add('visible');
+                    });
+                }, 100);
+            }, 100);
         }
 
         // Función para calcular posiciones exactas
         function calcularPosiciones() {
             const yearGroups = document.querySelectorAll('.year-group');
-            let currentPosition = 80;
+            let currentPosition = 100; // Reducida la posición inicial
             let globalIndex = 0;
+            const isMobile = window.innerWidth <= 768;
+            const mobilePadding = isMobile ? 30 : 20; // Reducido drásticamente
 
             yearGroups.forEach(yearGroup => {
                 const yearNode = yearGroup.querySelector('.year-node');
@@ -615,14 +634,14 @@
                 const cards = yearGroup.querySelectorAll('.timeline-card');
 
                 yearNode.style.top = `${currentPosition}px`;
-                currentPosition += 80;
+                currentPosition += 50; // Espacio mínimo después del año
 
                 monthNodes.forEach(monthNode => {
                     const month = monthNode.dataset.month;
                     const dayNodes = yearGroup.querySelectorAll(`.day-node[data-month="${month}"]`);
 
                     monthNode.style.top = `${currentPosition}px`;
-                    currentPosition += 70;
+                    currentPosition += 40; // Espacio mínimo después del mes
 
                     dayNodes.forEach(dayNode => {
                         const day = dayNode.dataset.day;
@@ -630,7 +649,7 @@
                             card.dataset.month === month && card.dataset.day === day);
 
                         dayNode.style.top = `${currentPosition}px`;
-                        currentPosition += 60;
+                        currentPosition += 40; // Espacio mínimo después del día
 
                         dayCards.forEach((card, index) => {
                             const content = card.querySelector('.card-content');
@@ -638,162 +657,229 @@
 
                             if (!cardHeights.has(cardId)) {
                                 const headerHeight = card.querySelector('.card-header').offsetHeight;
-                                const expandedHeight = headerHeight + medirAlturaContenido(content);
-                                cardHeights.set(cardId, { collapsed: headerHeight, expanded: expandedHeight });
+                                // Medimos el contenido sin mostrar aún el card 
+                                const contentHeight = medirAlturaContenido(content);
+                                // Altura total considerando el header y el contenido expandido
+                                const totalExpandedHeight = headerHeight + contentHeight + 15; // Espacio mínimo
+
+                                cardHeights.set(cardId, {
+                                    collapsed: headerHeight + 10, // Reducido al mínimo
+                                    expanded: totalExpandedHeight
+                                });
                             }
 
-                            const side = globalIndex % 2 === 0 ? 'left' : 'right';
+                            // Asignar lado en desktop (alternando)
+                            const side = isMobile ? 'left' : (globalIndex % 2 === 0 ? 'left' : 'right');
                             card.dataset.originalSide = side;
                             card.dataset.globalIndex = globalIndex;
                             globalIndex++;
 
+                            // Posicionar la tarjeta
                             card.style.top = `${currentPosition}px`;
-                            card.className = `timeline-card ${side} visible`;
+                            card.className = `timeline-card ${side}`; // Se añadirá 'visible' más tarde
 
-                            currentPosition += cardHeights.get(cardId).collapsed + 60;
+                            // Incrementar la posición actual para la siguiente tarjeta
+                            const heights = cardHeights.get(cardId);
+                            currentPosition += heights.collapsed + mobilePadding; // Espaciado mínimo
                         });
                     });
                 });
 
-                currentPosition += 80;
+                // Añadir espacio adicional al final de cada grupo de año
+                currentPosition += (isMobile ? 40 : 30); // Mínimo espacio entre años
             });
 
-            document.querySelector('.timeline-container').style.height = `${currentPosition + 150}px`;
-            document.querySelector('.timeline-line').style.height = `${currentPosition + 150}px`;
+            // Ajustar altura del contenedor y línea del tiempo
+            document.querySelector('.timeline-container').style.height = `${currentPosition + 100}px`;
+            document.querySelector('.timeline-line').style.height = `${currentPosition + 100}px`;
         }
 
         // Función para reposicionar al expandir/contraer
         function reposicionarElementos() {
+            const isMobile = window.innerWidth <= 768;
             const yearGroups = document.querySelectorAll('.year-group');
-            let currentPosition = 80;
-            const allCards = Array.from(document.querySelectorAll('.timeline-card'));
-
-            allCards.sort((a, b) => parseInt(a.dataset.globalIndex) - parseInt(b.dataset.globalIndex));
+            let currentPosition = 100; // Igual que en calcularPosiciones
+            const mobilePadding = isMobile ? 30 : 20; // Igual que en calcularPosiciones
 
             yearGroups.forEach(yearGroup => {
                 const yearNode = yearGroup.querySelector('.year-node');
-                const monthNodes = yearGroup.querySelectorAll('.month-node');
+                const monthNodes = Array.from(yearGroup.querySelectorAll('.month-node'));
+                const dayNodes = Array.from(yearGroup.querySelectorAll('.day-node'));
+                const cards = Array.from(yearGroup.querySelectorAll('.timeline-card'));
 
+                // Actualizar posición del nodo de año
                 yearNode.style.top = `${currentPosition}px`;
-                currentPosition += 80;
+                currentPosition += 50; // Igual que en calcularPosiciones
 
-                monthNodes.forEach(monthNode => {
+                // Ordenar meses numéricamente
+                monthNodes.sort((a, b) => parseInt(a.dataset.month) - parseInt(b.dataset.month));
+
+                // Procesar cada mes
+                for (let i = 0; i < monthNodes.length; i++) {
+                    const monthNode = monthNodes[i];
                     const month = monthNode.dataset.month;
-                    const dayNodes = yearGroup.querySelectorAll(`.day-node[data-month="${month}"]`);
 
+                    // Actualizar posición del nodo de mes
                     monthNode.style.top = `${currentPosition}px`;
-                    currentPosition += 70;
+                    currentPosition += 40; // Igual que en calcularPosiciones
 
-                    dayNodes.forEach(dayNode => {
+                    // Filtrar y ordenar días de este mes
+                    const monthDayNodes = dayNodes.filter(node => node.dataset.month === month)
+                        .sort((a, b) => parseInt(a.dataset.day) - parseInt(b.dataset.day));
+
+                    // Procesar cada día
+                    for (let j = 0; j < monthDayNodes.length; j++) {
+                        const dayNode = monthDayNodes[j];
                         const day = dayNode.dataset.day;
-                        const dayCards = allCards.filter(card =>
-                            card.dataset.month === month && card.dataset.day === day && yearGroup.contains(card));
 
+                        // Actualizar posición del nodo de día
                         dayNode.style.top = `${currentPosition}px`;
-                        currentPosition += 60;
+                        currentPosition += 40; // Igual que en calcularPosiciones
 
-                        dayCards.forEach(card => {
+                        // Filtrar cards de este día y ordenar por índice global
+                        const dayCards = cards.filter(card =>
+                            card.dataset.month === month && card.dataset.day === day)
+                            .sort((a, b) => parseInt(a.dataset.globalIndex) - parseInt(b.dataset.globalIndex));
+
+                        // Procesar cada card
+                        for (let k = 0; k < dayCards.length; k++) {
+                            const card = dayCards[k];
                             const content = card.querySelector('.card-content');
-                            const isExpanded = content.classList.contains('expanded');
                             const cardId = card.dataset.nombre;
-                            const heights = cardHeights.get(cardId);
+                            const isExpanded = card.dataset.expanded === 'true' || content.classList.contains('expanded');
 
-                            const side = card.dataset.originalSide;
-
-                            card.style.top = `${currentPosition}px`;
+                            // Restaurar clase original de lado
+                            const side = isMobile ? 'left' : card.dataset.originalSide;
                             card.className = `timeline-card ${side} visible`;
 
-                            currentPosition += (isExpanded ? heights.expanded : heights.collapsed) + (isExpanded ? 90 : 60);
-                        });
-                    });
-                });
+                            // Si está expandido, añadir clase
+                            if (isExpanded) {
+                                content.classList.add('expanded');
+                            } else {
+                                content.classList.remove('expanded');
+                            }
 
-                currentPosition += 80;
-            });
+                            // Actualizar posición del card
+                            card.style.top = `${currentPosition}px`;
 
-            document.querySelector('.timeline-container').style.height = `${currentPosition + 150}px`;
-            document.querySelector('.timeline-line').style.height = `${currentPosition + 150}px`;
-        }
+                            // Calcular espacio para el siguiente elemento basado en si está expandido
+                            const heights = cardHeights.get(cardId);
+                            const cardHeight = isExpanded ? heights.expanded : heights.collapsed;
 
-        // Función para alternar tarjeta
-        function toggleCard(card) {
-            const content = card.querySelector('.card-content');
-            const wasExpanded = content.classList.contains('expanded');
-
-            content.classList.toggle('expanded');
-            card.querySelector('.expand-indicator').textContent = wasExpanded
-                ? 'Toca para expandir permanentemente'
-                : 'Contenido fijado (toca para cerrar)';
-        }
-
-        // Auto-scroll
-        function iniciarAutoScroll() {
-            if (isUserInteracting) return;
-            clearInterval(autoScrollInterval);
-
-            const cards = document.querySelectorAll('.timeline-card:not(.clicked)');
-            if (cards.length === 0) return;
-
-            let currentIndex = 0;
-
-            autoScrollInterval = setInterval(() => {
-                if (isUserInteracting) return;
-
-                const card = cards[currentIndex];
-                if (card) {
-                    window.scrollTo({
-                        top: card.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-
-                    card.style.transition = 'box-shadow 0.5s, transform 0.5s';
-                    card.style.boxShadow = '0 0 0 2px rgba(213, 43, 30, 0.5), 0 5px 20px rgba(0,0,0,0.15)';
-                    card.style.transform = 'scale(1.02)';
-
-                    setTimeout(() => {
-                        card.style.boxShadow = '';
-                        card.style.transform = '';
-                    }, 1500);
+                            // Añadir altura del card + padding adicional
+                            currentPosition += cardHeight + mobilePadding;
+                        }
+                    }
                 }
 
-                currentIndex = (currentIndex + 1) % cards.length;
-            }, 6000);
-        }
+                // Espacio adicional después de cada grupo de año
+                currentPosition += (isMobile ? 40 : 30); // Igual que en calcularPosiciones
+            });
 
-        // Formatear fecha
-        function formatDate(dateStr) {
-            try {
-                const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                return new Date(dateStr).toLocaleDateString('es-ES', options);
-            } catch (e) {
-                return dateStr;
+            // Actualizar altura del contenedor y línea
+            document.querySelector('.timeline-container').style.height = `${currentPosition + 100}px`;
+            document.querySelector('.timeline-line').style.height = `${currentPosition + 100}px`;
+        }
+        // Función para alternar expansión de tarjeta
+        // Función para alternar expansión de tarjeta
+        function toggleCard(card) {
+            const content = card.querySelector('.card-content');
+            content.classList.toggle('expanded');
+
+            // Actualizar el estado de expansión
+            card.dataset.expanded = content.classList.contains('expanded') ? 'true' : 'false';
+
+            // Detener auto-scroll cuando se expande una tarjeta
+            if (content.classList.contains('expanded')) {
+                isUserInteracting = true;
+                clearInterval(autoScrollInterval);
             }
         }
 
-        // Inicialización
+        // Función para formatear fecha
+        function formatDate(dateString) {
+            if (!dateString) return "Desconocido";
+            const date = new Date(dateString);
+            return `${date.getDate()} de ${monthNames[date.getMonth()]} de ${date.getFullYear()}`;
+        }
+
+        // Iniciar auto-scroll
+        function iniciarAutoScroll() {
+            if (isUserInteracting) return;
+
+            // Verificar si hay alguna tarjeta expandida
+            const expandedCards = document.querySelectorAll('.card-content.expanded');
+            if (expandedCards.length > 0) {
+                return; // No iniciar auto-scroll si hay tarjetas expandidas
+            }
+
+            clearInterval(autoScrollInterval);
+            autoScrollInterval = setInterval(() => {
+                if (!isUserInteracting) {
+                    window.scrollBy(0, 1);
+
+                    // Detener cuando llegue al final
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+                        clearInterval(autoScrollInterval);
+                        // Reiniciar después de 3 segundos
+                        setTimeout(() => {
+                            window.scrollTo(0, 0);
+                            setTimeout(iniciarAutoScroll, 2000);
+                        }, 3000);
+                    }
+                }
+            }, 25); // Velocidad de scroll
+        }
+
+        // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
             posicionarElementos();
 
-            setTimeout(() => {
-                document.querySelectorAll('.timeline-card').forEach(card => {
-                    card.classList.add('visible');
+            // Iniciar auto-scroll después de 2 segundos
+            setTimeout(iniciarAutoScroll, 2000);
+
+            // Detener el auto-scroll con cualquier interacción
+            ['mousedown', 'wheel', 'touchstart', 'keydown'].forEach(eventType => {
+                document.addEventListener(eventType, () => {
+                    isUserInteracting = true;
+                    clearInterval(autoScrollInterval);
                 });
-            }, 100);
-
-            window.addEventListener('resize', () => {
-                cardHeights.clear();
-                posicionarElementos();
             });
 
+            // Restaurar auto-scroll después de periodo de inactividad
+            ['mouseup', 'touchend', 'keyup'].forEach(eventType => {
+                document.addEventListener(eventType, () => {
+                    // Verificar si hay tarjetas expandidas
+                    const expandedCards = document.querySelectorAll('.card-content.expanded');
+                    if (expandedCards.length === 0) {
+                        // Solo restaurar si no hay tarjetas expandidas
+                        setTimeout(() => {
+                            isUserInteracting = false;
+                            iniciarAutoScroll();
+                        }, 5000); // 5 segundos de inactividad para reiniciar
+                    }
+                });
+            });
+
+            // Seguimiento de scroll para determinar interacción
+            let lastScrollTop = 0;
             window.addEventListener('scroll', () => {
-                isUserInteracting = true;
-                clearTimeout(window.scrollEndTimer);
-                window.scrollEndTimer = setTimeout(() => {
-                    isUserInteracting = false;
-                }, 2000);
-            });
+                const st = window.pageYOffset || document.documentElement.scrollTop;
+                if (Math.abs(lastScrollTop - st) > 10) { // Si el usuario hizo scroll significativo
+                    isUserInteracting = true;
+                    clearInterval(autoScrollInterval);
 
-            iniciarAutoScroll();
+                    // Verificar tarjetas expandidas antes de reiniciar
+                    const expandedCards = document.querySelectorAll('.card-content.expanded');
+                    if (expandedCards.length === 0) {
+                        setTimeout(() => {
+                            isUserInteracting = false;
+                            iniciarAutoScroll();
+                        }, 5000);
+                    }
+                }
+                lastScrollTop = st <= 0 ? 0 : st;
+            }, false);
         });
     </script>
 </body>

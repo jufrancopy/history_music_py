@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia del Paraguay - Timeline</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #1d4e89;
+            margin-bottom: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #1d4e89;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid #ce1126;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid #fff;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid #fff;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #fff transparent transparent;
+        }
+
+        .right::after {
+            left: -16px;
+        }
+
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .content h2 {
+            color: #ce1126;
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: #3971c1;
+            margin-bottom: 10px;
+        }
+
+        .content ul {
+            padding-left: 20px;
+        }
+
+        .content li {
+            margin-bottom: 8px;
+        }
+
+        .periodo-btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #1d4e89;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .periodo-btn:hover {
+            background-color: #3971c1;
+        }
+
+        .periodo-btn.active {
+            background-color: #ce1126;
+        }
+
+        .navigation {
+            text-align: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background-color: #f5f5f5;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .flag-colors {
+            display: flex;
+            height: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .flag-red {
+            background-color: #ce1126;
+            flex: 1;
+        }
+
+        .flag-white {
+            background-color: white;
+            flex: 1;
+        }
+
+        .flag-blue {
+            background-color: #1d4e89;
+            flex: 1;
+        }
+
+        @media screen and (max-width: 600px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .container::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+
+            .left::after,
+            .right::after {
+                left: 15px;
+            }
+
+            .right {
+                left: 0%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="flag-colors">
+        <div class="flag-red"></div>
+        <div class="flag-white"></div>
+        <div class="flag-blue"></div>
+    </div>
+
+    <div class="header">
+        <h1>Historia del Paraguay</h1>
+        <p>Un recorrido por los principales períodos históricos del Paraguay</p>
+    </div>
+
+    <div class="navigation">
+        <button class="periodo-btn active" onclick="filtrarPeriodo('all')">Todos</button>
+        <button class="periodo-btn" onclick="filtrarPeriodo('precolonial')">Precolonial</button>
+        <button class="periodo-btn" onclick="filtrarPeriodo('colonial')">Colonial</button>
+        <button class="periodo-btn" onclick="filtrarPeriodo('independencia')">Independencia</button>
+        <button class="periodo-btn" onclick="filtrarPeriodo('guerra-triple-alianza')">Guerra de la Triple
+            Alianza</button>
+        <button class="periodo-btn" onclick="filtrarPeriodo('posguerra')">Posguerra</button>
+        <button class="periodo-btn" onclick="filtrarPeriodo('siglo-xx')">Siglo XX</button>
+        <button class="periodo-btn" onclick="filtrarPeriodo('contemporaneo')">Contemporáneo</button>
+    </div>
+
+    <div class="timeline">
+
+        <!-- Período Precolonial -->
+        <div class="container left periodo precolonial">
+            <div class="content">
+                <h2>Período Precolonial</h2>
+                <h3>Hasta 1524</h3>
+                <ul>
+                    <li><strong>1000 a.C. - 1500 d.C.</strong>: Diversas comunidades indígenas habitan la región,
+                        principalmente los guaraníes.</li>
+                    <li><strong>Siglo XV</strong>: Los guaraníes desarrollan una sociedad basada en la agricultura y
+                        constituyen la etnia principal.</li>
+                    <li><strong>Cultura Guaraní</strong>: Organización en teýy (familias extensas) y tekoha
+                        (comunidades).</li>
+                    <li><strong>Presencia de otras etnias</strong>: Guaycurúes, Payaguás y Mbayás en el Chaco.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Período Colonial -->
+        <div class="container right periodo colonial">
+            <div class="content">
+                <h2>Período Colonial Temprano</h2>
+                <h3>1524-1600</h3>
+                <ul>
+                    <li><strong>1524</strong>: Alejo García, primer europeo en llegar a tierras paraguayas.</li>
+                    <li><strong>1537</strong>: Fundación del fuerte Nuestra Señora de la Asunción por Juan de Salazar.
+                    </li>
+                    <li><strong>1541</strong>: Domingo Martínez de Irala establece el cabildo de Asunción.</li>
+                    <li><strong>1556</strong>: Irala implementa el sistema de encomiendas.</li>
+                    <li><strong>1575</strong>: Llegada de los primeros jesuitas a Paraguay.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container left periodo colonial">
+            <div class="content">
+                <h2>Período Colonial Tardío</h2>
+                <h3>1600-1811</h3>
+                <ul>
+                    <li><strong>1609-1767</strong>: Establecimiento y desarrollo de las misiones jesuíticas guaraníes.
+                    </li>
+                    <li><strong>1721-1735</strong>: Revolución de los Comuneros, primera rebelión contra la Corona
+                        española.</li>
+                    <li><strong>1750</strong>: Tratado de Madrid entre España y Portugal afecta territorios de las
+                        misiones.</li>
+                    <li><strong>1767</strong>: Expulsión de los jesuitas de todos los territorios españoles.</li>
+                    <li><strong>1776</strong>: Creación del Virreinato del Río de la Plata, Paraguay queda subordinado a
+                        Buenos Aires.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Independencia y Dr. Francia -->
+        <div class="container right periodo independencia">
+            <div class="content">
+                <h2>Independencia y Dr. Francia</h2>
+                <h3>1811-1840</h3>
+                <ul>
+                    <li><strong>14 de mayo de 1811</strong>: Revolución de Independencia del Paraguay.</li>
+                    <li><strong>1813</strong>: Congreso declara la República del Paraguay.</li>
+                    <li><strong>1814-1840</strong>: Gobierno del Dr. José Gaspar Rodríguez de Francia como "Dictador
+                        Supremo".</li>
+                    <li><strong>Política de aislamiento</strong>: Cierre de fronteras para proteger la independencia.
+                    </li>
+                    <li><strong>Reformas económicas</strong>: Confiscación de tierras de la élite y la iglesia, creación
+                        de "Estancias de la Patria".</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Los López -->
+        <div class="container left periodo independencia">
+            <div class="content">
+                <h2>Era de los López</h2>
+                <h3>1840-1870</h3>
+                <ul>
+                    <li><strong>1840-1862</strong>: Gobierno de Carlos Antonio López, primer presidente constitucional.
+                    </li>
+                    <li><strong>1844</strong>: Reconocimiento internacional de la independencia paraguaya.</li>
+                    <li><strong>1854</strong>: Primera línea de ferrocarril en Sudamérica.</li>
+                    <li><strong>1862-1870</strong>: Francisco Solano López asume la presidencia.</li>
+                    <li><strong>Modernización</strong>: Desarrollo industrial, contratación de técnicos europeos,
+                        fundación de la primera fundición de hierro.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Guerra de la Triple Alianza -->
+        <div class="container right periodo guerra-triple-alianza">
+            <div class="content">
+                <h2>Guerra de la Triple Alianza</h2>
+                <h3>1864-1870</h3>
+                <ul>
+                    <li><strong>1864</strong>: Inicio del conflicto con la intervención brasileña en Uruguay.</li>
+                    <li><strong>1865</strong>: Formación de la Triple Alianza (Argentina, Brasil y Uruguay) contra
+                        Paraguay.</li>
+                    <li><strong>1866</strong>: Batalla de Curupayty, victoria paraguaya.</li>
+                    <li><strong>1868</strong>: Caída de la fortaleza de Humaitá.</li>
+                    <li><strong>1 de marzo de 1870</strong>: Batalla de Cerro Corá, muerte de Francisco Solano López.
+                    </li>
+                    <li><strong>Consecuencias</strong>: Devastación del país, pérdida de aproximadamente el 60-70% de la
+                        población y gran parte de su territorio.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Posguerra y Reconstrucción -->
+        <div class="container left periodo posguerra">
+            <div class="content">
+                <h2>Posguerra y Reconstrucción</h2>
+                <h3>1870-1900</h3>
+                <ul>
+                    <li><strong>1870</strong>: Nueva constitución liberal bajo ocupación aliada.</li>
+                    <li><strong>1871-1874</strong>: Gobierno de Salvador Jovellanos.</li>
+                    <li><strong>1874</strong>: Fundación del Partido Colorado.</li>
+                    <li><strong>1887</strong>: Fundación del Partido Liberal.</li>
+                    <li><strong>1875-1877</strong>: Gobierno de Juan Bautista Gill.</li>
+                    <li><strong>1878</strong>: Tratado Loizaga-Cotegipe con Brasil, definición de fronteras.</li>
+                    <li><strong>1887</strong>: Firma con Argentina del Tratado Aceval-Tamayo, definición de fronteras en
+                        el Chaco.</li>
+                    <li><strong>1880s-1900</strong>: Venta masiva de tierras públicas a empresas extranjeras.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Era Liberal -->
+        <div class="container right periodo siglo-xx">
+            <div class="content">
+                <h2>Era Liberal</h2>
+                <h3>1904-1936</h3>
+                <ul>
+                    <li><strong>1904</strong>: Revolución Liberal, inicio de la hegemonía liberal.</li>
+                    <li><strong>1912</strong>: Fundación del Partido Socialista.</li>
+                    <li><strong>1922-1923</strong>: Guerra Civil paraguaya.</li>
+                    <li><strong>1924</strong>: Masacre de obreros en Puerto Pinasco.</li>
+                    <li><strong>1928-1932</strong>: Presidencia de José P. Guggiari.</li>
+                    <li><strong>1932-1935</strong>: Guerra del Chaco contra Bolivia, victoria paraguaya.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Revolución Febrerista y Guerra Civil -->
+        <div class="container left periodo siglo-xx">
+            <div class="content">
+                <h2>Revolución Febrerista y Guerra Civil</h2>
+                <h3>1936-1954</h3>
+                <ul>
+                    <li><strong>1936</strong>: Revolución Febrerista liderada por el Coronel Rafael Franco.</li>
+                    <li><strong>1939-1940</strong>: Presidencia de José Félix Estigarribia, nueva constitución.</li>
+                    <li><strong>1940-1948</strong>: Dictadura de Higinio Morínigo.</li>
+                    <li><strong>1947</strong>: Guerra Civil paraguaya, victoria del Partido Colorado.</li>
+                    <li><strong>1949</strong>: El Partido Colorado divide el país en "franjas", iniciando persecuciones
+                        políticas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Dictadura de Stroessner -->
+        <div class="container right periodo siglo-xx">
+            <div class="content">
+                <h2>Dictadura de Stroessner</h2>
+                <h3>1954-1989</h3>
+                <ul>
+                    <li><strong>1954</strong>: Golpe de Estado del General Alfredo Stroessner.</li>
+                    <li><strong>1959</strong>: Levantamientos guerrilleros, represión sistemática.</li>
+                    <li><strong>1970s</strong>: Construcción de la represa hidroeléctrica Itaipú con Brasil.</li>
+                    <li><strong>1975</strong>: Inicio de la Operación Cóndor, coordinación represiva entre dictaduras
+                        sudamericanas.</li>
+                    <li><strong>1980s</strong>: Creciente oposición y presión internacional por violaciones de derechos
+                        humanos.</li>
+                    <li><strong>1982-1983</strong>: Crisis económica por finalización de obras de Itaipú.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Transición Democrática -->
+        <div class="container left periodo contemporaneo">
+            <div class="content">
+                <h2>Transición Democrática</h2>
+                <h3>1989-2000</h3>
+                <ul>
+                    <li><strong>3 de febrero de 1989</strong>: Golpe de Estado liderado por el General Andrés Rodríguez.
+                    </li>
+                    <li><strong>1991</strong>: Primeras elecciones municipales libres.</li>
+                    <li><strong>1992</strong>: Nueva Constitución democrática.</li>
+                    <li><strong>1993</strong>: Juan Carlos Wasmosy, primer presidente civil electo en elecciones libres.
+                    </li>
+                    <li><strong>1996</strong>: Crisis política por intento de golpe de Estado del General Lino Oviedo.
+                    </li>
+                    <li><strong>1999</strong>: "Marzo Paraguayo", asesinato del vicepresidente Luis María Argaña y
+                        manifestaciones populares.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Paraguay Contemporáneo -->
+        <div class="container right periodo contemporaneo">
+            <div class="content">
+                <h2>Paraguay Contemporáneo</h2>
+                <h3>2000-presente</h3>
+                <ul>
+                    <li><strong>2003-2008</strong>: Presidencia de Nicanor Duarte Frutos.</li>
+                    <li><strong>2008</strong>: Fernando Lugo, primer presidente no colorado en más de 60 años.</li>
+                    <li><strong>2012</strong>: Juicio político y destitución de Fernando Lugo.</li>
+                    <li><strong>2013-2018</strong>: Presidencia de Horacio Cartes.</li>
+                    <li><strong>2018-presente</strong>: Presidencia de Mario Abdo Benítez.</li>
+                    <li><strong>2020-2022</strong>: Crisis sanitaria y económica por la pandemia de COVID-19.</li>
+                    <li><strong>2023</strong>: Santiago Peña asume la presidencia.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function filtrarPeriodo(periodo) {
+            // Actualizar botones activos
+            const botones = document.querySelectorAll('.periodo-btn');
+            botones.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filtrar períodos
+            const periodos = document.querySelectorAll('.periodo');
+            periodos.forEach(p => {
+                if (periodo === 'all') {
+                    p.style.display = 'block';
+                } else {
+                    if (p.classList.contains(periodo)) {
+                        p.style.display = 'block';
+                    } else {
+                        p.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

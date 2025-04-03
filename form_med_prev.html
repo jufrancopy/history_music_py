@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocuestionario del Paciente - Asuriesgo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .progress {
+            height: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn-custom {
+            background-color: #0f6f61;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+        }
+
+        .btn-custom:hover {
+            background-color: #0d5c50;
+            color: white;
+        }
+
+        .question {
+            margin-bottom: 25px;
+        }
+
+        .question-title {
+            color: #0f6f61;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+        }
+
+        .summary-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-title {
+            font-weight: 600;
+            color: #0f6f61;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-container">
+                    <h2 class="text-center mb-4">Autocuestionario del Paciente</h2>
+                    <p class="text-center mb-4">Complete este formulario antes de su consulta</p>
+
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 0%" id="progressBar">
+                        </div>
+                    </div>
+
+                    <form id="patientForm">
+                        <!-- Paso 1: Datos Generales -->
+                        <div class="step active" id="step1">
+                            <h4 class="question-title">A. Datos Generales</h4>
+
+                            <div class="question">
+                                <label for="nombre" class="form-label">Nombre completo</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            </div>
+
+                            <div class="question">
+                                <label for="edad" class="form-label">Edad</label>
+                                <input type="number" class="form-control" id="edad" name="edad" min="18" max="120"
+                                    required>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Vive solo?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="vive_solo" id="vive_solo_si"
+                                        value="si" required>
+                                    <label class="form-check-label" for="vive_solo_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="vive_solo" id="vive_solo_no"
+                                        value="no">
+                                    <label class="form-check-label" for="vive_solo_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Recibe ayuda para sus actividades diarias?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ayuda_actividades" id="ayuda_si"
+                                        value="si" required>
+                                    <label class="form-check-label" for="ayuda_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ayuda_actividades" id="ayuda_no"
+                                        value="no">
+                                    <label class="form-check-label" for="ayuda_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary disabled">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(1, 2)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 2: Actividades de la Vida Diaria -->
+                        <div class="step" id="step2">
+                            <h4 class="question-title">B. Actividades de la Vida Diaria (AVD)</h4>
+                            <p>Marque las actividades que puede realizar sin ayuda:</p>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="avd" id="avd_vestirse"
+                                        value="vestirse">
+                                    <label class="form-check-label" for="avd_vestirse">Se viste solo</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="avd" id="avd_alimentarse"
+                                        value="alimentarse">
+                                    <label class="form-check-label" for="avd_alimentarse">Se alimenta solo</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="avd" id="avd_movilizarse"
+                                        value="movilizarse">
+                                    <label class="form-check-label" for="avd_movilizarse">Se moviliza sin ayuda</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="avd" id="avd_banio"
+                                        value="banio">
+                                    <label class="form-check-label" for="avd_banio">No necesita ayuda para ir al
+                                        baño</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="avd" id="avd_higiene"
+                                        value="higiene">
+                                    <label class="form-check-label" for="avd_higiene">Mantiene higiene personal</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(2, 1)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(2, 3)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 3: Evaluación de Deterioro Cognitivo -->
+                        <div class="step" id="step3">
+                            <h4 class="question-title">C. Evaluación de Deterioro Cognitivo</h4>
+
+                            <div class="question">
+                                <label class="form-label">¿Olvida con frecuencia fechas o nombres?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="olvido_fechas" id="olvido_si"
+                                        value="si" required>
+                                    <label class="form-check-label" for="olvido_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="olvido_fechas" id="olvido_no"
+                                        value="no">
+                                    <label class="form-check-label" for="olvido_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Se desorienta en lugares conocidos?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="desorientacion"
+                                        id="desorientacion_si" value="si" required>
+                                    <label class="form-check-label" for="desorientacion_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="desorientacion"
+                                        id="desorientacion_no" value="no">
+                                    <label class="form-check-label" for="desorientacion_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Tiene dificultad para seguir conversaciones o
+                                    instrucciones?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="dificultad_conversacion"
+                                        id="dificultad_si" value="si" required>
+                                    <label class="form-check-label" for="dificultad_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="dificultad_conversacion"
+                                        id="dificultad_no" value="no">
+                                    <label class="form-check-label" for="dificultad_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(3, 2)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(3, 4)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 4: Enfermedades Crónicas -->
+                        <div class="step" id="step4">
+                            <h4 class="question-title">B. Enfermedades Crónicas</h4>
+                            <p>Marque las condiciones que padece:</p>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="enfermedades"
+                                        id="hipertension" value="hipertension">
+                                    <label class="form-check-label" for="hipertension">Hipertensión Arterial</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="enfermedades" id="diabetes"
+                                        value="diabetes">
+                                    <label class="form-check-label" for="diabetes">Diabetes / Prediabetes</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="enfermedades" id="pulmonar"
+                                        value="pulmonar">
+                                    <label class="form-check-label" for="pulmonar">Enfermedad Pulmonar (EPOC,
+                                        Asma)</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="enfermedades"
+                                        id="cardiovascular" value="cardiovascular">
+                                    <label class="form-check-label" for="cardiovascular">Enfermedad
+                                        Cardiovascular</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="enfermedades"
+                                        id="cerebrovascular" value="cerebrovascular">
+                                    <label class="form-check-label" for="cerebrovascular">Enfermedad
+                                        Cerebrovascular</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="enfermedades" id="renal"
+                                        value="renal">
+                                    <label class="form-check-label" for="renal">Enfermedad Renal Crónica</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="enfermedades"
+                                        id="reumatologica" value="reumatologica">
+                                    <label class="form-check-label" for="reumatologica">Enfermedad Reumatológica</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label for="otras_enfermedades" class="form-label">Otras enfermedades
+                                    (especifique):</label>
+                                <input type="text" class="form-control" id="otras_enfermedades"
+                                    name="otras_enfermedades">
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(4, 3)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(4, 5)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 5: Medicación Actual -->
+                        <div class="step" id="step5">
+                            <h4 class="question-title">C. Medicación Actual</h4>
+
+                            <div class="question">
+                                <label for="medicamento1" class="form-label">Fármaco 1</label>
+                                <input type="text" class="form-control" id="medicamento1" name="medicamentos[]">
+                            </div>
+
+                            <div class="question">
+                                <label for="medicamento2" class="form-label">Fármaco 2</label>
+                                <input type="text" class="form-control" id="medicamento2" name="medicamentos[]">
+                            </div>
+
+                            <div class="question">
+                                <label for="medicamento3" class="form-label">Fármaco 3</label>
+                                <input type="text" class="form-control" id="medicamento3" name="medicamentos[]">
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Cumple con el tratamiento?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cumple_tratamiento"
+                                        id="cumple_si" value="si" required>
+                                    <label class="form-check-label" for="cumple_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cumple_tratamiento"
+                                        id="cumple_no" value="no">
+                                    <label class="form-check-label" for="cumple_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(5, 4)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(5, 6)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 6: Escala de Fragilidad Clínica -->
+                        <div class="step" id="step6">
+                            <h4 class="question-title">D. Escala de Fragilidad Clínica</h4>
+
+                            <div class="question">
+                                <label class="form-label">¿Siente cansancio frecuente?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cansancio" id="cansancio_si"
+                                        value="si" required>
+                                    <label class="form-check-label" for="cansancio_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cansancio" id="cansancio_no"
+                                        value="no">
+                                    <label class="form-check-label" for="cansancio_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Tiene dificultad para caminar 100 metros?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="dificultad_caminar"
+                                        id="caminar_si" value="si" required>
+                                    <label class="form-check-label" for="caminar_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="dificultad_caminar"
+                                        id="caminar_no" value="no">
+                                    <label class="form-check-label" for="caminar_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Ha tenido alguna caída en los últimos 6 meses?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="caidas" id="caidas_si" value="si"
+                                        required>
+                                    <label class="form-check-label" for="caidas_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="caidas" id="caidas_no"
+                                        value="no">
+                                    <label class="form-check-label" for="caidas_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Ha experimentado pérdida de peso no intencionada?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="perdida_peso" id="peso_si"
+                                        value="si" required>
+                                    <label class="form-check-label" for="peso_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="perdida_peso" id="peso_no"
+                                        value="no">
+                                    <label class="form-check-label" for="peso_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(6, 5)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(6, 7)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 7: Factores de Riesgo Cardiovascular -->
+                        <div class="step" id="step7">
+                            <h4 class="question-title">E. Factores de Riesgo Cardiovascular</h4>
+
+                            <div class="question">
+                                <label class="form-label">Califique su dieta:</label>
+                                <select class="form-select" name="dieta" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="excelente">Excelente</option>
+                                    <option value="bueno">Bueno</option>
+                                    <option value="regular">Regular</option>
+                                    <option value="deficiente">Deficiente</option>
+                                </select>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">Actividad física (minutos semanales de ejercicio
+                                    moderado-intenso):</label>
+                                <select class="form-select" name="actividad_fisica" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="mas_150">Más de 150 min</option>
+                                    <option value="75_150">75-150 min</option>
+                                    <option value="menos_75">Menos de 75 min</option>
+                                </select>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">Exposición a nicotina:</label>
+                                <select class="form-select" name="nicotina" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="no_usa">No usa</option>
+                                    <option value="ocasional">Uso ocasional</option>
+                                    <option value="frecuente">Uso frecuente</option>
+                                </select>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">Horas promedio de sueño por noche:</label>
+                                <select class="form-select" name="sueño" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="7_9">7-9h (ideal)</option>
+                                    <option value="5_6">5-6h</option>
+                                    <option value="menos_5">Menos de 5h</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(7, 6)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(7, 8)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 8: Salud Emocional -->
+                        <div class="step" id="step8">
+                            <h4 class="question-title">F. Salud Emocional</h4>
+
+                            <div class="question">
+                                <label class="form-label">¿Ha sentido estrés intenso en el último mes?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="estres" id="estres_si" value="si"
+                                        required>
+                                    <label class="form-check-label" for="estres_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="estres" id="estres_no"
+                                        value="no">
+                                    <label class="form-check-label" for="estres_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Presenta episodios de pánico o ansiedad repentina?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="panico" id="panico_si" value="si"
+                                        required>
+                                    <label class="form-check-label" for="panico_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="panico" id="panico_no"
+                                        value="no">
+                                    <label class="form-check-label" for="panico_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label class="form-label">¿Siente tristeza o falta de interés en actividades diarias por
+                                    más de dos semanas?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tristeza" id="tristeza_si"
+                                        value="si" required>
+                                    <label class="form-check-label" for="tristeza_si">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tristeza" id="tristeza_no"
+                                        value="no">
+                                    <label class="form-check-label" for="tristeza_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="question">
+                                <label for="observaciones_emocionales" class="form-label">Observaciones:</label>
+                                <textarea class="form-control" id="observaciones_emocionales"
+                                    name="observaciones_emocionales" rows="3"></textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(8, 7)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="nextStep(8, 9)">Siguiente</button>
+                            </div>
+                        </div>
+
+                        <!-- Paso 9: Resumen y Finalización -->
+                        <div class="step" id="step9">
+                            <h4 class="question-title">Resumen de su evaluación</h4>
+
+                            <div id="resumenContainer">
+                                <!-- Aquí se generará el resumen dinámicamente -->
+                            </div>
+
+                            <div class="chart-container">
+                                <canvas id="riskChart"></canvas>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="prevStep(9, 8)">Anterior</button>
+                                <button type="button" class="btn btn-custom" onclick="submitForm()">Guardar y
+                                    Finalizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para imprimir/compartir -->
+    <div class="modal fade" id="finalModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Evaluación completada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="printContent">
+                        <h4 class="text-center">Reporte de Evaluación Integral</h4>
+                        <div id="reportContent">
+                            <!-- Contenido del reporte generado dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-custom" onclick="window.print()">Imprimir</button>
+                    <button type="button" class="btn btn-custom" onclick="shareReport()">Compartir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Configuración inicial
+        const totalSteps = 9;
+        let currentStep = 1;
+        let formData = {};
+
+        // Inicializar el gráfico
+        let riskChart;
+
+        // Función para avanzar al siguiente paso
+        function nextStep(current, next) {
+            // Validar campos requeridos
+            const currentStepElement = document.getElementById(`step${current}`);
+            const requiredInputs = currentStepElement.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredInputs.forEach(input => {
+                if (!input.value && !input.checked) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos requeridos',
+                    text: 'Por favor complete todos los campos obligatorios antes de continuar.',
+                });
+                return;
+            }
+
+            // Guardar datos del paso actual
+            saveStepData(current);
+
+            // Actualizar progreso
+            updateProgress(next);
+
+            // Cambiar de paso
+            document.getElementById(`step${current}`).classList.remove('active');
+            document.getElementById(`step${next}`).classList.add('active');
+            currentStep = next;
+
+            // Si es el último paso, generar resumen
+            if (next === totalSteps) {
+                generateSummary();
+                generateCharts();
+            }
+        }
+
+        // Función para retroceder al paso anterior
+        function prevStep(current, prev) {
+            // Guardar datos del paso actual
+            saveStepData(current);
+
+            // Actualizar progreso
+            updateProgress(prev);
+
+            // Cambiar de paso
+            document.getElementById(`step${current}`).classList.remove('active');
+            document.getElementById(`step${prev}`).classList.add('active');
+            currentStep = prev;
+        }
+
+        // Función para actualizar la barra de progreso
+        function updateProgress(step) {
+            const progressPercentage = (step / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercentage}%`;
+        }
+
+        // Función para guardar datos del paso actual
+        function saveStepData(step) {
+            const stepElement = document.getElementById(`step${step}`);
+            const inputs = stepElement.querySelectorAll('input, select, textarea');
+
+            inputs.forEach(input => {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    if (input.checked) {
+                        if (!formData[input.name]) {
+                            formData[input.name] = [];
+                        }
+                        formData[input.name].push(input.value);
+                    }
+                } else {
+                    formData[input.name] = input.value;
+                }
+            });
+        }
+
+        // Función para generar el resumen
+        function generateSummary() {
+            const resumenContainer = document.getElementById('resumenContainer');
+            let html = '';
+
+            // Datos generales
+            html += `
+        <div class="summary-item">
+          <h5 class="summary-title">Datos Generales</h5>
+          <p><strong>Nombre:</strong> ${formData.nombre || 'No proporcionado'}</p>
+          <p><strong>Edad:</strong> ${formData.edad || 'No proporcionado'}</p>
+          <p><strong>Vive solo:</strong> ${formData.vive_solo === 'si' ? 'Sí' : 'No'}</p>
+          <p><strong>Recibe ayuda:</strong> ${formData.ayuda_actividades === 'si' ? 'Sí' : 'No'}</p>
+        </div>
+      `;
+
+            // Actividades de la Vida Diaria
+            const avdNoCount = 5 - (formData.avd ? formData.avd.length : 0);
+            let avdStatus = '';
+            if (avdNoCount === 0) avdStatus = '<span class="badge bg-success">Independiente</span>';
+            else if (avdNoCount <= 2) avdStatus = '<span class="badge bg-warning">Dependencia moderada</span>';
+            else avdStatus = '<span class="badge bg-danger">Dependencia severa</span>';
+
+            html += `
+        <div class="summary-item">
+          <h5 class="summary-title">Actividades de la Vida Diaria</h5>
+          <p><strong>Total de "No":</strong> ${avdNoCount} ${avdStatus}</p>
+          <p><strong>Puede realizar:</strong> ${formData.avd ? formData.avd.join(', ') : 'Ninguna'}</p>
+        </div>
+      `;
+
+            // Enfermedades crónicas
+            html += `
+        <div class="summary-item">
+          <h5 class="summary-title">Enfermedades Crónicas</h5>
+          <p>${formData.enfermedades ? formData.enfermedades.join(', ') : 'Ninguna reportada'}</p>
+          ${formData.otras_enfermedades ? `<p><strong>Otras:</strong> ${formData.otras_enfermedades}</p>` : ''}
+        </div>
+      `;
+
+            // Factores de riesgo cardiovascular
+            html += `
+        <div class="summary-item">
+          <h5 class="summary-title">Factores de Riesgo Cardiovascular</h5>
+          <p><strong>Dieta:</strong> ${formatOption(formData.dieta)}</p>
+          <p><strong>Actividad física:</strong> ${formatOption(formData.actividad_fisica)}</p>
+          <p><strong>Nicotina:</strong> ${formatOption(formData.nicotina)}</p>
+          <p><strong>Sueño:</strong> ${formatOption(formData.sueño)}</p>
+        </div>
+      `;
+
+            // Salud emocional
+            html += `
+        <div class="summary-item">
+          <h5 class="summary-title">Salud Emocional</h5>
+          <p><strong>Estrés intenso:</strong> ${formData.estres === 'si' ? 'Sí' : 'No'}</p>
+          <p><strong>Episodios de pánico:</strong> ${formData.panico === 'si' ? 'Sí' : 'No'}</p>
+          <p><strong>Tristeza persistente:</strong> ${formData.tristeza === 'si' ? 'Sí' : 'No'}</p>
+          ${formData.observaciones_emocionales ? `<p><strong>Observaciones:</strong> ${formData.observaciones_emocionales}</p>` : ''}
+        </div>
+      `;
+
+            resumenContainer.innerHTML = html;
+
+            // Generar también el contenido para el reporte final
+            generateReportContent();
+        }
+
+        // Función para formatear opciones
+        function formatOption(value) {
+            if (!value) return 'No proporcionado';
+
+            const options = {
+                'excelente': 'Excelente',
+                'bueno': 'Bueno',
+                'regular': 'Regular',
+                'deficiente': 'Deficiente',
+                'mas_150': 'Más de 150 min',
+                '75_150': '75-150 min',
+                'menos_75': 'Menos de 75 min',
+                'no_usa': 'No usa',
+                'ocasional': 'Uso ocasional',
+                'frecuente': 'Uso frecuente',
+                '7_9': '7-9h (ideal)',
+                '5_6': '5-6h',
+                'menos_5': 'Menos de 5h'
+            };
+
+            return options[value] || value;
+        }
+
+        // Función para generar gráficos
+        function generateCharts() {
+            const ctx = document.getElementById('riskChart').getContext('2d');
+
+            if (riskChart) {
+                riskChart.destroy();
+            }
+
+            // Datos de ejemplo para el gráfico
+            riskChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Actividad Física', 'Dieta', 'Sueño', 'Nicotina', 'Salud Emocional', 'Enfermedades'],
+                    datasets: [{
+                        label: 'Perfil de Riesgo',
+                        data: [
+                            formData.actividad_fisica === 'mas_150' ? 100 : formData.actividad_fisica === '75_150' ? 70 : 30,
+                            formData.dieta === 'excelente' ? 100 : formData.dieta === 'bueno' ? 75 : formData.dieta === 'regular' ? 50 : 25,
+                            formData.sueño === '7_9' ? 100 : formData.sueño === '5_6' ? 60 : 30,
+                            formData.nicotina === 'no_usa' ? 100 : formData.nicotina === 'ocasional' ? 60 : 20,
+                            formData.estres === 'no' && formData.panico === 'no' && formData.tristeza === 'no' ? 100 :
+                                (formData.estres === 'si' || formData.panico === 'si' || formData.tristeza === 'si') ? 40 : 70,
+                            formData.enfermedades ? 100 - (formData.enfermedades.length * 15) : 100
+                        ],
+                        backgroundColor: 'rgba(15, 111, 97, 0.2)',
+                        borderColor: 'rgba(15, 111, 97, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(15, 111, 97, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // Función para generar el contenido del reporte
+        function generateReportContent() {
+            const reportContainer = document.getElementById('reportContent');
+            let html = `
+        <div class="mb-4">
+          <h5>Datos del Paciente:</h5>
+          <p><strong>Nombre:</strong> ${formData.nombre || 'No proporcionado'}</p>
+          <p><strong>Edad:</strong> ${formData.edad || 'No proporcionado'}</p>
+          <p><strong>Fecha de Evaluación:</strong> ${new Date().toLocaleDateString()}</p>
+        </div>
+        
+        <div class="mb-4">
+          <h5>1. Evaluación de Factores de Riesgo Cardiovascular</h5>
+          <p><strong>Dieta saludable:</strong> ${formatOption(formData.dieta)}</p>
+          <p><strong>Actividad física:</strong> ${formatOption(formData.actividad_fisica)}</p>
+          <p><strong>Exposición a nicotina:</strong> ${formatOption(formData.nicotina)}</p>
+          <p><strong>Sueño:</strong> ${formatOption(formData.sueño)}</p>
+        </div>
+        
+        <div class="mb-4">
+          <h5>2. Evaluación de Salud Emocional</h5>
+          <p><strong>Estrés intenso:</strong> ${formData.estres === 'si' ? 'Sí' : 'No'}</p>
+          <p><strong>Episodios de pánico:</strong> ${formData.panico === 'si' ? 'Sí' : 'No'}</p>
+          <p><strong>Tristeza persistente:</strong> ${formData.tristeza === 'si' ? 'Sí' : 'No'}</p>
+        </div>
+        
+        <div class="mb-4">
+          <h5>3. Evaluación de Fragilidad</h5>
+          <p><strong>Actividades de la Vida Diaria:</strong> ${formData.avd ? formData.avd.join(', ') : 'Ninguna'}</p>
+          <p><strong>Estado funcional:</strong> ${avdNoCount === 0 ? 'Independiente' : avdNoCount <= 2 ? 'Dependencia parcial' : 'Dependencia total'}</p>
+        </div>
+        
+        <div class="mb-4">
+          <h5>4. Diagnóstico Final y Recomendaciones</h5>
+          <p>Se recomienda:</p>
+          <ul>
+            ${getRecommendations()}
+          </ul>
+        </div>
+      `;
+
+            reportContainer.innerHTML = html;
+        }
+
+        // Función para generar recomendaciones basadas en los datos
+        function getRecommendations() {
+            let recommendations = [];
+
+            // Recomendaciones basadas en actividad física
+            if (formData.actividad_fisica === 'menos_75') {
+                recommendations.push('Incrementar actividad física a al menos 150 minutos semanales');
+            }
+
+            // Recomendaciones basadas en dieta
+            if (formData.dieta === 'regular' || formData.dieta === 'deficiente') {
+                recommendations.push('Mejorar hábitos alimenticios con asesoría nutricional');
+            }
+
+            // Recomendaciones basadas en nicotina
+            if (formData.nicotina === 'frecuente') {
+                recommendations.push('Considerar programas para dejar de fumar');
+            }
+
+            // Recomendaciones basadas en salud emocional
+            if (formData.estres === 'si' || formData.panico === 'si' || formData.tristeza === 'si') {
+                recommendations.push('Evaluación psicológica o psiquiátrica');
+            }
+
+            // Recomendaciones basadas en enfermedades crónicas
+            if (formData.enfermedades && formData.enfermedades.length > 0) {
+                recommendations.push('Seguimiento médico regular para condiciones crónicas');
+            }
+
+            // Si no hay recomendaciones específicas
+            if (recommendations.length === 0) {
+                recommendations.push('Mantener hábitos saludables actuales');
+            }
+
+            return recommendations.map(rec => `<li>${rec}</li>`).join('');
+        }
+
+        // Función para enviar el formulario
+        function submitForm() {
+            // Guardar datos del último paso
+            saveStepData(totalSteps);
+
+            // Preparar datos para Firebase
+            const firebaseData = prepareForFirebase();
+
+            // Aquí iría la conexión con Firebase en un entorno real
+            console.log('Datos para Firebase:', firebaseData);
+
+            // Mostrar modal con opciones
+            const finalModal = new bootstrap.Modal(document.getElementById('finalModal'));
+            finalModal.show();
+
+            // Mostrar SweetAlert de confirmación
+            Swal.fire({
+                icon: 'success',
+                title: 'Evaluación completada',
+                text: 'Su información ha sido guardada correctamente.',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#0f6f61'
+            });
+        }
+
+        // Función para preparar datos para Firebase
+        function prepareForFirebase() {
+            return {
+                datosGenerales: {
+                    nombre: formData.nombre,
+                    edad: formData.edad,
+                    viveSolo: formData.vive_solo === 'si',
+                    ayudaActividades: formData.ayuda_actividades === 'si'
+                },
+                actividadesVidaDiaria: {
+                    actividades: formData.avd || [],
+                    dependencia: avdNoCount === 0 ? 'independiente' : avdNoCount <= 2 ? 'moderada' : 'severa'
+                },
+                enfermedadesCronicas: formData.enfermedades || [],
+                otrasEnfermedades: formData.otras_enfermedades || '',
+                medicacion: formData.medicamentos || [],
+                cumpleTratamiento: formData.cumple_tratamiento === 'si',
+                factoresRiesgo: {
+                    dieta: formData.dieta,
+                    actividadFisica: formData.actividad_fisica,
+                    nicotina: formData.nicotina,
+                    sueño: formData.sueño
+                },
+                saludEmocional: {
+                    estres: formData.estres === 'si',
+                    panico: formData.panico === 'si',
+                    tristeza: formData.tristeza === 'si',
+                    observaciones: formData.observaciones_emocionales || ''
+                },
+                fechaRegistro: new Date().toISOString()
+            };
+        }
+
+        // Función para compartir el reporte
+        function shareReport() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Reporte de Evaluación de Salud',
+                    text: 'Aquí está mi reporte de evaluación de salud completado.',
+                    url: window.location.href
+                }).catch(err => {
+                    console.log('Error al compartir:', err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se pudo compartir',
+                        text: 'Hubo un error al intentar compartir el reporte.',
+                        confirmButtonColor: '#0f6f61'
+                    });
+                });
+            } else {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Función no disponible',
+                    text: 'La función de compartir no está disponible en este navegador.',
+                    confirmButtonColor: '#0f6f61'
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
