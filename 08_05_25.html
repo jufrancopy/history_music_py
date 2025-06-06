@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Música Indígena y Colonial - Abril</title>
+    <title>Música Indígena y Colonial del Paraguay - Abril</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* Paleta de colores */
-            --primary-color: #5e3a1e;
-            --secondary-color: #8d6e63;
-            --accent-color: #d7ccc8;
-            --text-color: #3e2723;
-            --light-color: #efebe9;
-            --dark-color: #3e2723;
+            /* Paleta de colores inspirada en Paraguay */
+            --primary-color: #005f4b;
+            --secondary-color: #8b4513;
+            --accent-color: #d4a574;
+            --text-color: #2c1810;
+            --light-color: #f5f1e8;
+            --dark-color: #2c1810;
             --white: #ffffff;
+            --guarani-red: #c8102e;
 
             /* Tipografía */
             --font-main: 'Cormorant Garamond', serif;
@@ -40,8 +41,8 @@
             color: var(--text-color);
             line-height: 1.8;
             background:
-                linear-gradient(rgba(239, 235, 233, 0.9), rgba(239, 235, 233, 0.9)),
-                url('https://media.istockphoto.com/id/182187811/photo/musical-notes.jpg') center/cover fixed;
+                linear-gradient(rgba(245, 241, 232, 0.9), rgba(245, 241, 232, 0.9)),
+                url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover fixed;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -103,7 +104,7 @@
 
         /* ========== NAVBAR ========== */
         .navbar {
-            background-color: rgba(94, 58, 30, 0.9);
+            background-color: rgba(0, 95, 75, 0.9);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -170,8 +171,8 @@
             text-align: center;
             color: var(--white);
             background:
-                linear-gradient(rgba(94, 58, 30, 0.85), rgba(94, 58, 30, 0.7)),
-                url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+                linear-gradient(rgba(0, 95, 75, 0.85), rgba(139, 69, 19, 0.7)),
+                url('https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover;
             padding: 0 2rem;
             position: relative;
             overflow: hidden;
@@ -246,7 +247,7 @@
         }
 
         .content-item {
-            background-color: rgba(215, 204, 200, 0.2);
+            background-color: rgba(212, 165, 116, 0.2);
             padding: 1.5rem;
             border-radius: var(--border-radius);
             border: 1px solid var(--accent-color);
@@ -316,6 +317,12 @@
             display: inline-block;
         }
 
+        .guarani-term {
+            color: var(--guarani-red);
+            font-weight: 600;
+            font-style: italic;
+        }
+
         /* ========== TIMELINE ========== */
         .timeline-container {
             padding: 2rem 0;
@@ -371,14 +378,327 @@
         }
 
         th {
-            background-color: rgba(94, 58, 30, 0.1);
+            background-color: rgba(0, 95, 75, 0.1);
             font-family: var(--font-headings);
             color: var(--primary-color);
             font-weight: 600;
         }
 
         tr:hover {
-            background-color: rgba(215, 204, 200, 0.3);
+            background-color: rgba(212, 165, 116, 0.3);
+        }
+
+
+        /* ========== ESTILOS PARA IMÁGENES DE INSTRUMENTOS ========== */
+
+        /* Contenedor de imagen con tamaño fijo */
+        .instrument-image {
+            width: 120px;
+            height: 120px;
+            min-width: 120px; /* Evita que se comprima */
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            background-color: var(--light-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        /* Imagen responsive que mantiene proporción */
+        .instrument-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Mantiene proporción y llena el contenedor */
+            object-position: center; /* Centra la imagen */
+            transition: transform var(--transition-speed);
+        }
+
+        /* Efecto hover en la imagen */
+        .instrument-image:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Overlay sutil para mejor legibilidad */
+        .instrument-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 95, 75, 0.1) 100%);
+            opacity: 0;
+            transition: opacity var(--transition-speed);
+        }
+
+        .instrument-image:hover::after {
+            opacity: 1;
+        }
+
+        /* Modificación de la tarjeta de instrumento para acomodar imágenes */
+        .instrument-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform var(--transition-speed);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .instrument-card:hover {
+            transform: translateX(10px);
+        }
+
+        /* Ajuste del contenido de información */
+        .instrument-info {
+            flex: 1; /* Toma el espacio restante */
+        }
+
+        .instrument-info h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        /* ========== VERSIÓN ALTERNATIVA: IMAGEN CIRCULAR ========== */
+        /* Si prefieres imágenes circulares, usa estas clases en lugar de las anteriores */
+
+        .instrument-image-circle {
+            width: 100px;
+            height: 100px;
+            min-width: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            background-color: var(--light-color);
+            border: 3px solid var(--accent-color);
+        }
+
+        .instrument-image-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform var(--transition-speed);
+        }
+
+        .instrument-image-circle:hover img {
+            transform: scale(1.15);
+        }
+
+        /* ========== ESTILOS ESPECÍFICOS PARA VOCABULARIO ========== */
+        .vocabulary-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        .vocabulary-header::after {
+            content: "♪ ♫ ♪";
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .vocabulary-subtitle {
+            color: var(--secondary-color);
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .vocabulary-intro {
+            background: linear-gradient(135deg, rgba(0, 95, 75, 0.1), rgba(212, 165, 116, 0.2));
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--guarani-red);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .vocabulary-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            transition: all var(--transition-speed);
+            border: 1px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vocabulary-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--guarani-red));
+            transition: width var(--transition-speed);
+        }
+
+        .vocabulary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .vocabulary-card:hover::before {
+            width: 8px;
+        }
+
+        .vocabulary-term {
+            color: var(--guarani-red);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-headings);
+            position: relative;
+        }
+
+        .vocabulary-term::after {
+            content: "•";
+            color: var(--accent-color);
+            margin-left: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .vocabulary-definition {
+            color: var(--text-color);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .vocabulary-context {
+            background-color: rgba(212, 165, 116, 0.2);
+            padding: 0.75rem;
+            border-radius: 5px;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        /* ========== CATEGORÍAS DE VOCABULARIO ========== */
+        .vocabulary-category {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-title::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 2s;
+        }
+
+        .category-title:hover::before {
+            left: 100%;
+        }        
+
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .vocabulary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .vocabulary-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .vocabulary-term {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ========== ANIMACIONES ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .vocabulary-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .vocabulary-card:nth-child(even) {
+            animation-delay: 0.1s;
+        }
+
+        .vocabulary-card:nth-child(odd) {
+            animation-delay: 0.2s;
+        }
+
+        /* ========== RESPONSIVE PARA MÓVILES ========== */
+        @media (max-width: 768px) {
+            .instrument-card {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+            
+            .instrument-image {
+                width: 150px;
+                height: 150px;
+                min-width: 150px;
+                margin-bottom: 1rem;
+            }
+            
+            /* Para versión circular en móvil */
+            .instrument-image-circle {
+                width: 120px;
+                height: 120px;
+                min-width: 120px;
+                margin-bottom: 1rem;
+            }
         }
 
         /* ========== RESPONSIVE ========== */
@@ -428,53 +748,57 @@
 
     <!-- Portada -->
     <section class="cover" id="inicio">
-        <h1 class="cover-title">Música Indígena y Colonial</h1>
-        <p class="cover-subtitle">Un viaje sonoro por las raíces musicales de América - Abril</p>
+        <h1 class="cover-title">Música Indígena y Colonial del Paraguay</h1>
+        <p class="cover-subtitle">Un viaje sonoro por las raíces guaraníes y la herencia jesuítica - Abril</p>
     </section>
 
     <!-- Planificación del Mes -->
     <div class="container">
-        <h2>Planificación de Abril - Música Indígena y Colonial</h2>
+        <h2>Planificación de Abril - Música Indígena y Colonial Paraguaya</h2>
         
         <!-- Semana 1 -->
         <div class="week-card">
             <div class="week-number">Semana 1</div>
-            <h3>Unidad 2.2: Instrumentos Musicales Indígenas</h3>
+            <h3>Unidad 2.2: Instrumentos Musicales Guaraníes</h3>
             
             <div class="content-grid">
                 <div class="content-item">
                     <h4><i class="fas fa-book"></i> Contenido</h4>
                     <ul>
-                        <li>Clasificación organológica</li>
-                        <li>Técnicas de ejecución</li>
-                        <li>Contextos rituales y sociales</li>
+                        <li>Instrumentos guaraníes tradicionales</li>
+                        <li>Técnicas ancestrales de construcción</li>
+                        <li>Rituales y ceremonias sagradas</li>
+                        <li>Simbolismo en la cosmología guaraní</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tasks"></i> Actividades</h4>
                     <ul>
-                        <li>Exposición interactiva con réplicas</li>
-                        <li>Taller de reconocimiento auditivo</li>
-                        <li>Creación de catálogo ilustrado</li>
+                        <li>Demostración con instrumentos originales</li>
+                        <li>Taller de construcción de <span class="guarani-term">mimby</span></li>
+                        <li>Audición de cantos ceremoniales</li>
+                        <li>Mapeo de instrumentos por región</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tools"></i> Recursos</h4>
                     <ul>
-                        <li>Instrumentos reales/réplicas</li>
-                        <li>Diagramas técnicos</li>
-                        <li>Grabaciones auténticas</li>
+                        <li>Instrumentos guaraníes auténticos</li>
+                        <li>Materiales naturales (takuara, etc.)</li>
+                        <li>Grabaciones de comunidades indígenas</li>
+                        <li>Atlas etnomusicológico paraguayo</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-clipboard-check"></i> Evaluación</h4>
                     <ul>
-                        <li>Catálogo grupal</li>
-                        <li>Presentación oral</li>
-                        <li>Prueba de reconocimiento</li>
+                        <li>Construcción de instrumento simple</li>
+                        <li>Presentación sobre significado cultural</li>
+                        <li>Identificación auditiva</li>
+                        <li>Mapa conceptual guaraní</li>
                     </ul>
                 </div>
             </div>
@@ -483,42 +807,46 @@
         <!-- Semana 2 -->
         <div class="week-card">
             <div class="week-number">Semana 2</div>
-            <h3>Unidad 2.3: Descripción Ampliada de Instrumentos</h3>
+            <h3>Unidad 2.3: Organología Guaraní Detallada</h3>
             
             <div class="content-grid">
                 <div class="content-item">
                     <h4><i class="fas fa-book"></i> Contenido</h4>
                     <ul>
-                        <li>Construcción y materiales</li>
-                        <li>Contextos de uso</li>
-                        <li>Simbolismo cultural</li>
+                        <li>Materiales del monte paraguayo</li>
+                        <li>Técnicas de preparación tradicional</li>
+                        <li>Variantes regionales (Mbya, Ache, Guaraní)</li>
+                        <li>Transmisión del conocimiento ancestral</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tasks"></i> Actividades</h4>
                     <ul>
-                        <li>Investigación guiada en biblioteca</li>
-                        <li>Elaboración de fichas técnicas</li>
-                        <li>Simulación de construcción</li>
+                        <li>Visita virtual a comunidades indígenas</li>
+                        <li>Entrevistas con artesanos guaraníes</li>
+                        <li>Elaboración de fichas etnográficas</li>
+                        <li>Documentación fotográfica del proceso</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tools"></i> Recursos</h4>
                     <ul>
-                        <li>Manuales de organología</li>
-                        <li>Materiales naturales</li>
-                        <li>Videos documentales</li>
+                        <li>Documentales sobre cultura guaraní</li>
+                        <li>Testimonios de sabios indígenas</li>
+                        <li>Materiales del Museo del Barro</li>
+                        <li>Archivo Sonoro Nacional</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-clipboard-check"></i> Evaluación</h4>
                     <ul>
-                        <li>Ficha técnica individual</li>
-                        <li>Proceso de investigación</li>
-                        <li>Creatividad en presentación</li>
+                        <li>Informe etnográfico detallado</li>
+                        <li>Registro audiovisual del proceso</li>
+                        <li>Análisis comparativo regional</li>
+                        <li>Reflexión sobre preservación cultural</li>
                     </ul>
                 </div>
             </div>
@@ -527,42 +855,46 @@
         <!-- Semana 3 -->
         <div class="week-card">
             <div class="week-number">Semana 3</div>
-            <h3>Unidad 3: Música Durante la Colonia</h3>
+            <h3>Unidad 3: Misiones Jesuíticas y Transformación Musical</h3>
             
             <div class="content-grid">
                 <div class="content-item">
                     <h4><i class="fas fa-book"></i> Contenido</h4>
                     <ul>
-                        <li>Transculturación musical</li>
-                        <li>Nuevas formas y géneros</li>
-                        <li>Fusión de tradiciones</li>
+                        <li>Las Reducciones Jesuíticas del Paraguay</li>
+                        <li>Síntesis musical guaraní-europea</li>
+                        <li>Maestros músicos guaraníes</li>
+                        <li>El Barroco Americano guaraní</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tasks"></i> Actividades</h4>
                     <ul>
-                        <li>Audición comparativa indígena/colonial</li>
-                        <li>Análisis de partituras históricas</li>
-                        <li>Cuadro comparativo</li>
+                        <li>Comparación música pre y post jesuítica</li>
+                        <li>Análisis de partituras de las Misiones</li>
+                        <li>Recreación de coro misionero</li>
+                        <li>Visita virtual a Trinidad y Jesús</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tools"></i> Recursos</h4>
                     <ul>
-                        <li>Partituras facsímiles</li>
-                        <li>Grabaciones comparativas</li>
-                        <li>Atlas musicales</li>
+                        <li>Manuscritos musicales jesuíticos</li>
+                        <li>Instrumentos barrocos adaptados</li>
+                        <li>Grabaciones de música misionera</li>
+                        <li>Mapas de las 30 Reducciones</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-clipboard-check"></i> Evaluación</h4>
                     <ul>
-                        <li>Cuadro comparativo</li>
-                        <li>Análisis crítico</li>
-                        <li>Participación en debates</li>
+                        <li>Ensayo sobre transculturación</li>
+                        <li>Interpretación musical misionera</li>
+                        <li>Cuadro comparativo evolutivo</li>
+                        <li>Debate sobre impacto cultural</li>
                     </ul>
                 </div>
             </div>
@@ -571,51 +903,55 @@
         <!-- Semana 4 -->
         <div class="week-card">
             <div class="week-number">Semana 4</div>
-            <h3>Unidad 3 (cont.): Música Colonial - Instituciones y Compositores</h3>
+            <h3>Unidad 3 (cont.): Legado Musical de las Misiones</h3>
             
             <div class="content-grid">
                 <div class="content-item">
                     <h4><i class="fas fa-book"></i> Contenido</h4>
                     <ul>
-                        <li>Instituciones musicales</li>
-                        <li>Compositores anónimos y conocidos</li>
-                        <li>Escuelas catedralicias</li>
+                        <li>Compositores guaraníes de las Misiones</li>
+                        <li>Orquestas indígenas barrocas</li>
+                        <li>Influencia en la música paraguaya actual</li>
+                        <li>Conservación del patrimonio musical</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tasks"></i> Actividades</h4>
                     <ul>
-                        <li>Recreación histórica musical</li>
-                        <li>Taller de escritura neumática</li>
-                        <li>Análisis crítico grupal</li>
+                        <li>Concierto didáctico barroco-guaraní</li>
+                        <li>Investigación de compositores indígenas</li>
+                        <li>Creación de línea temporal musical</li>
+                        <li>Proyecto de conservación digital</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-tools"></i> Recursos</h4>
                     <ul>
-                        <li>Reproducciones de instrumentos coloniales</li>
-                        <li>Manuscritos históricos</li>
-                        <li>Software de notación</li>
+                        <li>Archivo Musical de las Misiones</li>
+                        <li>Instrumentos reconstruidos</li>
+                        <li>Software de digitalización musical</li>
+                        <li>Contacto con musicólogos especialistas</li>
                     </ul>
                 </div>
                 
                 <div class="content-item">
                     <h4><i class="fas fa-clipboard-check"></i> Evaluación</h4>
                     <ul>
-                        <li>Recreación musical</li>
-                        <li>Proyecto colaborativo</li>
-                        <li>Ensayo reflexivo</li>
+                        <li>Proyecto de investigación grupal</li>
+                        <li>Presentación multimedia</li>
+                        <li>Propuesta de conservación</li>
+                        <li>Reflexión final integradora</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Sección de Instrumentos -->
+     <!-- Sección de Instrumentos -->
     <div class="container" id="instrumentos">
-        <h2>Instrumentos Musicales Indígenas</h2>
+        <h2>Clasificación Organológica</h2>
         <p>Clasificación organológica y técnicas de ejecución de los principales instrumentos precolombinos.</p>
 
         <div class="instrument-card">
@@ -679,258 +1015,433 @@
         </div>
     </div>
 
+    <!-- Sección de Instrumentos -->
+    <div class="container" id="instrumentos">
+        <h2>Instrumentos Musicales Guaraníes</h2>
+        <p>Los instrumentos tradicionales del pueblo guaraní reflejan su profunda conexión con la naturaleza y el cosmos.</p>
+
+        <div class="instrument-card">
+            <div class="instrument-image">
+                <img src="images/mimby.png" alt="Mimby - Flauta guaraní">
+            </div>
+            <div class="instrument-info">
+                <h3><span class="guarani-term">Mimby</span> (Flauta)</h3>
+                <p>Flauta de takuara (caña de bambú) con 3 a 6 orificios...</p>
+                <div>
+                    <span class="technique-badge">Soplo transversal</span>
+                    <span class="technique-badge">Ceremonial</span>
+                    <span class="technique-badge">Comunicación espiritual</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instrument-card">
+            <div class="instrument-image">
+                <img src="images/anguapu.png" alt="Anguapu - Tambor guaraní">
+            </div>
+            <div class="instrument-info">
+                <h3><span class="guarani-term">Anguapu</span> (Tambor)</h3>
+                <p>Tambor ceremonial hecho con tronco ahuecado y cuero de animal. Fundamental en rituales y danzas, marca el ritmo de la vida comunitaria guaraní.</p>
+                <div>
+                    <span class="technique-badge">Percusión directa</span>
+                    <span class="technique-badge">Ritual comunitario</span>
+                    <span class="technique-badge">Danza sagrada</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instrument-card">
+            <div class="instrument-image">
+                <img src="images/takuapu.png" alt="Takuapu - Bastón de ritmo guaraní">
+            </div>
+            <div class="instrument-info">
+                <h3><span class="guarani-term">Takuapu</span> (Bastón de ritmo)</h3>
+                <p>Bastón de takuara que se golpea contra el suelo. Instrumento femenino por excelencia, acompaña cantos y danzas de las mujeres guaraníes.</p>
+                <div>
+                    <span class="technique-badge">Percusión de suelo</span>
+                    <span class="technique-badge">Instrumento femenino</span>
+                    <span class="technique-badge">Acompañamiento vocal</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instrument-card">
+            <div class="instrument-image">
+                <img src="images/mbaraka.png" alt="Mbaraka - Sonaja guaraní">
+            </div>
+            <div class="instrument-info">
+                <h3><span class="guarani-term">Mbaraka</span> (Sonaja)</h3>
+                <p>Instrumento sagrado del chamán guaraní, hecho con calabaza y semillas. Elemento central en ceremonias de curación y comunicación con los dioses.</p>
+                <div>
+                    <span class="technique-badge">Sacudimiento ritual</span>
+                    <span class="technique-badge">Instrumento chamánico</span>
+                    <span class="technique-badge">Curación espiritual</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instrument-card">
+            <div class="instrument-image">
+                <img src="images/mbaraka_miri.png" alt="Mbaraka - Sonaja guaraní">   
+            </div>
+            <div class="instrument-info">
+                <h3><span class="guarani-term">Mbaraka Mirĩ</span> (Arco musical)</h3>
+                <p>Mbaraka mirĩ (maracas o sonajeros) de "tekoharuvicha" (líder religioso) Paĩ Tavyterã del depto. de Amambay, confeccionados en calabaza de peregrino (Lagenaria siceraria) y ornamentados con borlas de algodón nativo (mandyju guasu) y diseños pirograbados.
+
+El porongo o calabaza de peregrino (hy'a) es utilizado en la artesanía Paî Tavyterã para confeccionar el "mbaraka mba'e pú mirĩ" o "mbaraka mirĩ" (sonajero), instrumento musical ceremonial que contiene semillas en su interior.
+
+Acervo del Museo Antropológico, Arqueológico y Etnográfico Guido Boggiani, San Lorenzo.(Extracto de: https://www.facebook.com/photo.php?fbid=393685388719239&id=103554801065634&set=a.360553648699080)</p>
+                <div>
+                    <span class="technique-badge">Resonancia bucal</span>
+                    <span class="technique-badge">Melodías íntimas</span>
+                    <span class="technique-badge">Música personal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="vocabulary-header">
+            <h1>Vocabulario Mbya-Guaraní</h1>
+            <p class="vocabulary-subtitle">Glosario de términos relacionados con el Mimby Etá</p>
+        </header>
+
+        <div class="vocabulary-intro">
+            <p>El pueblo Mbya-Guaraní posee una rica tradición lingüística que se refleja en la nomenclatura de sus instrumentos musicales y prácticas ceremoniales. Este vocabulario recopila los términos más importantes relacionados con el <strong>Mimby Etá</strong> y su contexto cultural.</p>
+        </div>
+
+        <!-- CATEGORÍA: INSTRUMENTOS Y MÚSICA -->
+        <div class="vocabulary-category">
+            <h2 class="category-title">🎵 Instrumentos y Música</h2>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Mimby etá</h3>
+                    <p class="vocabulary-definition">Flautas (varias). Instrumento musical de viento construido con eslabones de tacuara.</p>
+                    <div class="vocabulary-context">El instrumento principal de este estudio, ejecutado tradicionalmente por las mujeres mbya.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Kumbijáre</h3>
+                    <p class="vocabulary-definition">Conjunto de sonidos que acompañan la danza, también se refiere a ciertos instrumentos musicales.</p>
+                    <div class="vocabulary-context">Un susurro musical que inunda el valle durante las ceremonias.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Takuapí</h3>
+                    <p class="vocabulary-definition">Caña hueca y fina de bambú (Merostachys clausenii) utilizada para construir las flautas.</p>
+                    <div class="vocabulary-context">Materia prima sagrada que crece en zonas selváticas húmedas.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Popuguaí</h3>
+                    <p class="vocabulary-definition">Instrumento musical de percusión utilizado para convocar a la comunidad.</p>
+                    <div class="vocabulary-context">El Opyguá lo utiliza para llamar a las mujeres durante las ceremonias.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Jachuká vyapú</h3>
+                    <p class="vocabulary-definition">Canto sagrado femenino entonado al adentrarse en la selva.</p>
+                    <div class="vocabulary-context">Melodía que acompaña la búsqueda de frutos, mieles y materiales para artesanías.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Aviá</h3>
+                    <p class="vocabulary-definition">Zorzal, también nombre de una melodía tocada con mimby.</p>
+                    <div class="vocabulary-context">Representa la conexión entre la música y la naturaleza.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORÍA: PERSONAS Y ROLES SOCIALES -->
+        <div class="vocabulary-category">
+            <h2 class="category-title">👥 Personas y Roles Sociales</h2>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Mbya</h3>
+                    <p class="vocabulary-definition">La gente adulta; autodenominación de esta etnia de la nación guaraní.</p>
+                    <div class="vocabulary-context">Pueblo originario portador de esta tradición musical ancestral.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Opyguá</h3>
+                    <p class="vocabulary-definition">Sacerdote, líder religioso de la comunidad.</p>
+                    <div class="vocabulary-context">Figura central en las ceremonias de bautismo y rituales sagrados.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Kuñá kuéry</h3>
+                    <p class="vocabulary-definition">Todas las mujeres de la comunidad.</p>
+                    <div class="vocabulary-context">Las ejecutoras tradicionales del Mimby etá y guardianas de la tradición musical.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Kurï'i</h3>
+                    <p class="vocabulary-definition">Retoño vegetal, aplicable metafóricamente a las nuevas vidas humanas.</p>
+                    <div class="vocabulary-context">Representa la continuidad generacional y el renacimiento espiritual.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Verá Chunú</h3>
+                    <p class="vocabulary-definition">Trueno luminoso (rayo), nombre propio masculino.</p>
+                    <div class="vocabulary-context">Nombre del Opyguá en la leyenda del mimby retá.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORÍA: LUGARES Y ESPACIOS SAGRADOS -->
+        <div class="vocabulary-category">
+            <h2 class="category-title">🏛️ Lugares y Espacios Sagrados</h2>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Tekoá</h3>
+                    <p class="vocabulary-definition">Morada, lugar donde se vive en comunidad.</p>
+                    <div class="vocabulary-context">Espacio vital donde se desarrolla la vida comunitaria y espiritual mbya.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Opy</h3>
+                    <p class="vocabulary-definition">Capilla, casa de sanación y bautismo.</p>
+                    <div class="vocabulary-context">Construcción austere hecha con barro, takuaras y ramas de jejy.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Karuguajy'y</h3>
+                    <p class="vocabulary-definition">Arco iris.</p>
+                    <div class="vocabulary-context">Fenómeno natural que da nombre al valle donde se desarrolla la leyenda.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Kaaguy roguápy</h3>
+                    <p class="vocabulary-definition">Bien adentro del monte.</p>
+                    <div class="vocabulary-context">Lugar sagrado donde las mujeres se adentran para sus rituales de fertilidad.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Yvy kangá</h3>
+                    <p class="vocabulary-definition">Huesos de la tierra (esqueleto terrestre).</p>
+                    <div class="vocabulary-context">Concepto cosmológico que representa la estructura fundamental del mundo.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORÍA: DEIDADES Y CONCEPTOS ESPIRITUALES -->
+        <div class="vocabulary-category">
+            <h2 class="category-title">✨ Deidades y Conceptos Espirituales</h2>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Ñamandú</h3>
+                    <p class="vocabulary-definition">Deidad representada por el sol.</p>
+                    <div class="vocabulary-context">Divinidad central en la cosmología mbya, celebrada en las danzas rituales.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Tenondeguá Ru Eté</h3>
+                    <p class="vocabulary-definition">Deidad mayor: Nuestro padre verdadero.</p>
+                    <div class="vocabulary-context">La divinidad suprema que inspira al sacerdote en las ceremonias de bautismo.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Jakaira Chy Eté</h3>
+                    <p class="vocabulary-definition">Deidad femenina, la madre verdadera.</p>
+                    <div class="vocabulary-context">Diosa de la fertilidad que bendice los vientres de las mujeres con rocío sagrado.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Takuá Verá Chy Eté</h3>
+                    <p class="vocabulary-definition">Deidad femenina asociada con las cañas sagradas.</p>
+                    <div class="vocabulary-context">Diosa que enseña a las mujeres el arte de hacer sonar el takuapí.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Tatachiná</h3>
+                    <p class="vocabulary-definition">Niebla que vivifica la creación, invocada y representada con humo de tabaco.</p>
+                    <div class="vocabulary-context">Fuerza espiritual que envuelve a las mujeres durante sus rituales en el monte.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Aguyjé</h3>
+                    <p class="vocabulary-definition">Estado de perfección espiritual.</p>
+                    <div class="vocabulary-context">Meta suprema del desarrollo espiritual en la tradición mbya.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Ychapy rechá</h3>
+                    <p class="vocabulary-definition">Gotas de rocío.</p>
+                    <div class="vocabulary-context">Bendición sagrada con la que Jakaira Chy Eté toca los ombligos de las mujeres.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOMBRES SAGRADOS Y ELEMENTOS CEREMONIALES -->
+        <div class="vocabulary-category">
+            <h2 class="category-title">🌟 Nombres Sagrados y Elementos Ceremoniales</h2>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Karaí</h3>
+                    <p class="vocabulary-definition">Señor. Uno de los nombres sagrados tradicionales.</p>
+                    <div class="vocabulary-context">Nombre ceremonial impuesto durante el bautismo de los niños.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Verá</h3>
+                    <p class="vocabulary-definition">Luminoso. Nombre sagrado relacionado con la luz.</p>
+                    <div class="vocabulary-context">Representa la iluminación espiritual y la conexión con lo divino.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Araí</h3>
+                    <p class="vocabulary-definition">Cielito. Nombre sagrado que evoca el cielo.</p>
+                    <div class="vocabulary-context">Nombre ceremonial que conecta al portador con las alturas espirituales.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Jerojy oká reguá</h3>
+                    <p class="vocabulary-definition">Danza comunitaria ritual circular.</p>
+                    <div class="vocabulary-context">Danza sagrada que celebra a Ñamandú y marca el ciclo ceremonial.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Pety chimbó</h3>
+                    <p class="vocabulary-definition">Humo de tabaco.</p>
+                    <div class="vocabulary-context">Elemento sagrado que crea el halo ceremonial en el interior del opy.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Jejy</h3>
+                    <p class="vocabulary-definition">Especie de palmera utilizada en construcciones sagradas.</p>
+                    <div class="vocabulary-context">Material natural usado junto con barro y takuaras para construir el opy.</div>
+                </div>
+
+                <div class="vocabulary-card">
+                    <h3 class="vocabulary-term">Oipéju yvytú, yvytú porá, yvytú pyaú</h3>
+                    <p class="vocabulary-definition">Sopla un viento sagrado y nuevo.</p>
+                    <div class="vocabulary-context">Invocación ceremonial pronunciada por el Opyguá para llamar a la renovación espiritual.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Sección Colonial -->
     <div class="container" id="colonial">
-        <h2>Música Durante la Colonia</h2>
-        <p>La llegada de los europeos transformó radicalmente el panorama musical americano, creando nuevas formas de expresión a través de la transculturación.</p>
+        <h2>Música en las Misiones Jesuíticas del Paraguay</h2>
+        <p>Las Reducciones Jesuíticas crearon una síntesis única entre la tradición musical guaraní y el barroco europeo, dando origen a una de las experiencias musicales más extraordinarias de América.</p>
 
-        <h3>Comparación: Música Indígena vs. Colonial</h3>
+        <h3>Comparación: Música Guaraní vs. Música Misionera</h3>
         <table>
             <thead>
                 <tr>
                     <th>Aspecto</th>
-                    <th>Música Indígena</th>
-                    <th>Música Colonial</th>
+                    <th>Música Guaraní Original</th>
+                    <th>Música de las Misiones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>Función</strong></td>
-                    <td>Ritual, ceremonial, comunicación</td>
-                    <td>Religiosa, cortesana, didáctica</td>
+                    <td>Comunicación espiritual, ritual, curación</td>
+                    <td>Litúrgica, educativa, evangelizadora</td>
                 </tr>
                 <tr>
                     <td><strong>Instrumentos</strong></td>
-                    <td>Aerófonos, membranófonos, idiófonos</td>
-                    <td>Instrumentos europeos + adaptaciones locales</td>
+                    <td>Mimby, anguapu, takuapu, mbaraka</td>
+                    <td>Órganos, violines, arpas, instrumentos barrocos</td>
                 </tr>
                 <tr>
                     <td><strong>Escalas</strong></td>
-                    <td>Pentáfonas, microtonales</td>
-                    <td>Modales europeas, tonalidad emergente</td>
+                    <td>Sistemas pentatónicos, microtonales</td>
+                    <td>Escalas europeas, armonía tonal</td>
                 </tr>
                 <tr>
                     <td><strong>Notación</strong></td>
-                    <td>Tradición oral</td>
-                    <td>Notación neumática y mensural</td>
+                    <td>Tradición oral exclusiva</td>
+                    <td>Notación mensural europea, manuscritos</td>
+                </tr>
+                <tr>
+                    <td><strong>Lengua</strong></td>
+                    <td>Guaraní exclusivamente</td>
+                    <td>Latín, español y guaraní adaptado</td>
+                </tr>
+                <tr>
+                    <td><strong>Intérpretes</strong></td>
+                    <td>Chamanes, mujeres, comunidad</td>
+                    <td>Coros indígenas, orquestas misioneras</td>
+                </tr>
+                <tr>
+                    <td><strong>Repertorio</strong></td>
+                    <td>Cantos ancestrales, improvisación</td>
+                    <td>Polifonía barroca, villancicos, motetes</td>
                 </tr>
                 <tr>
                     <td><strong>Contexto</strong></td>
-                    <td>Naturaleza, cosmos, ancestros</td>
-                    <td>Iglesia, palacio, educación</td>
-                </tr>
-                <tr>
-                    <td><strong>Transmisión</strong></td>
-                    <td>Oral, imitación</td>
-                    <td>Escrita, institucional</td>
+                    <td>Ceremonias naturales, ciclos lunares</td>
+                    <td>Calendario litúrgico católico</td>
                 </tr>
             </tbody>
         </table>
 
-        <h3>Instituciones Musicales Coloniales</h3>
+        <h3>Compositores Indígenas de las Misiones</h3>
         <div class="content-grid">
             <div class="content-item">
-                <h4><i class="fas fa-church"></i> Catedrales</h4>
-                <ul>
-                    <li>Centros de enseñanza musical</li>
-                    <li>Formación de maestros de capilla</li>
-                    <li>Producción de repertorio sacro</li>
-                    <li>Archivo de partituras</li>
-                </ul>
+                <h4>Domingo Zipoli (1688-1726)</h4>
+                <p>Jesuita italiano que desarrolló un estilo único integrando elementos guaraníes en su música barroca. Sus obras fueron interpretadas por músicos indígenas en las Reducciones.</p>
             </div>
-            
             <div class="content-item">
-                <h4><i class="fas fa-graduation-cap"></i> Colegios Jesuitas</h4>
-                <ul>
-                    <li>Educación musical sistemática</li>
-                    <li>Teatro musical</li>
-                    <li>Misiones musicales</li>
-                    <li>Síntesis cultural</li>
-                </ul>
-            </div>
-            
-            <div class="content-item">
-                <h4><i class="fas fa-crown"></i> Cortes Virreinales</h4>
-                <ul>
-                    <li>Música profana y cortesana</li>
-                    <li>Festividades oficiales</li>
-                    <li>Patrocinio artístico</li>
-                    <li>Intercambio con Europa</li>
-                </ul>
+                <h4>Maestros Guaraníes Anónimos</h4>
+                <p>Músicos indígenas que crearon adaptaciones únicas del repertorio europeo, incorporando elementos rítmicos y melódicos de su tradición ancestral.</p>
             </div>
         </div>
     </div>
 
     <!-- Cronología -->
     <div class="container" id="cronologia">
-        <h2>Cronología Musical Colonial</h2>
+        <h2>Cronología de la Música Paraguaya</h2>
+        
         <div class="timeline-container">
             <div class="timeline-item">
-                <div class="timeline-date">1519-1521</div>
+                <div class="timeline-date">Pre-1537</div>
                 <div class="timeline-content">
-                    <h3>Conquista de México</h3>
-                    <p>Primer contacto masivo entre tradiciones musicales europeas e indígenas. Los conquistadores documentan la riqueza musical azteca.</p>
+                    <h3>Período Precolombino</h3>
+                    <p>Música guaraní en estado puro. Instrumentos de takuara, ceremonias rituales, cantos sagrados transmitidos oralmente de generación en generación. La música como vínculo directo con la naturaleza y los ancestros.</p>
                 </div>
             </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">1524</div>
-                <div class="timeline-content">
-                    <h3>Llegada de los "Doce Franciscanos"</h3>
-                    <p>Inicio sistemático de la evangelización musical. Los franciscanos utilizan la música como herramienta de conversión.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">1539</div>
-                <div class="timeline-content">
-                    <h3>Primera Imprenta en América</h3>
-                    <p>Se establece la primera imprenta en México, permitiendo la impresión de libros de música y textos litúrgicos, facilitando la difusión del repertorio europeo.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">1556</div>
-                <div class="timeline-content">
-                    <h3>Fundación del Colegio de Tlatelolco</h3>
-                    <p>Establecimiento de una institución educativa que incluye enseñanza musical avanzada para indígenas nobles, creando los primeros músicos nativos formados en tradición europea.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">1570-1600</div>
-                <div class="timeline-content">
-                    <h3>Edad de Oro de la Música Catedralicia</h3>
-                    <p>Florecimiento de las capillas musicales en las principales catedrales. Compositores como Hernando Franco crean un estilo musical único que fusiona elementos europeos con sensibilidades locales.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">1600-1650</div>
-                <div class="timeline-content">
-                    <h3>Consolidación del Barroco Colonial</h3>
-                    <p>Desarrollo de un estilo musical distintivamente americano. Aparición de villancicos con elementos indígenas y criollos, y consolidación de tradiciones musicales mestizas.</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Compositores Destacados -->
-    <div class="container">
-        <h2>Compositores de la Época Colonial</h2>
-        
-        <div class="content-grid">
-            <div class="content-item">
-                <h4><i class="fas fa-user"></i> Hernando Franco (1532-1585)</h4>
-                <ul>
-                    <li>Maestro de capilla en México</li>
-                    <li>Pionero del estilo colonial</li>
-                    <li>Misas y motetes polifónicos</li>
-                    <li>Fusión de tradiciones musicales</li>
-                </ul>
+            <div class="timeline-item">
+                <div class="timeline-date">1537-1609</div>
+                <div class="timeline-content">
+                    <h3>Primeros Contactos</h3>
+                    <p>Llegada de los españoles y primeros misioneros franciscanos. Inicio del proceso de encuentro cultural. Los guaraníes mantienen sus tradiciones musicales mientras se introducen los primeros elementos europeos.</p>
+                </div>
             </div>
-            
-            <div class="content-item">
-                <h4><i class="fas fa-user"></i> Gaspar Fernández (1566-1629)</h4>
-                <ul>
-                    <li>Villancicos multilingües</li>
-                    <li>Incorporación de lenguas indígenas</li>
-                    <li>Maestro en Puebla y Oaxaca</li>
-                    <li>Estilo teatral y popular</li>
-                </ul>
-            </div>
-            
-            <div class="content-item">
-                <h4><i class="fas fa-user"></i> Juan de Lienas (s. XVI)</h4>
-                <ul>
-                    <li>Compositor novohispano</li>
-                    <li>Música sacra polifónica</li>
-                    <li>Influencia del Renacimiento tardío</li>
-                    <li>Adaptación al contexto americano</li>
-                </ul>
-            </div>
-            
-            <div class="content-item">
-                <h4><i class="fas fa-users"></i> Compositores Anónimos</h4>
-                <ul>
-                    <li>Tradición oral preservada</li>
-                    <li>Manuscritos sin atribución</li>
-                    <li>Música popular y ceremonial</li>
-                    <li>Síntesis cultural espontánea</li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
-    <!-- Actividades Prácticas -->
-    <div class="container">
-        <h2>Actividades y Proyectos del Mes</h2>
-        
-        <div class="week-card">
-            <h3><i class="fas fa-palette"></i> Proyecto: Catálogo de Instrumentos Indígenas</h3>
-            <p>Creación colaborativa de un catálogo ilustrado que incluya:</p>
-            <div class="content-grid">
-                <div class="content-item">
-                    <h4>Investigación</h4>
-                    <ul>
-                        <li>Selección de 10 instrumentos representativos</li>
-                        <li>Búsqueda de información histórica</li>
-                        <li>Documentación fotográfica</li>
-                    </ul>
-                </div>
-                
-                <div class="content-item">
-                    <h4>Creación</h4>
-                    <ul>
-                        <li>Fichas técnicas detalladas</li>
-                        <li>Ilustraciones o diagramas</li>
-                        <li>Grabaciones de audio</li>
-                    </ul>
-                </div>
-                
-                <div class="content-item">
-                    <h4>Presentación</h4>
-                    <ul>
-                        <li>Exposición interactiva</li>
-                        <li>Demostración de técnicas</li>
-                        <li>Contexto cultural y ritual</li>
-                    </ul>
+            <div class="timeline-item">
+                <div class="timeline-date">1609-1767</div>
+                <div class="timeline-content">
+                    <h3>Período de las Misiones Jesuíticas</h3>
+                    <p>Creación de las 30 Reducciones. Desarrollo extraordinario de la música barroca interpretada por indígenas. Construcción de instrumentos europeos con técnicas guaraníes. Florecimiento del arte musical mestizo.</p>
                 </div>
             </div>
-        </div>
 
-        <div class="week-card">
-            <h3><i class="fas fa-theater-masks"></i> Taller: Recreación Histórica Musical</h3>
-            <p>Simulación de una ceremonia musical colonial que incluya:</p>
-            <ul>
-                <li>Interpretación de villancicos del período</li>
-                <li>Uso de instrumentos de época (o réplicas)</li>
-                <li>Vestuario y ambientación histórica</li>
-                <li>Explicación del contexto social y religioso</li>
-                <li>Análisis de la fusión cultural en la música</li>
-            </ul>
-        </div>
-
-        <div class="week-card">
-            <h3><i class="fas fa-feather-alt"></i> Práctica: Escritura Neumática</h3>
-            <p>Introducción a la notación musical colonial:</p>
-            <div class="content-grid">
-                <div class="content-item">
-                    <h4>Teoría</h4>
-                    <ul>
-                        <li>Historia de la notación neumática</li>
-                        <li>Símbolos y significados</li>
-                        <li>Evolución hacia la notación mensural</li>
-                    </ul>
+            <div class="timeline-item">
+                <div class="timeline-date">1767</div>
+                <div class="timeline-content">
+                    <h3>Expulsión de los Jesuitas</h3>
+                    <p>Fin abrupto del período misionero. Dispersión de músicos indígenas. Muchos manuscritos y instrumentos se pierden. La tradición musical queda fragmentada pero no desaparece completamente.</p>
                 </div>
-                
-                <div class="content-item">
-                    <h4>Práctica</h4>
-                    <ul>
-                        <li>Transcripción de melodías simples</li>
-                        <li>Lectura de manuscritos históricos</li>
-                        <li>Creación de notaciones propias</li>
-                    </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">1767-1811</div>
+                <div class="timeline-content">
+                    <h3>Período Colonial Tardío</h3>
+                    <p>Supervivencia de elementos musicales misioneros en comunidades rurales. Desarrollo de formas musicales criollas que combinan elementos guaraníes, españoles y africanos.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Siglo XX-XXI</div>
+                <div class="timeline-content">
+                    <h3>Redescubrimiento y Preservación</h3>
+                    <p>Investigación musicológica moderna. Recuperación de manuscritos de las Misiones. Revitalización de la música guaraní ancestral. Proyectos de preservación del patrimonio musical paraguayo.</p>
                 </div>
             </div>
         </div>
@@ -938,120 +1449,59 @@
 
     <!-- Recursos Adicionales -->
     <div class="container">
-        <h2>Recursos para el Aprendizaje</h2>
+        <h2>Recursos y Actividades Complementarias</h2>
         
         <div class="content-grid">
             <div class="content-item">
-                <h4><i class="fas fa-headphones"></i> Recursos Auditivos</h4>
+                <h4><i class="fas fa-headphones"></i> Recursos Sonoros</h4>
                 <ul>
-                    <li>Grabaciones de música precolombina reconstituida</li>
-                    <li>Villancicos coloniales interpretados</li>
-                    <li>Comparaciones sonoras antes/después</li>
-                    <li>Documentales con banda sonora histórica</li>
+                    <li>Archivo Sonoro Nacional del Paraguay</li>
+                    <li>Grabaciones de comunidades Mbya-Guaraní</li>
+                    <li>Música barroca de las Misiones</li>
+                    <li>Colección del Museo del Barro</li>
                 </ul>
             </div>
             
             <div class="content-item">
-                <h4><i class="fas fa-images"></i> Recursos Visuales</h4>
+                <h4><i class="fas fa-map-marked-alt"></i> Sitios de Interés</h4>
                 <ul>
-                    <li>Códices con representaciones musicales</li>
-                    <li>Instrumentos en museos virtuales</li>
-                    <li>Pinturas coloniales con escenas musicales</li>
-                    <li>Diagramas de construcción de instrumentos</li>
+                    <li>Ruinas de Trinidad y Jesús (Patrimonio UNESCO)</li>
+                    <li>Comunidades indígenas actuales</li>
+                    <li>Museo de Instrumentos Musicales</li>
+                    <li>Centro de Estudios Paraguayos</li>
                 </ul>
             </div>
             
             <div class="content-item">
-                <h4><i class="fas fa-book"></i> Recursos Bibliográficos</h4>
+                <h4><i class="fas fa-users"></i> Expertos y Contactos</h4>
                 <ul>
-                    <li>Manuales de organología americana</li>
-                    <li>Crónicas de la conquista</li>
-                    <li>Estudios de musicología histórica</li>
-                    <li>Partituras facsímiles</li>
+                    <li>Musicólogos especializados</li>
+                    <li>Artesanos tradicionales guaraníes</li>
+                    <li>Intérpretes de música colonial</li>
+                    <li>Investigadores del CEADUC</li>
                 </ul>
             </div>
             
             <div class="content-item">
-                <h4><i class="fas fa-laptop"></i> Recursos Digitales</h4>
+                <h4><i class="fas fa-project-diagram"></i> Proyectos Finales</h4>
                 <ul>
-                    <li>Bases de datos musicológicas</li>
-                    <li>Software de notación histórica</li>
-                    <li>Simuladores de instrumentos antiguos</li>
-                    <li>Plataformas de intercambio académico</li>
+                    <li>Construcción de instrumento guaraní</li>
+                    <li>Investigación etnomusicológica</li>
+                    <li>Concierto didáctico comparativo</li>
+                    <li>Documental sobre preservación</li>
                 </ul>
             </div>
         </div>
-    </div>
-
-    <!-- Evaluación -->
-    <div class="container">
-        <h2>Criterios de Evaluación</h2>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Aspecto</th>
-                    <th>Excelente (4)</th>
-                    <th>Bueno (3)</th>
-                    <th>Satisfactorio (2)</th>
-                    <th>Necesita Mejorar (1)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Conocimiento Histórico</strong></td>
-                    <td>Demuestra comprensión profunda de contextos históricos y culturales</td>
-                    <td>Comprende los principales eventos y procesos históricos</td>
-                    <td>Conoce datos básicos pero falta profundidad</td>
-                    <td>Conocimiento superficial o incorrecto</td>
-                </tr>
-                <tr>
-                    <td><strong>Análisis Musical</strong></td>
-                    <td>Identifica y explica características musicales complejas</td>
-                    <td>Reconoce elementos musicales principales</td>
-                    <td>Identifica aspectos básicos con ayuda</td>
-                    <td>Dificultad para reconocer elementos musicales</td>
-                </tr>
-                <tr>
-                    <td><strong>Investigación</strong></td>
-                    <td>Utiliza fuentes diversas y confiables, presenta información original</td>
-                    <td>Usa fuentes apropiadas y presenta información clara</td>
-                    <td>Utiliza fuentes básicas con información correcta</td>
-                    <td>Fuentes limitadas o información inexacta</td>
-                </tr>
-                <tr>
-                    <td><strong>Presentación</strong></td>
-                    <td>Exposición clara, creativa y bien estructurada</td>
-                    <td>Presentación organizada y comprensible</td>
-                    <td>Comunicación básica pero efectiva</td>
-                    <td>Dificultades en la comunicación de ideas</td>
-                </tr>
-                <tr>
-                    <td><strong>Participación</strong></td>
-                    <td>Participa activamente, aporta ideas valiosas</td>
-                    <td>Participa regularmente en actividades</td>
-                    <td>Participa ocasionalmente</td>
-                    <td>Escasa participación en clase</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
     <!-- Footer -->
-    <div class="container">
-        <div style="text-align: center; padding: 2rem 0; border-top: 2px solid var(--accent-color); margin-top: 2rem;">
-            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">
-                <i class="fas fa-music"></i> Música Indígena y Colonial - Abril
-            </h3>
-            <p style="font-style: italic; color: var(--secondary-color);">
-                "La música es el lenguaje universal que conecta culturas y épocas, 
-                preservando la memoria sonora de nuestros pueblos."
-            </p>
-        </div>
-    </div>
+    <footer style="background-color: var(--primary-color); color: var(--white); text-align: center; padding: 2rem; margin-top: 3rem;">
+        <p>&copy; 2024 - Música Indígena y Colonial del Paraguay</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">"La música es el alma de los pueblos, y en Paraguay, esa alma late con el corazón guaraní"</p>
+    </footer>
 
     <script>
-        // Navegación suave
+        // Smooth scrolling para navegación
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1065,20 +1515,11 @@
             });
         });
 
-        // Efecto de parallax en la portada
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.cover');
-            if (parallax) {
-                const speed = scrolled * 0.5;
-                parallax.style.transform = `translateY(${speed}px)`;
-            }
-        });
-
-        // Animación de entrada para las tarjetas
+        // Animación de entrada para elementos visibles
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -1090,39 +1531,24 @@
             });
         }, observerOptions);
 
-        // Aplicar animación a las tarjetas
-        document.querySelectorAll('.week-card, .instrument-card, .timeline-item').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
+        // Observar elementos para animación
+        document.querySelectorAll('.week-card, .instrument-card, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
         });
 
-        // Contador de progreso de lectura
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
+        // Efectos de hover dinámicos
+        document.querySelectorAll('.content-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.transition = 'transform 0.3s ease';
+            });
             
-            // Crear barra de progreso si no existe
-            let progressBar = document.getElementById('progress-bar');
-            if (!progressBar) {
-                progressBar = document.createElement('div');
-                progressBar.id = 'progress-bar';
-                progressBar.style.cssText = `
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: ${scrolled}%;
-                    height: 4px;
-                    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-                    z-index: 1001;
-                    transition: width 0.3s ease;
-                `;
-                document.body.appendChild(progressBar);
-            } else {
-                progressBar.style.width = scrolled + '%';
-            }
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>
