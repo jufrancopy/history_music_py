@@ -6,6 +6,7 @@
     <title>Música Indígena y Colonial del Paraguay - Abril</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         :root {
             /* Paleta de colores inspirada en Paraguay */
@@ -733,16 +734,17 @@
     </style>
 </head>
 <body>
-    <!-- Navegación -->
+    <!-- Barra de navegación -->
     <nav class="navbar">
-        <div class="nav-brand">
-            <i class="fas fa-music nav-logo" style="font-size: 2rem; color: var(--light-color);"></i>
-        </div>
+        <a href="index.html">
+            <img src="historia.png" alt="Logo" class="nav-logo">
+        </a>
+        <button class="menu-toggle" aria-label="Menú">☰</button>
         <ul class="nav-menu">
-            <li><a href="#inicio" class="nav-link">Inicio</a></li>
-            <li><a href="#instrumentos" class="nav-link">Instrumentos</a></li>
-            <li><a href="#colonial" class="nav-link">Época Colonial</a></li>
-            <li><a href="#cronologia" class="nav-link">Cronología</a></li>
+            <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
+            <li class="nav-item"><a href="index.html" class="nav-link">Historia de la Música</a></li>
+            <li class="nav-item"><a href="../intro_filosofia/index.html" class="nav-link">Filosofía</a></li>
+            <li class="nav-item"><a href="../contact.html" class="nav-link">Contacto</a></li>
         </ul>
     </nav>
 

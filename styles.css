@@ -178,6 +178,7 @@ table {
     border-collapse: collapse;
     margin: 2rem 0;
     font-size: 1rem;
+    table-layout: fixed; /* Añadido para mejorar la consistencia */
 }
 
 th,
@@ -600,7 +601,7 @@ body.modal-open {
     }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .navbar {
         padding: 1rem;
         position: relative;
@@ -685,6 +686,108 @@ body.modal-open {
         padding-left: 2rem;
         margin-bottom: 2rem;
     }
+
+    /* Tablas responsivas */
+    .semester-section table {
+        border: 0;
+    }
+
+    .semester-section table thead {
+        display: none;
+    }
+
+    .semester-section table tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid var(--accent-color);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+    .semester-section table td {
+        display: block;
+        text-align: left;
+        border-bottom: 1px dotted var(--accent-color);
+        padding: 12px 15px;
+    }
+
+    .semester-section table td:last-child {
+        border-bottom: 0;
+    }
+
+    .semester-section table td::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: bold;
+        font-family: var(--font-headings);
+        color: var(--primary-color);
+        margin-bottom: 0.5em;
+    }
+
+    .semester-section table td ul {
+        padding-left: 20px;
+        margin: 0;
+    }
+}
+
+/* --- ESTILOS DEL CALENDARIO --- */
+#calendario-anual-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.mes-calendario {
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--box-shadow);
+}
+
+.mes-titulo {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.dias-semana, .dias-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    gap: 5px;
+}
+
+.dias-semana div {
+    font-weight: bold;
+    font-family: var(--font-headings);
+    padding-bottom: 0.5rem;
+}
+
+.dia-calendario, .dia-vacio {
+    padding: 0.5rem 0;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.dia-clase {
+    background-color: var(--accent-color);
+    font-weight: bold;
+}
+
+.dia-clase a {
+    display: block;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.dia-clase:hover {
+    background-color: var(--secondary-color);
+}
+
+.dia-clase a:hover {
+    color: var(--white);
 }
 
 /* Clases programadas */
@@ -747,4 +850,63 @@ body.modal-open {
         padding: 0.3rem 0.8rem;
         font-size: 0.9rem;
     }
+}
+
+
+.modal-body .assessment-section h3,
+.modal-body .resources-section h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.modal-body .assessment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.modal-body .assessment-item h4 {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.modal-body .resources-section ul {
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+/* Estilos para el acordeón */
+.accordion {
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.5rem;
+    transition: 0.4s;
+    font-family: var(--font-headings);
+    margin-top: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.active,
+.accordion:hover {
+    background-color: var(--secondary-color);
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    border: 1px solid var(--accent-color);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
