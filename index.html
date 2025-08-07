@@ -1,596 +1,1064 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historia Musical de Paraguay</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        .header {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        .header p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-        }
-
-        .timeline-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative;
-        }
-
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(180deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
-            transform: translateX(-50%);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .period {
-            margin-bottom: 4rem;
-            position: relative;
-        }
-
-        .period-header {
-            text-align: center;
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transform: translateY(0);
-            transition: transform 0.3s ease;
-            position: relative;
-            z-index: 10;
-        }
-
-        .period-header:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .period-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .period-years {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .musicians-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        .musician-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border-left: 5px solid #4ecdc4;
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-
-        .musician-card:nth-child(even) {
-            border-left-color: #ff6b6b;
-        }
-
-        .musician-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 1);
-        }
-
-        .musician-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-        }
-
-        .musician-years {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-bottom: 0.8rem;
-            font-style: italic;
-        }
-
-        .musician-description {
-            color: #34495e;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        .highlight {
-            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
-            padding: 0.2rem 0.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        .works {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: rgba(52, 152, 219, 0.1);
-            border-radius: 10px;
-            border-left: 3px solid #3498db;
-        }
-
-        .works-title {
-            font-weight: 600;
-            color: #2980b9;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .works-list {
-            font-size: 0.85rem;
-            color: #34495e;
-            font-style: italic;
-        }
-
-        .source-reference {
-            margin-top: 1rem;
-            padding: 0.5rem 0.8rem;
-            background: rgba(155, 89, 182, 0.1);
-            border-radius: 8px;
-            border-left: 3px solid #9b59b6;
-            font-size: 0.8rem;
-            color: #8e44ad;
-            font-weight: 500;
-        }
-
-        .source-reference::before {
-            content: "📚 ";
-            margin-right: 0.3rem;
-        }
-
-        @media (max-width: 768px) {
-            .musicians-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .timeline-line {
-                display: none;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .period-title {
-                font-size: 1.4rem;
-            }
-
-            .timeline-container {
-                padding: 0 1rem;
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    <title>Cátedra - Historia de la Música Paraguaya</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <div class="header">
-        <h1>🎵 Historia Musical de Paraguay</h1>
-        <p>Un recorrido cronológico por los grandes compositores y músicos paraguayos</p>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="historia.png" alt="Logo" class="nav-logo">
+        </a>
+        <button class="menu-toggle" aria-label="Menú">☰</button>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
+            <li class="nav-item"><a href="index.html" class="nav-link">Historia de la Música</a></li>
+            <li class="nav-item"><a href="../intro_filosofia/index.html" class="nav-link">Filosofía</a></li>
+            <li class="nav-item"><a href="../contact.html" class="nav-link">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Portada -->
+    <section class="cover">
+        <img src="historia.png" alt="Logo Historia de la Música Paraguaya" class="cover-logo">
+        <h1 class="cover-title">Historia de la Música Paraguaya</h1>
+        <p class="cover-subtitle">Explorando las raíces culturales y la evolución del arte sonoro paraguayo a través de
+            los siglos</p>
+    </section>
+
+    <div class="container">
+        <h2>Detalles de la Materia</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Materia</th>
+                    <th>Horario</th>
+                    <th>Alumnos</th>
+                    <th>Evaluación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Historia de la Música Paraguaya</td>
+                    <td>17:00 a 18:00 hs</td>
+                    <td><button class="btn" onclick="openModal('modalHistoria')">Ver</button></td>
+                    <td><button class="btn" onclick="openModal('modalEvaluacion')">Ver</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <header>
+            <h2>Plan Anual de Historia de la Música Paraguaya</h2>
+            <p class="intro">Tercer Año - Educación Media</p>
+            <div class="course-info">
+                <p><strong>Docente:</strong> Lic. Julio Franco</p>
+                <p><strong>Objetivos del curso:</strong> Comprender el desarrollo histórico de la música paraguaya,
+                    analizar sus características estilísticas y valorar su importancia en la construcción de la
+                    identidad nacional.</p>
+            </div>
+        </header>
+        <div class="semester-section">
+            <button class="accordion">PRIMER SEMESTRE</button>
+            <div class="panel">
+                <div class="month-section">
+                    <h3 class="month-title">MARZO - Raíces y Orígenes</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 1.1: Introducción al Paraguay</strong>
+                                    <ul>
+                                        <li>Contexto geográfico e histórico</li>
+                                        <li>Panorama cultural inicial</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Mapa conceptual colaborativo</li>
+                                        <li>Lluvia de ideas sobre música paraguaya</li>
+                                        <li>Presentación multimedia</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Mapas históricos, imágenes, videos documentales</td>
+                                <td data-label="Evaluación">Participación activa</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 1.2: Provincia gigante</strong>
+                                    <ul>
+                                        <li>Extensión territorial original</li>
+                                        <li>Influencias culturales regionales</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Comparación mapas históricos/actuales</li>
+                                        <li>Análisis de documentos en grupos</li>
+                                        <li>Creación de línea de tiempo</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Mapas comparativos, documentos históricos</td>
+                                <td data-label="Evaluación">Trabajo grupal</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 1.3: Integración política y cultural</strong>
+                                    <ul>
+                                        <li>Procesos de mestizaje</li>
+                                        <li>Primeras manifestaciones musicales</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Role-play de encuentro cultural</li>
+                                        <li>Análisis de crónicas coloniales</li>
+                                        <li>Reflexión escrita individual</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Textos históricos, grabaciones reconstruidas</td>
+                                <td data-label="Evaluación">Ensayo reflexivo</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 2.1: Los indígenas y su música</strong>
+                                    <ul>
+                                        <li>Cosmovisión musical indígena</li>
+                                        <li>Funciones sociales de la música</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Audición comparativa (grupos étnicos)</li>
+                                        <li>Taller de análisis morfológico</li>
+                                        <li>Foro de discusión</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones etnográficas, instrumentos réplica</td>
+                                <td data-label="Evaluación">Ficha de análisis</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="month-section">
+                    <h3 class="month-title">ABRIL - Música Indígena y Colonial</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 2.2: Instrumentos musicales indígenas</strong>
+                                    <ul>
+                                        <li>Clasificación organológica</li>
+                                        <li>Técnicas de ejecución</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Exposición interactiva con réplicas</li>
+                                        <li>Taller de reconocimiento auditivo</li>
+                                        <li>Creación de catálogo ilustrado</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Instrumentos reales/replicas, diagramas</td>
+                                <td data-label="Evaluación">Catálogo grupal</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 2.3: Descripción ampliada de instrumentos</strong>
+                                    <ul>
+                                        <li>Construcción y materiales</li>
+                                        <li>Contextos de uso</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Investigación guiada en biblioteca</li>
+                                        <li>Elaboración de fichas técnicas</li>
+                                        <li>Simulación de construcción</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Manuales de organología, materiales naturales</td>
+                                <td data-label="Evaluación">Ficha técnica</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 3: Música durante la colonia</strong>
+                                    <ul>
+                                        <li>Transculturación musical</li>
+                                        <li>Nuevas formas y géneros</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Audición comparativa indígena/colonial</li>
+                                        <li>Análisis de partituras históricas</li>
+                                        <li>Cuadro comparativo</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Partituras facsímiles, grabaciones</td>
+                                <td data-label="Evaluación">Cuadro comparativo</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 3 (cont.): Música colonial</strong>
+                                    <ul>
+                                        <li>Instituciones musicales</li>
+                                        <li>Compositores anónimos y conocidos</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Recreación histórica musical</li>
+                                        <li>Taller de escritura neumática</li>
+                                        <li>Análisis crítico grupal</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Reproducciones de instrumentos coloniales</td>
+                                <td data-label="Evaluación">Participación en taller</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="month-section">
+                    <h3 class="month-title">MAYO - Las Misiones Jesuíticas</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 4.1: Sistema reduccional</strong>
+                                    <ul>
+                                        <li>Organización social y cultural</li>
+                                        <li>Escuelas de música</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Simulación de taller misional</li>
+                                        <li>Análisis de documentos jesuíticos</li>
+                                        <li>Mapa conceptual grupal</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Planos de reducciones, crónicas</td>
+                                <td data-label="Evaluación">Mapa conceptual</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 4.2: Los jesuitas y la música</strong>
+                                    <ul>
+                                        <li>Métodos pedagógicos</li>
+                                        <li>Repertorio misional</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Audición de música reduccional</li>
+                                        <li>Análisis estilístico guiado</li>
+                                        <li>Reflexión escrita</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones de Chiquitos, Moxos</td>
+                                <td data-label="Evaluación">Ensayo crítico</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 4.3: Músicos jesuitas destacados</strong>
+                                    <ul>
+                                        <li>Biografías y obras</li>
+                                        <li>Legado musical</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Juego de roles: "Entrevista" a jesuitas</li>
+                                        <li>Investigación documental</li>
+                                        <li>Presentaciones multimedia</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Partituras, biografías, recursos digitales</td>
+                                <td data-label="Evaluación">Presentación grupal</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Evaluación parcial</strong>
+                                    <ul>
+                                        <li>Síntesis del primer cuatrimestre</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Prueba escrita estructurada</li>
+                                        <li>Entrega de portafolios</li>
+                                        <li>Autoevaluación</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Guías de estudio, rúbricas</td>
+                                <td data-label="Evaluación">Examen escrito</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="month-section">
+                    <h3 class="month-title">JUNIO - Independencia y Nacionalismo</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 5.1: Contexto independentista</strong>
+                                    <ul>
+                                        <li>Cambios políticos y culturales</li>
+                                        <li>Nuevas expresiones musicales</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis de documentos históricos</li>
+                                        <li>Debate sobre identidad musical</li>
+                                        <li>Línea de tiempo interactiva</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Proclamas, periódicos de la época</td>
+                                <td data-label="Evaluación">Contribución a línea de tiempo</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 5.2: Dictadura de Francia</strong>
+                                    <ul>
+                                        <li>Políticas culturales</li>
+                                        <li>Desarrollo musical</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis crítico de fuentes</li>
+                                        <li>Simulación de tertulia decimonónica</li>
+                                        <li>Creación de periódico histórico</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Decretos, reglamentos, memorias</td>
+                                <td data-label="Evaluación">Artículo periodístico</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 5.3: Himno y canto patriótico</strong>
+                                    <ul>
+                                        <li>Historia del himno nacional</li>
+                                        <li>Tetã purahéi</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis musical comparativo</li>
+                                        <li>Taller de composición patriótica</li>
+                                        <li>Audición crítica</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Diferentes versiones históricas</td>
+                                <td data-label="Evaluación">Composición creativa</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 5.4: Músicos de la independencia</strong>
+                                    <ul>
+                                        <li>Biografías y aportes</li>
+                                        <li>Contexto sociocultural</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Elaboración de biografías musicales</li>
+                                        <li>Representación histórica</li>
+                                        <li>Galería de personajes</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Retratos, partituras, documentos</td>
+                                <td data-label="Evaluación">Biografía ilustrada</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="semester-section">
+            <button class="accordion">SEGUNDO SEMESTRE</button>
+            <div class="panel">
+                <div class="month-section">
+                    <h3 class="month-title">JULIO - Época de los López y Progreso Musical</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 6.1: Contexto histórico-cultural</strong>
+                                    <ul>
+                                        <li>Progreso material bajo los López</li>
+                                        <li>Políticas culturales</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis de documentos de la época</li>
+                                        <li>Debate sobre mecenazgo artístico</li>
+                                        <li>Línea de tiempo comparativa</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Decretos culturales, inventarios históricos</td>
+                                <td data-label="Evaluación">Análisis documental</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 6.2: Primeras referencias Música Popular</strong>
+                                    <ul>
+                                        <li>Crónicas y descripciones</li>
+                                        <li>Transición estilística</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis de textos históricos</li>
+                                        <li>Recreación de escenas musicales</li>
+                                        <li>Comparación con tradición oral</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Crónicas de viajeros, periódicos</td>
+                                <td data-label="Evaluación">Informe comparativo</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 6.3: Músicos destacados</strong>
+                                    <ul>
+                                        <li>Biografías y aportes</li>
+                                        <li>Estilos característicos</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Audiciones comentadas</li>
+                                        <li>Elaboración de perfiles biográficos</li>
+                                        <li>"Entrevistas" históricas simuladas</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Partituras históricas, retratos</td>
+                                <td data-label="Evaluación">Perfil biográfico</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 7: Himno Nacional Paraguayo</strong>
+                                    <ul>
+                                        <li>Historia y controversias</li>
+                                        <li>Análisis musical</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis de versiones históricas</li>
+                                        <li>Taller de interpretación</li>
+                                        <li>Reflexión sobre simbolismo</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones históricas, partituras originales</td>
+                                <td data-label="Evaluación">Ensayo interpretativo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="month-section">
+                    <h3 class="month-title">AGOSTO - Guerra y Postguerra Musical</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 8.1: Guerra de la Triple Alianza</strong>
+                                    <ul>
+                                        <li>Impacto demográfico-cultural</li>
+                                        <li>Música en el conflicto</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis de canciones bélicas</li>
+                                        <li>Simulación de diario de guerra</li>
+                                        <li>Mapa de impacto cultural</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Cancionero de guerra, memorias</td>
+                                <td data-label="Evaluación">Entrada de diario histórica</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 8.2: Música post-guerra</strong>
+                                    <ul>
+                                        <li>Reconstrucción cultural</li>
+                                        <li>Nuevas expresiones</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Comparación pre/post guerra</li>
+                                        <li>Análisis de letras como documento</li>
+                                        <li>Taller de resiliencia musical</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones reconstruidas, poesía</td>
+                                <td data-label="Evaluación">Análisis lírico</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 9.1: Danzas paraguayas</strong>
+                                    <ul>
+                                        <li>Origen y evolución</li>
+                                        <li>Contextos sociales</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Visualización coreográfica</li>
+                                        <li>Investigación etnográfica</li>
+                                        <li>Taller rítmico-corporal</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Videos documentales, trajes típicos</td>
+                                <td data-label="Evaluación">Ficha técnica de danza</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 9.2: Tipos de danzas</strong>
+                                    <ul>
+                                        <li>Clasificación regional</li>
+                                        <li>Instrumentación característica</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Taller de reconocimiento auditivo</li>
+                                        <li>Creación de infografías</li>
+                                        <li>Presentaciones grupales</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones de campo, diagramas</td>
+                                <td data-label="Evaluación">Infografía grupal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="month-section">
+                    <h3 class="month-title">SEPTIEMBRE - Música Popular Paraguaya</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 10: El Compuesto</strong>
+                                    <ul>
+                                        <li>Orígenes y características</li>
+                                        <li>Estructura musical y poética</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Audición comparativa</li>
+                                        <li>Taller de análisis métrico</li>
+                                        <li>Creación colectiva</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones clásicas, partituras</td>
+                                <td data-label="Evaluación">Composición grupal</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 11: Polca Paraguaya</strong>
+                                    <ul>
+                                        <li>Diferenciación con otras polcas</li>
+                                        <li>Subgéneros y variantes</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis rítmico corporal</li>
+                                        <li>Mapa de intérpretes históricos</li>
+                                        <li>Taller de ejecución básica</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Instrumentos reales, diagramas rítmicos</td>
+                                <td data-label="Evaluación">Ejercicio de ejecución</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 12: Guarania</strong>
+                                    <ul>
+                                        <li>José Asunción Flores</li>
+                                        <li>Revolución musical y cultural</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Análisis melódico comparado</li>
+                                        <li>Documental con debate</li>
+                                        <li>Taller de arreglo vocal</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Documentales, partituras originales</td>
+                                <td data-label="Evaluación">Arreglo vocal grupal</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Evaluación parcial</strong>
+                                    <ul>
+                                        <li>Síntesis de contenidos</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Prueba escrita integradora</li>
+                                        <li>Presentación de trabajos</li>
+                                        <li>Autoevaluación guiada</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Guías de estudio, rúbricas</td>
+                                <td data-label="Evaluación">Examen escrito</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="month-section">
+                    <h3 class="month-title">OCTUBRE - Siglo XX y Consolidación</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semana</th>
+                                <th>Contenido</th>
+                                <th>Actividades</th>
+                                <th>Recursos</th>
+                                <th>Evaluación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Semana">1</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 14: Agrupaciones tradicionales</strong>
+                                    <ul>
+                                        <li>Conjuntos típicos</li>
+                                        <li>Bandas folklóricas</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Audición comparativa</li>
+                                        <li>Simulación de agrupación</li>
+                                        <li>Análisis de formaciones</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones históricas, fotografías</td>
+                                <td data-label="Evaluación">Diagrama de agrupación</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">2</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 15: Zarzuela paraguaya</strong>
+                                    <ul>
+                                        <li>Características únicas</li>
+                                        <li>Temas y estructura</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Visualización de fragmentos</li>
+                                        <li>Análisis libretos</li>
+                                        <li>Taller de escenificación</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Grabaciones, libretos, vestuario</td>
+                                <td data-label="Evaluación">Escena adaptada</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">3</td>
+                                <td data-label="Contenido">
+                                    <strong>Unidad 16: Compositores del siglo XX</strong>
+                                    <ul>
+                                        <li>Agustín Barrios Mangoré</li>
+                                        <li>Otros compositores relevantes</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Audición crítica</li>
+                                        <li>Análisis técnico</li>
+                                        <li>Mapa de influencias</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Partituras, biografías, cartas</td>
+                                <td data-label="Evaluación">Mapa conceptual</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Semana">4</td>
+                                <td data-label="Contenido">
+                                    <strong>Síntesis y cierre</strong>
+                                    <ul>
+                                        <li>Línea histórica completa</li>
+                                        <li>Proyecciones futuras</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Actividades">
+                                    <ul>
+                                        <li>Elaboración de mural histórico</li>
+                                        <li>Foro de proyecciones</li>
+                                        <li>Evaluación formativa</li>
+                                    </ul>
+                                </td>
+                                <td data-label="Recursos">Materiales síntesis, gráficos</td>
+                                <td data-label="Evaluación">Contribución al mural</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </br>
+        <!-- Calendario Anual -->
+        <button class="accordion">Calendario de Clases 2025</button>
+        <div class="panel">
+            <div id="calendario-anual-container"></div>
+        </div>
+
+        <div id="modalHistoria" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Alumnos de Historia de la Música Paraguaya</h2>
+                    <button class="modal-close" onclick="closeModal('modalHistoria')">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Apellidos</th>
+                                <th>Nombres</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CABALLERO MARTÍNEZ</td>
+                                <td>LEONARDO FABIO</td>
+                            </tr>
+                            <tr>
+                                <td>CRUZ VALDEZ</td>
+                                <td>SANTIAGO JOSUE</td>
+                            </tr>
+                            <tr>
+                                <td>MOLEDA BENÍTEZ</td>
+                                <td>AGUSTÍN</td>
+                            </tr>
+                            <tr>
+                                <td>PERALTA TROCHE</td>
+                                <td>GILBERTO ZACHARIEL</td>
+                            </tr>
+                            <tr>
+                                <td>MENDOZA CANTERO</td>
+                                <td>SEBASTIAN</td>
+                            </tr>
+                            <tr>
+                                <td>MARTÍNEZ NUÑEZ</td>
+                                <td>KARINA ELIZABET</td>
+                            </tr>
+                            <tr>
+                                <td>DOMANICZKY BALLASCH</td>
+                                <td>IVÁN LORENZO</td>
+                            </tr>
+                            <tr>
+                                <td>IBAÑEZ ESCURRA</td>
+                                <td>JAQUELINE</td>
+                            </tr>
+                            <tr>
+                                <td>RODRIGUEZ GALEANO</td>
+                                <td>ANGEL GABRIEL</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <!-- Puedes agregar botones aquí si los necesitas -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="timeline-container">
-        <div class="timeline-line"></div>
-
-        <div class="period fade-in">
-            <div class="period-header">
-                <div class="period-title">Época Precolombina</div>
-                <div class="period-years">Antes del siglo XVI</div>
+    <div id="modalEvaluacion" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Evaluación y Recursos</h2>
+                <button class="modal-close" onclick="closeModal('modalEvaluacion')">&times;</button>
             </div>
-            <div class="musicians-grid">
-                <div class="musician-card">
-                    <div class="musician-name">Los Indígenas</div>
-                    <div class="musician-description">
-                        La música estaba <span class="highlight">ligada a las actividades cotidianas y rituales</span>, sin la noción occidental de lo "estético". 
-                        No existían músicos especialistas, ya que todos participaban de la experiencia musical colectiva. 
-                        La música era anaestructural, con frases repetitivas y principalmente con fines rituales.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 3, 39-44</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="period fade-in">
-            <div class="period-header">
-                <div class="period-title">La Colonia</div>
-                <div class="period-years">Siglos XVI - XVIII</div>
-            </div>
-            <div class="musicians-grid">
-                <div class="musician-card">
-                    <div class="musician-name">Gregorio de Acosta</div>
-                    <div class="musician-years">1545</div>
-                    <div class="musician-description">
-                        Integró un <span class="highlight">coro de músicos en Asunción</span> en 1545, estableciendo las primeras formaciones musicales en Paraguay.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 5, 68</div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Padre Juan Gabriel Lezcano</div>
-                    <div class="musician-years">1543</div>
-                    <div class="musician-description">
-                        Fundó una casa y escuela donde se enseñaba música, siendo uno de los pioneros en la educación musical formal.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 5, 68</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="period fade-in">
-            <div class="period-header">
-                <div class="period-title">Las Misiones Jesuíticas</div>
-                <div class="period-years">Siglos XVII - XVIII</div>
-            </div>
-            <div class="musicians-grid">
-                <div class="musician-card">
-                    <div class="musician-name">Domenico Zipoli</div>
-                    <div class="musician-years">1688-1726</div>
-                    <div class="musician-description">
-                        Compositor italiano de gran fama, organista de la Chiesa del Gesú. Su <span class="highlight">música fue la más apreciada</span> en las reducciones.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras destacadas:</div>
-                        <div class="works-list">Misas, motetes, himnos y piezas para órgano</div>
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 6-7, 76-78, 93-94</div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Anton Sepp</div>
-                    <div class="musician-years">1655-1733</div>
-                    <div class="musician-description">
-                        Músico tirolés que ejecutaba <span class="highlight">más de 20 instrumentos</span> y fue uno de los primeros en introducir el arpa en Paraguay.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 6, 72-79</div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Jean Vaisseau</div>
-                    <div class="musician-years">Llegó en 1617</div>
-                    <div class="musician-description">
-                        Maestro de capilla de la corte de Carlos V antes de llegar a América. Trabajó en la Misión de Loreto.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 6, 72-79</div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Pedro Comentale</div>
-                    <div class="musician-years">1595-1664</div>
-                    <div class="musician-description">
-                        Originario de Nápoles, presentó un grupo de <span class="highlight">músicos indígenas diestros</span> en vihuelas de arco en Buenos Aires en 1628.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 6, 72-79</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="period fade-in">
-            <div class="period-header">
-                <div class="period-title">La Independencia</div>
-                <div class="period-years">1811-1840</div>
-            </div>
-            <div class="musicians-grid">
-                <div class="musician-card">
-                    <div class="musician-name">Antonio María Quintana</div>
-                    <div class="musician-years">Época de Francia</div>
-                    <div class="musician-description">
-                        Guitarrista virtuoso y considerado el <span class="highlight">primer maestro de música del Paraguay</span>. 
-                        Enseñó en la Escuela Central de Primeras Letras.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 8-10, 122-127</div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Anastasio Rolón</div>
-                    <div class="musician-years">c. 1830</div>
-                    <div class="musician-description">
-                        Guitarrista y poeta de Caraguatay, autor del <span class="highlight">primer Himno Patriótico de Paraguay</span> 
-                        con letra original en guaraní.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 8, 116-118</div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Kangüe Herreros</div>
-                    <div class="musician-years">Soldado del Batallón Escolta</div>
-                    <div class="musician-description">
-                        Guitarrista y cantor popular de Carapeguá. Se le atribuye la creación de la polca "Campamento Cerro León".
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras:</div>
-                        <div class="works-list">"Campamento Cerro León", "Che lucero aguai'y"</div>
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 8-10, 122-127</div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Tomás Miranda</div>
-                    <div class="musician-years">1830-1840</div>
-                    <div class="musician-description">
-                        Guitarrista virtuoso de Carapeguá, conocido como "Tomás Carapeguá", destacado en las décadas de 1830 y 1840.
-                    </div>
-                    <div class="source-reference">Referencia: Historia de la Música Paraguaya - Prof. Asunción Cantero, p. 8-10, 122-127</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="period fade-in">
-            <div class="period-header">
-                <div class="period-title">Los López y la Guerra de la Triple Alianza</div>
-                <div class="period-years">1840-1870</div>
-            </div>
-            <div class="musicians-grid">
-                <div class="musician-card">
-                    <div class="musician-name">Francisco Sauvageot de Dupuis</div>
-                    <div class="musician-years">1813-1861</div>
-                    <div class="musician-description">
-                        Músico francés, Jefe de Música y profesor de la Academia Literaria. Formó <span class="highlight">más de 20 agrupaciones musicales</span> 
-                        y es considerado presunto autor del Himno Nacional.
+            <div class="modal-body">
+                <div class="assessment-section">
+                    <h3>Sistema de Evaluación</h3>
+                    <div class="assessment-grid">
+                        <div class="assessment-item">
+                            <h4>Evaluación Continua</h4>
+                            <ul>
+                                <li>Participación en clase (20%)</li>
+                                <li>Trabajos prácticos (30%)</li>
+                                <li>Investigaciones (20%)</li>
+                            </ul>
+                        </div>
+                        <div class="assessment-item">
+                            <h4>Evaluaciones Parciales</h4>
+                            <ul>
+                                <li>Primer cuatrimestre (15%)</li>
+                                <li>Segundo cuatrimestre (15%)</li>
+                            </ul>
+                        </div>
+                        <div class="assessment-item">
+                            <h4>Proyecto Final</h4>
+                            <ul>
+                                <li>Investigación monográfica (opcional)</li>
+                                <li>Creación musical inspirada</li>
+                                <li>Presentación multimedia</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="musician-card">
-                    <div class="musician-name">Cantalicio Guerrero</div>
-                    <div class="musician-years">1853-1908</div>
-                    <div class="musician-description">
-                        Uno de los <span class="highlight">primeros músicos profesionales</span> formados por Dupuis. 
-                        Organizó la primera Orquesta Nacional subvencionada por el Estado en 1890.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obra principal:</div>
-                        <div class="works-list">Habanera sinfónica "La Paraguaya"</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Indalecio Odriozola</div>
-                    <div class="musician-years">c. 1830-1865/1870</div>
-                    <div class="musician-description">
-                        Uno de los <span class="highlight">mejores discípulos de Dupuis</span>, dirigió las primeras orquestas en la capital. 
-                        Falleció en el frente durante la Guerra de la Triple Alianza.
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Luis Cavedagni</div>
-                    <div class="musician-years">Llegó en 1874</div>
-                    <div class="musician-description">
-                        Músico italiano que realizó la <span class="highlight">primera reconstrucción del Himno Nacional</span> 
-                        publicada en 1874.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="period fade-in">
-            <div class="period-header">
-                <div class="period-title">Siglo XX - La Edad de Oro</div>
-                <div class="period-years">1900-2000</div>
-            </div>
-            <div class="musicians-grid">
-                <div class="musician-card">
-                    <div class="musician-name">Agustín Pío Barrios Mangoré</div>
-                    <div class="musician-years">1885-1944</div>
-                    <div class="musician-description">
-                        El <span class="highlight">más universal de los músicos paraguayos</span> y gran creador de la escuela guitarrística más importante de América.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras destacadas:</div>
-                        <div class="works-list">"Las Abejas", "La Catedral", "Danza Paraguaya", "Julia Florida"</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">José Asunción Flores</div>
-                    <div class="musician-years">1904-1972</div>
-                    <div class="musician-description">
-                        La <span class="highlight">figura más importante de la música popular paraguaya del siglo XX</span>. 
-                        Creador de la Guarania en 1925.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras destacadas:</div>
-                        <div class="works-list">"Jejuí", "India", "Ne rendápe aju", "Pyhare Pyte"</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Félix Pérez Cardozo</div>
-                    <div class="musician-years">1908-1952</div>
-                    <div class="musician-description">
-                        La <span class="highlight">figura más relevante en la interpretación y composición para arpa</span> en Paraguay. 
-                        Contribuyó a la evolución del arpa paraguaya.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obra icónica:</div>
-                        <div class="works-list">"Guyra campana" (versión internacionalmente difundida)</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Herminio Giménez</div>
-                    <div class="musician-years">1905-1991</div>
-                    <div class="musician-description">
-                        Su música "Cerro Corá" fue declarada <span class="highlight">Canción Nacional</span>. 
-                        Compositor sinfónico y de música para filmes.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras:</div>
-                        <div class="works-list">"Cerro Corá", "El Rabelero", "La Epopeya"</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Florentín Giménez</div>
-                    <div class="musician-years">1925-</div>
-                    <div class="musician-description">
-                        Autor de la <span class="highlight">primera ópera paraguaya "Juana de Lara"</span>. 
-                        Fundó el Conservatorio Nacional de Música.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Logro:</div>
-                        <div class="works-list">6 sinfonías y primera ópera paraguaya</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Mauricio Cardozo Ocampo</div>
-                    <div class="musician-years">1907-1982</div>
-                    <div class="musician-description">
-                        Destacado por su <span class="highlight">música de inspiración folclórica</span>. 
-                        Formó el célebre dúo Martínez-Cardozo.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras:</div>
-                        <div class="works-list">"Galopera", "Pueblo Ybycuí", "Paraguaya linda" (300+ canciones)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="period fade-in">
-            <div class="period-header">
-                <div class="period-title">El Nuevo Cancionero</div>
-                <div class="period-years">Década de 1970 en adelante</div>
-            </div>
-            <div class="musicians-grid">
-                <div class="musician-card">
-                    <div class="musician-name">Maneco Galeano</div>
-                    <div class="musician-years">1945-1980</div>
-                    <div class="musician-description">
-                        Figura clave del <span class="highlight">Movimiento del Nuevo Cancionero en Paraguay</span>. 
-                        Sus canciones se caracterizan por textos con ironía, sátira política y compromiso social.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras icónicas:</div>
-                        <div class="works-list">"Yo soy de la Chacarita", "La Chuchi", "Poncho de 60 listas"</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Oscar Nelson Safuán</div>
-                    <div class="musician-years">1943-</div>
-                    <div class="musician-description">
-                        Creador del género musical <span class="highlight">Avanzada</span> en la década de 1980, 
-                        fusionando guarania y polca con ritmos actuales e instrumentos electrónicos.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras:</div>
-                        <div class="works-list">"Tema Paraguayo", "Avanzada", "Nacionales 1, 2 y 3"</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Carlos Noguera</div>
-                    <div class="musician-years">Nuevo Cancionero</div>
-                    <div class="musician-description">
-                        Compositor del Nuevo Cancionero con <span class="highlight">espíritu contestatario</span> 
-                        durante la dictadura de Stroessner.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras:</div>
-                        <div class="works-list">"Canto de esperanza", "A la residenta", "El silencio y la aurora"</div>
-                    </div>
-                </div>
-                <div class="musician-card">
-                    <div class="musician-name">Alberto Rodas</div>
-                    <div class="musician-years">Nuevo Cancionero</div>
-                    <div class="musician-description">
-                        Compositor e intérprete del Nuevo Cancionero, parte del movimiento de jóvenes músicos paraguayos con conciencia social.
-                    </div>
-                    <div class="works">
-                        <div class="works-title">Obras:</div>
-                        <div class="works-list">"Torres de babel", "Sudor de pobre", "Tenemos tanto"</div>
-                    </div>
+                <hr style="margin: 2rem 0;">
+                <div class="resources-section">
+                    <h3>Recursos Didácticos</h3>
+                    <ul>
+                        <li>Biblioteca especializada con partituras y documentos históricos</li>
+                        <li>Colección de instrumentos musicales réplica</li>
+                        <li>Archivo digital de grabaciones históricas</li>
+                        <li>Visitas guiadas a museos y sitios históricos</li>
+                        <li>Plataforma virtual con materiales complementarios</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Animación de aparición progresiva
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // Funciones para manejar los modales
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationDelay = '0.2s';
-                    entry.target.classList.add('fade-in');
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Cerrar modal al hacer click fuera del contenido
+        window.onclick = function (event) {
+            if (event.target.className === "modal") {
+                event.target.style.display = "none";
+            }
+        }
+
+        // Menú móvil
+        document.querySelector('.menu-toggle').addEventListener('click', function () {
+            document.querySelector('.nav-menu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Dropdowns en móvil
+        document.querySelectorAll('.dropdown > .nav-link').forEach(item => {
+            item.addEventListener('click', function (e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = this.parentElement;
+                    dropdown.classList.toggle('active');
+
+                    // Cerrar otros dropdowns
+                    document.querySelectorAll('.dropdown').forEach(dd => {
+                        if (dd !== dropdown) {
+                            dd.classList.remove('active');
+                        }
+                    });
                 }
             });
-        }, observerOptions);
-
-        document.querySelectorAll('.period').forEach(period => {
-            observer.observe(period);
         });
 
-        // Efecto de hover en las tarjetas
-        document.querySelectorAll('.musician-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
+        // Script del acordeón
+        document.addEventListener('DOMContentLoaded', function () {
+            var acc = document.getElementsByClassName("accordion");
+            for (var i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
 
-        // Smooth scrolling para navegación
-        document.addEventListener('DOMContentLoaded', function() {
-            const timeline = document.querySelector('.timeline-container');
-            timeline.style.opacity = '0';
-            setTimeout(() => {
-                timeline.style.transition = 'opacity 1s ease';
-                timeline.style.opacity = '1';
-            }, 300);
+            // --- SCRIPT DEL CALENDARIO ---
+            const clasesProgramadas = {
+                '2025-3-27': { link: '25_03_25.html', title: 'Etnomusicología' },
+                '2025-4-3': { link: 'timeline_paraguay_precolonial.html', title: 'Música Colonial' },
+                '2025-4-17': { link: 'timeline_paraguay_precolonial.html', title: 'Música Colonial (Cont.)' },
+                '2025-4-24': { link: 'timeline_paraguay_precolonial.html', title: 'Música Colonial (Cont.)' },
+                '2025-5-1': { link: '#', title: 'Resumen General' },
+                '2025-5-8': { link: '08_05_25.html', title: 'Misiones Jesuíticas' },
+                '2025-6-20': { link: '20_06_2025.html', title: 'Período Independiente' },
+                '2025-8-7': { link: '07_08_2025.html', title: 'Linea de Tiempo Compositores' },
+            };
+
+            const calendarContainer = document.getElementById('calendario-anual-container');
+            const year = 2025;
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+            for (let month = 0; month < 12; month++) {
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'mes-calendario';
+
+                const title = document.createElement('h3');
+                title.className = 'mes-titulo';
+                title.textContent = monthNames[month];
+                monthDiv.appendChild(title);
+
+                const weekDaysDiv = document.createElement('div');
+                weekDaysDiv.className = 'dias-semana';
+                dayNames.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.textContent = day;
+                    weekDaysDiv.appendChild(dayHeader);
+                });
+                monthDiv.appendChild(weekDaysDiv);
+
+                const daysGrid = document.createElement('div');
+                daysGrid.className = 'dias-grid';
+
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'dia-vacio';
+                    daysGrid.appendChild(emptyCell);
+                }
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayCell = document.createElement('div');
+                    dayCell.className = 'dia-calendario';
+
+                    const dateString = `${year}-${month + 1}-${day}`;
+                    if (clasesProgramadas[dateString]) {
+                        const clase = clasesProgramadas[dateString];
+                        dayCell.classList.add('dia-clase');
+
+                        const link = document.createElement('a');
+                        link.href = clase.link;
+                        link.textContent = day;
+                        link.title = clase.title;
+                        dayCell.appendChild(link);
+                    } else {
+                        dayCell.textContent = day;
+                    }
+                    daysGrid.appendChild(dayCell);
+                }
+                monthDiv.appendChild(daysGrid);
+                calendarContainer.appendChild(monthDiv);
+            }
         });
     </script>
 </body>
+
 </html>
