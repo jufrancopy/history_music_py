@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen de Música Paraguaya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .student-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .student-info h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .question {
+            background: #fff;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+        
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .option {
+            position: relative;
+        }
+        
+        .option label {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        .option label:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: #667eea;
+        }
+        
+        .option label.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .start-exam-btn, .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto;
+            min-width: 200px;
+        }
+        
+        .start-exam-btn:hover, .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .exam-section {
+            display: none;
+        }
+        
+        .exam-section.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            background: #f0f0f0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .score-excellent {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+        }
+        
+        .score-good {
+            background: linear-gradient(135deg, #FF9800, #FFC107);
+        }
+        
+        .score-poor {
+            background: linear-gradient(135deg, #F44336, #FF5722);
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .question {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="historia.png" alt="Logo" class="nav-logo">
+        </a>
+        <button class="menu-toggle" aria-label="Menú">☰</button>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
+            <li class="nav-item"><a href="index.html" class="nav-link">Historia de la Música</a></li>
+            <li class="nav-item"><a href="../intro_filosofia/index.html" class="nav-link">Filosofía</a></li>
+            <li class="nav-item"><a href="../contact.html" class="nav-link">Contacto</a></li>
+            <li class="nav-item"><a href="test_21_08_2025.html" class="nav-link">Test</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 Examen de Música Paraguaya</h1>
+            <p>Evaluación de conocimientos sobre la música tradicional del Paraguay</p>
+        </div>
+        
+        <div class="content">
+            <!-- Información del estudiante -->
+            <div id="student-info-section" class="student-info">
+                <h2>Información del Estudiante</h2>
+                <div class="form-group">
+                    <label for="firstName">Nombre:</label>
+                    <input type="text" id="firstName" placeholder="Ingrese su nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Apellido:</label>
+                    <input type="text" id="lastName" placeholder="Ingrese su apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" placeholder="ejemplo@correo.com" required>
+                </div>
+                <button class="start-exam-btn" onclick="startExam()">Comenzar Examen</button>
+            </div>
+            
+            <!-- Sección del examen -->
+            <div id="exam-section" class="exam-section">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div id="questions-container"></div>
+                <button class="submit-btn" onclick="submitExam()">Finalizar Examen</button>
+            </div>
+            
+            <!-- Resultados -->
+            <div id="results-section" class="results">
+                <h2>¡Examen Completado!</h2>
+                <div id="score-display" class="score-circle">
+                    <span id="score-text">0/30</span>
+                </div>
+                <div id="student-name-display" style="font-size: 1.5em; margin: 20px 0; font-weight: bold;"></div>
+                <div id="percentage-display" style="font-size: 1.2em; margin: 10px 0;"></div>
+                <div id="grade-display" style="font-size: 1.3em; margin: 10px 0; font-weight: bold;"></div>
+                <button class="download-btn" onclick="downloadResults()">📸 Descargar Certificado</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="results-canvas" style="display: none;"></canvas>
+
+    <script>
+        const questions = [
+            {
+                question: "¿Qué tipo de instrumento son los membranófonos?",
+                options: [
+                    "Instrumentos de cuerda",
+                    "Instrumentos de percusión",
+                    "Instrumentos de viento",
+                    "Instrumentos que producen sonido mediante la vibración de una membrana"
+                ],
+                answer: "Instrumentos que producen sonido mediante la vibración de una membrana"
+            },
+            {
+                question: "¿Cuál de los siguientes instrumentos es un aerófono?",
+                options: ["Anguapu", "Mimby", "Takuapu", "Mbaraka"],
+                answer: "Mimby"
+            },
+            {
+                question: "¿Qué instrumento guaraní es conocido como el tambor ceremonial?",
+                options: ["Mbaraka", "Anguapu", "Mimby", "Takuapu"],
+                answer: "Anguapu"
+            },
+            {
+                question: "¿Cuál es la técnica de ejecución del Takuapu?",
+                options: ["Soplo directo", "Percusión de suelo", "Sacudimiento", "Pulsación"],
+                answer: "Percusión de suelo"
+            },
+            {
+                question: "¿Qué función cumple el Mbaraka en la cultura guaraní?",
+                options: ["Comunicación espiritual", "Ritual comunitario", "Instrumento femenino", "Curación espiritual"],
+                answer: "Curación espiritual"
+            },
+            {
+                question: "¿Qué instrumento se utiliza para convocar a la comunidad en ceremonias?",
+                options: ["Mimby", "Popuguaí", "Kumbijáre", "Takuapí"],
+                answer: "Popuguaí"
+            },
+            {
+                question: "¿Cuál es el nombre del sacerdote en la cultura mbya-guaraní?",
+                options: ["Kuñá kuéry", "Opyguá", "Mbya", "Verá Chunú"],
+                answer: "Opyguá"
+            },
+            {
+                question: "¿Qué deidad representa el sol en la cosmología mbya?",
+                options: ["Ñamandú", "Jakaira Chy Eté", "Takuá Verá Chy Eté", "Aguyjé"],
+                answer: "Ñamandú"
+            },
+            {
+                question: "¿Qué periodo abarca la música guaraní en estado puro?",
+                options: ["1537-1609", "1609-1767", "Pre-1537", "1767-1811"],
+                answer: "Pre-1537"
+            },
+            {
+                question: "¿Quién fue un compositor jesuita que integró elementos guaraníes en su música barroca?",
+                options: ["Domingo Zipoli", "Francisco Pizarro", "Alejo García", "Juan de Salazar"],
+                answer: "Domingo Zipoli"
+            },
+            {
+                question: "¿Qué periodo abarca el desarrollo musical del Paraguay independiente?",
+                options: ["1811-1870", "1609-1767", "1767-1811", "1537-1609"],
+                answer: "1811-1870"
+            },
+            {
+                question: "¿Cuál fue una de las características musicales del período independiente?",
+                options: [
+                    "Uso exclusivo del español en las letras",
+                    "Bilingüismo musical: canciones en guaraní y español",
+                    "Predominancia de la música europea",
+                    "Fusión de géneros sin influencia indígena"
+                ],
+                answer: "Bilingüismo musical: canciones en guaraní y español"
+            },
+            {
+                question: "¿Qué género musical se adaptó al arpa paraguaya durante este período?",
+                options: ["Samba", "Polca Paraguaya", "Tango", "Bachata"],
+                answer: "Polca Paraguaya"
+            },
+            {
+                question: "¿Qué tipo de música se desarrolló especialmente durante el gobierno de Carlos Antonio López?",
+                options: ["Música religiosa", "Música militar y patriótica", "Música de cámara", "Música folclórica europea"],
+                answer: "Música militar y patriótica"
+            },
+            {
+                question: "¿Cuál de los siguientes instrumentos es considerado el nacional por excelencia en Paraguay?",
+                options: ["Guitarra", "Arpa Paraguaya", "Acordeón", "Flauta Traversa"],
+                answer: "Arpa Paraguaya"
+            },
+            {
+                question: "¿Quién fue un compositor destacado que escribió himnos para Paraguay durante este período?",
+                options: ["Francisco Acuña de Figueroa", "Domingo Zipoli", "Carlos Antonio López", "José Gaspar Rodríguez de Francia"],
+                answer: "Francisco Acuña de Figueroa"
+            },
+            {
+                question: "¿Qué impacto tuvo la Guerra de la Triple Alianza en la música paraguaya?",
+                options: [
+                    "El desarrollo de nuevos géneros musicales",
+                    "La pérdida de gran parte del patrimonio musical",
+                    "La introducción de música europea",
+                    "El fortalecimiento de la música indígena"
+                ],
+                answer: "La pérdida de gran parte del patrimonio musical"
+            },
+            {
+                question: "¿Qué tipo de música se adaptó a los instrumentos y voces locales durante este período?",
+                options: ["Música de cámara", "Música folclórica europea", "Música Religiosa Criolla", "Música pop moderna"],
+                answer: "Música Religiosa Criolla"
+            },
+            {
+                question: "¿Qué función tuvo la música patriótica durante el período independiente?",
+                options: [
+                    "Entretenimiento personal",
+                    "Exaltación nacional y celebración de la independencia",
+                    "Música de danza exclusivamente",
+                    "Rituales religiosos"
+                ],
+                answer: "Exaltación nacional y celebración de la independencia"
+            },
+            {
+                question: "¿Qué instrumento fue introducido durante el período lopizta?",
+                options: ["Arpa Paraguaya", "Guitarra", "Acordeón", "Takuapu"],
+                answer: "Acordeón"
+            },
+            {
+                question: "¿Cuál era la característica principal de la música indígena antes del siglo XVI?",
+                options: [
+                    "Estructura compleja y estética",
+                    "Participación colectiva sin músicos especialistas",
+                    "Influencia europea predominante",
+                    "Composición de música escrita"
+                ],
+                answer: "Participación colectiva sin músicos especialistas"
+            },
+            {
+                question: "¿Quién fundó una casa y escuela de música en 1543?",
+                options: ["Gregorio de Acosta", "Padre Juan Gabriel Lezcano", "Domenico Zipoli", "Jean Vaisseau"],
+                answer: "Padre Juan Gabriel Lezcano"
+            },
+            {
+                question: "¿Qué compositor italiano fue muy apreciado en las misiones jesuíticas?",
+                options: ["Gregorio de Acosta", "Domenico Zipoli", "Anton Sepp", "Francisco Sauvageot de Dupuis"],
+                answer: "Domenico Zipoli"
+            },
+            {
+                question: "¿Quién introdujo el arpa en Paraguay?",
+                options: ["Domenico Zipoli", "Anton Sepp", "Pedro Comentale", "Francisco Sauvageot de Dupuis"],
+                answer: "Anton Sepp"
+            },
+            {
+                question: "¿Qué instrumento tocaba Pedro Comentale, quien presentó músicos indígenas en 1628?",
+                options: ["Piano", "Guitarra", "Vihuela de arco", "Arpa"],
+                answer: "Vihuela de arco"
+            },
+            {
+                question: "¿Quién es considerado el primer maestro de música del Paraguay durante la época de Francia?",
+                options: ["Antonio María Quintana", "Anastasio Rolón", "Francisco Sauvageot de Dupuis", "Indalecio Odriozola"],
+                answer: "Antonio María Quintana"
+            },
+            {
+                question: "¿Qué obra es atribuida a Anastasio Rolón?",
+                options: ["Himno Nacional", "Campamento Cerro León", "Primer Himno Patriótico en guaraní", "Habanera sinfónica"],
+                answer: "Primer Himno Patriótico en guaraní"
+            },
+            {
+                question: "¿Quién organizó la primera Orquesta Nacional subvencionada por el Estado en 1890?",
+                options: ["Cantalicio Guerrero", "Francisco Sauvageot de Dupuis", "Luis Cavedagni", "Indalecio Odriozola"],
+                answer: "Cantalicio Guerrero"
+            },
+            {
+                question: "¿Qué músico francés es considerado el presunto autor del Himno Nacional?",
+                options: ["Indalecio Odriozola", "Francisco Sauvageot de Dupuis", "Cantalicio Guerrero", "Luis Cavedagni"],
+                answer: "Francisco Sauvageot de Dupuis"
+            },
+            {
+                question: "¿Qué músico italiano realizó la primera reconstrucción del Himno Nacional publicada en 1874?",
+                options: ["Luis Cavedagni", "Domenico Zipoli", "Antonio María Quintana", "Francisco Sauvageot de Dupuis"],
+                answer: "Luis Cavedagni"
+            }
+        ];
+
+        let studentAnswers = {};
+        let studentInfo = {};
+
+        function startExam() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!firstName || !lastName || !email) {
+                alert('Por favor, complete todos los campos antes de comenzar el examen.');
+                return;
+            }
+
+            studentInfo = { firstName, lastName, email };
+            
+            document.getElementById('student-info-section').style.display = 'none';
+            document.getElementById('exam-section').classList.add('active');
+            
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                questionDiv.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">${index + 1}</div>
+                        <div class="question-text">${q.question}</div>
+                    </div>
+                    <div class="options">
+                        ${q.options.map((option, optIndex) => `
+                            <div class="option">
+                                <label>
+                                    <input type="radio" name="question-${index}" value="${option}" 
+                                           onchange="updateAnswer(${index}, '${option}'); updateProgress();">
+                                    ${option}
+                                </label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function updateAnswer(questionIndex, answer) {
+            studentAnswers[questionIndex] = answer;
+            
+            // Update visual feedback
+            const labels = document.querySelectorAll(`input[name="question-${questionIndex}"]`);
+            labels.forEach(input => {
+                const label = input.parentElement;
+                if (input.checked) {
+                    label.classList.add('selected');
+                } else {
+                    label.classList.remove('selected');
+                }
+            });
+        }
+
+        function updateProgress() {
+            const answered = Object.keys(studentAnswers).length;
+            const total = questions.length;
+            const percentage = (answered / total) * 100;
+            
+            document.getElementById('progress-fill').style.width = percentage + '%';
+        }
+
+        function submitExam() {
+            if (Object.keys(studentAnswers).length !== questions.length) {
+                alert('Por favor, responda todas las preguntas antes de finalizar el examen.');
+                return;
+            }
+
+            const score = calculateScore();
+            showResults(score);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            questions.forEach((q, index) => {
+                if (studentAnswers[index] === q.answer) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function showResults(score) {
+            document.getElementById('exam-section').style.display = 'none';
+            document.getElementById('results-section').classList.add('show');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            const fullName = `${studentInfo.firstName} ${studentInfo.lastName}`;
+            
+            document.getElementById('score-text').textContent = `${score}/${questions.length}`;
+            document.getElementById('student-name-display').textContent = fullName;
+            document.getElementById('percentage-display').textContent = `${percentage}%`;
+            
+            const scoreCircle = document.getElementById('score-display');
+            let grade, gradeColor;
+            
+            if (percentage >= 80) {
+                grade = 'Excelente';
+                scoreCircle.className = 'score-circle score-excellent';
+            } else if (percentage >= 60) {
+                grade = 'Bueno';
+                scoreCircle.className = 'score-circle score-good';
+            } else {
+                grade = 'Necesita mejorar';
+                scoreCircle.className = 'score-circle score-poor';
+            }
+            
+            document.getElementById('grade-display').textContent = grade;
+        }
+
+        function downloadResults() {
+            const canvas = document.getElementById('results-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = 800;
+            canvas.height = 1000;
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // White card background
+            ctx.fillStyle = 'white';
+            ctx.roundRect = function(x, y, w, h, r) {
+                this.beginPath();
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                this.closePath();
+                return this;
+            }
+            ctx.roundRect(50, 100, 700, 800, 20).fill();
+            
+            // Header
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('🎵 CERTIFICADO DE EXAMEN', 400, 200);
+            
+            ctx.font = '32px Arial';
+            ctx.fillStyle = '#666';
+            ctx.fillText('Música Paraguaya', 400, 250);
+            
+            // Student name
+            ctx.font = 'bold 36px Arial';
+            ctx.fillStyle = '#333';
+            ctx.fillText(`${studentInfo.firstName} ${studentInfo.lastName}`, 400, 350);
+            
+            // Email
+            ctx.font = '24px Arial';
+            ctx.fillStyle = '#666';
+            ctx.fillText(studentInfo.email, 400, 390);
+            
+            // Score circle
+            const score = calculateScore();
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            // Circle background
+            ctx.beginPath();
+            ctx.arc(400, 520, 100, 0, 2 * Math.PI);
+            if (percentage >= 80) {
+                ctx.fillStyle = '#4CAF50';
+            } else if (percentage >= 60) {
+                ctx.fillStyle = '#FF9800';
+            } else {
+                ctx.fillStyle = '#F44336';
+            }
+            ctx.fill();
+            
+            // Score text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 48px Arial';
+            ctx.fillText(`${score}/${questions.length}`, 400, 535);
+            
+            // Percentage
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 42px Arial';
+            ctx.fillText(`${percentage}%`, 400, 680);
+            
+            // Grade
+            let grade;
+            if (percentage >= 80) grade = 'EXCELENTE';
+            else if (percentage >= 60) grade = 'BUENO';
+            else grade = 'NECESITA MEJORAR';
+            
+            ctx.font = 'bold 36px Arial';
+            ctx.fillText(grade, 400, 740);
+            
+            // Date
+            const now = new Date();
+            const dateString = now.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            ctx.font = '20px Arial';
+            ctx.fillStyle = '#666';
+            ctx.fillText(`Fecha: ${dateString}`, 400, 820);
+            
+            // Download
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Certificado_${studentInfo.firstName}_${studentInfo.lastName}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+    </script>
+</body>
+</html>
